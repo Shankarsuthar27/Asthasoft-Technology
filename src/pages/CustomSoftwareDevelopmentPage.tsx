@@ -39,7 +39,6 @@ interface CustomSoftwareDevelopmentPageProps {
 
 // Tech Stack Categories and Items
 const TECH_STACK_CATEGORIES = [
-  { id: 'all', name: 'All Technologies' },
   { id: 'frontend', name: 'Frontend' },
   { id: 'backend', name: 'Backend & APIs' },
   { id: 'cloud', name: 'Cloud & DevOps' },
@@ -80,13 +79,12 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
   onOpenScopingModal,
   onOpenCallModal,
 }) => {
-  const [selectedTechCategory, setSelectedTechCategory] = useState('all');
+  const [selectedTechCategory, setSelectedTechCategory] = useState('frontend');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  const filteredTechItems =
-    selectedTechCategory === 'all'
-      ? TECH_ITEMS
-      : TECH_ITEMS.filter((item) => item.category === selectedTechCategory);
+  const filteredTechItems = TECH_ITEMS.filter(
+    (item) => item.category === selectedTechCategory
+  );
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -119,7 +117,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 </h2>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight text-slate-900 leading-[1.12]">
                   <span className="text-[#0066ff]">Custom Software</span>{' '}
-                  <span className="text-[#0066ff]">Development</span> Company in USA
+                  <span className="text-[#0066ff]">Development</span> Company in INDIA
                 </h1>
               </div>
 
@@ -587,9 +585,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                           : 'bg-slate-100 text-slate-500'
                       }`}
                     >
-                      {cat.id === 'all'
-                        ? TECH_ITEMS.length
-                        : TECH_ITEMS.filter((i) => i.category === cat.id).length}
+                      {TECH_ITEMS.filter((i) => i.category === cat.id).length}
                     </span>
                   </button>
                 );
@@ -817,7 +813,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               ENGAGEMENT MODELS
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Custom Software Development Company in USA, UK, UAE, & India, Serving Clients Across the Globe
+              Custom Software Development Company India
             </h2>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               Transparent, flexible collaboration models engineered to match your organizational velocity and budget predictability.
