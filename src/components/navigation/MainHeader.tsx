@@ -190,7 +190,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                         <div className="space-y-1">
                           {[
                             { name: 'Custom Software Development', icon: Globe, href: '/custom-software-development' },
-                            { name: 'Mobile App Development', icon: Smartphone, href: '#services' },
+                            { name: 'Mobile App Development', icon: Smartphone, href: '/mobile-app-development-company' },
                             { name: 'Blockchain Development', icon: Layers, href: '#services' },
                             { name: 'AI Product Development', icon: Cpu, href: '#services-ai' },
                             { name: 'SaaS Development', icon: Building2, href: '#services' },

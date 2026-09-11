@@ -198,9 +198,17 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                           <span>Custom Software Development</span>
                         </a>
                         <a
-                          href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          href="/mobile-app-development-company"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            onClose();
+                            if (window.location.pathname !== '/mobile-app-development-company') {
+                              window.history.pushState({}, '', '/mobile-app-development-company');
+                              window.dispatchEvent(new Event('app-navigate'));
+                            }
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Smartphone className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>Mobile App Development</span>

@@ -9,6 +9,7 @@ import { WhatWeDoShowcase } from './components/sections/WhatWeDoShowcase';
 import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
 import { Footer } from './components/sections/Footer';
 import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopmentPage';
+import { MobileAppDevelopmentPage } from './pages/MobileAppDevelopmentPage';
 // import { PageEntranceAnimation } from './components/ui/PageEntranceAnimation';
 
 // 5 Conversion Funnels
@@ -57,6 +58,7 @@ export function App() {
   };
 
   const isCustomSoftwarePage = currentPath === '/custom-software-development';
+  const isMobileAppPage = currentPath === '/mobile-app-development-company';
 
   return (
     <div className="min-h-screen bg-[#0c1222] text-white selection:bg-[#0066ff] selection:text-white relative">
@@ -80,7 +82,12 @@ export function App() {
       />
 
       {/* Route Views */}
-      {isCustomSoftwarePage ? (
+      {isMobileAppPage ? (
+        <MobileAppDevelopmentPage
+          onOpenScopingModal={handleOpenScopingModal}
+          onOpenCallModal={handleOpenCallModal}
+        />
+      ) : isCustomSoftwarePage ? (
         <CustomSoftwareDevelopmentPage
           onOpenScopingModal={handleOpenScopingModal}
           onOpenCallModal={handleOpenCallModal}

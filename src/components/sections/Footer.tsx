@@ -87,7 +87,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                 </a>
               </li>
               <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Enterprise AI & Autonomous Systems</a></li>
-              <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Mobile App & Web Platforms</a></li>
+              <li>
+                <a
+                  href="/mobile-app-development-company"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (window.location.pathname !== '/mobile-app-development-company') {
+                      window.history.pushState({}, '', '/mobile-app-development-company');
+                      window.dispatchEvent(new Event('app-navigate'));
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Mobile App & Web Platforms
+                </a>
+              </li>
               <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Cloud Engineering & DevOps</a></li>
               <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Blockchain & Smart Contracts</a></li>
               <li><a href="#case-study" className="hover:text-[#0066ff] transition-colors">Case Studies & Outcomes</a></li>
