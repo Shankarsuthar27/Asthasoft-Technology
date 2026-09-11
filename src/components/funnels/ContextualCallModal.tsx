@@ -170,7 +170,7 @@ export const ContextualCallModal: React.FC<ContextualCallModalProps> = ({
                       </select>
                       <input
                         type="tel"
-                        placeholder="9664471637"
+                        placeholder=""
                         {...register('phone')}
                         className="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066ff] focus:bg-white transition-all"
                       />
@@ -199,20 +199,7 @@ export const ContextualCallModal: React.FC<ContextualCallModalProps> = ({
                   </button>
                 </form>
 
-                <div className="mt-3.5 text-center text-[11px] text-slate-500 flex flex-wrap items-center justify-center gap-1.5">
-                  <span>Or dial directly: </span>
-                  <a href="tel:+917023318111" className="text-xs text-[#0066ff] font-bold hover:underline">
-                    +91-7023318111
-                  </a>
-                  <span className="text-slate-300">|</span>
-                  <a href="tel:+919664471637" className="text-xs text-slate-800 font-semibold hover:text-[#0066ff] hover:underline">
-                    9664471637
-                  </a>
-                  <span className="text-slate-300">|</span>
-                  <a href="tel:01169269401" className="text-xs text-slate-800 font-semibold hover:text-[#0066ff] hover:underline">
-                    011-69269401
-                  </a>
-                </div>
+              
 
                 <div className="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
                   <span className="flex items-center gap-1.5 text-emerald-600 font-medium">

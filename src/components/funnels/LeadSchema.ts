@@ -39,11 +39,13 @@ export type QuickCallFormData = z.infer<typeof QuickCallSchema>;
 export const QuickEnquirySchema = z.object({
   fullName: z.string().min(2, "Name is required"),
   email: z.string().email("Valid email required"),
+  countryCode: z.string().optional(),
   phone: z.string().min(7, "Valid phone number required"),
   service: z.string().min(1, "Please select a service"),
   budget: z.string().optional(),
   timeline: z.string().optional(),
-  notes: z.string().min(10, "Please enter at least 10 characters"),
+  notes: z.string().optional(),
 });
 
 export type QuickEnquiryFormData = z.infer<typeof QuickEnquirySchema>;
+
