@@ -35,9 +35,15 @@ export function App() {
   });
 
   React.useEffect(() => {
+    // Disable automatic browser scroll restoration so page transitions always start cleanly at top
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     const handleLocationChange = () => {
       const p = window.location.pathname.replace(/\/$/, '') || '/';
       setCurrentPath(p);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     };
 
     window.addEventListener('popstate', handleLocationChange);
@@ -47,6 +53,15 @@ export function App() {
       window.removeEventListener('app-navigate', handleLocationChange);
     };
   }, []);
+
+  // Guarantee scroll to top whenever currentPath changes
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    const rafId = requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    });
+    return () => cancelAnimationFrame(rafId);
+  }, [currentPath]);
 
   const handleOpenScopingModal = (source: string = 'General Portal CTA') => {
     setScopingSource(source);
@@ -83,13 +98,21 @@ export function App() {
       />
 
       {/* Animated Route Views */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence
+        mode="wait"
+        onExitComplete={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        }}
+      >
         <motion.div
           key={currentPath}
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -14 }}
           transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          onAnimationStart={() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          }}
         >
           {isMobileAppPage ? (
             <MobileAppDevelopmentPage

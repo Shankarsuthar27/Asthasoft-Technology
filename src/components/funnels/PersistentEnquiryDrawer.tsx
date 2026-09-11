@@ -272,10 +272,13 @@ export const PersistentEnquiryDrawer: React.FC = () => {
                       )}
                     </button>
 
-                    <div className="text-center text-[10px] text-slate-400 pt-1">
-                      Direct Line: <a href="tel:+917023318111" className="text-brand-orange font-bold hover:underline">+91-7023318111</a>
-                      <span className="mx-1 text-white/30">|</span>
+                    <div className="text-center text-[10px] text-slate-400 pt-1 flex flex-wrap items-center justify-center gap-1">
+                      <span>Direct Line:</span>
+                      <a href="tel:+917023318111" className="text-brand-orange font-bold hover:underline">+91-7023318111</a>
+                      <span className="text-white/30">|</span>
                       <a href="tel:+919664471637" className="text-slate-200 hover:underline">9664471637</a>
+                      <span className="text-white/30">|</span>
+                      <a href="tel:01169269401" className="text-slate-200 hover:underline">011-69269401</a>
                     </div>
                   </form>
                 )}

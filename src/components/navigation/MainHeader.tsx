@@ -21,6 +21,7 @@ import {
   Settings,
 } from 'lucide-react';
 import { WHO_WE_ARE_LINKS, SOLUTIONS_COLUMNS, INDUSTRIES_LINKS } from '../../data/navigationData';
+import { navigateTo } from '../../utils/navigation';
 
 interface MainHeaderProps {
   onOpenScopingModal: (source?: string) => void;
@@ -70,11 +71,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
             href="/"
             onClick={(e) => {
               e.preventDefault();
-              if (window.location.pathname !== '/') {
-                window.history.pushState({}, '', '/');
-                window.dispatchEvent(new Event('app-navigate'));
-              }
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              navigateTo('/');
             }}
             className="flex items-center gap-2.5 group focus:outline-none cursor-pointer"
             aria-label="Asthasoft Technologies Pvt. Ltd. Home"
@@ -134,7 +131,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                         <a
                           key={link.title}
                           href={link.href}
-                          className="flex items-start gap-2.5 p-2.5 rounded-xl hover:bg-slate-50 group transition-colors"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setActiveMenu(null);
+                            navigateTo(link.href);
+                          }}
+                          className="flex items-start gap-2.5 p-2.5 rounded-xl hover:bg-slate-50 group transition-colors cursor-pointer"
                         >
                           <div className="w-2 h-2 rounded-full bg-brand-orange mt-1.5 shrink-0" />
                           <div>
@@ -202,15 +204,9 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                                 key={item.name}
                                 href={item.href}
                                 onClick={(e) => {
-                                  if (item.href.startsWith('/')) {
-                                    e.preventDefault();
-                                    setActiveMenu(null);
-                                    if (window.location.pathname !== item.href) {
-                                      window.history.pushState({}, '', item.href);
-                                      window.dispatchEvent(new Event('app-navigate'));
-                                    }
-                                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                                  }
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo(item.href);
                                 }}
                                 className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
@@ -244,7 +240,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href={item.href}
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo(item.href);
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />
@@ -274,7 +275,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href={item.href}
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo(item.href);
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />
@@ -341,7 +347,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href="#capabilities"
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo('#capabilities');
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />
@@ -375,7 +386,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href="#capabilities"
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo('#capabilities');
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />
@@ -409,7 +425,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href="#capabilities"
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo('#capabilities');
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />
@@ -474,7 +495,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href="#capabilities"
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo('#capabilities');
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />
@@ -508,7 +534,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href="#capabilities"
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveMenu(null);
+                                  navigateTo('#capabilities');
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />
@@ -530,7 +561,11 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
             {/* Direct Links matching screenshot */}
             <a
               href="#services"
-              className="px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#0066ff] transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateTo('#services');
+              }}
+              className="px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#0066ff] transition-colors cursor-pointer"
             >
               Our Work
             </a>
@@ -552,7 +587,11 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
             {/* Special glowing circular AI Button matching screenshot */}
             <a
               href="#services-ai"
-              className="relative flex items-center justify-center group shrink-0"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateTo('#services-ai');
+              }}
+              className="relative flex items-center justify-center group shrink-0 cursor-pointer"
               title="AI Development Services"
             >
               {/* Outer pulsing glow aura */}

@@ -7,6 +7,7 @@ import {
   IconBrandYoutube,
   IconBrandX,
 } from '@tabler/icons-react';
+import { navigateTo } from '../../utils/navigation';
 
 interface FooterProps {
   onOpenScopingModal: (source?: string) => void;
@@ -23,11 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
               href="/"
               onClick={(e) => {
                 e.preventDefault();
-                if (window.location.pathname !== '/') {
-                  window.history.pushState({}, '', '/');
-                  window.dispatchEvent(new Event('app-navigate'));
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                navigateTo('/');
               }}
               className="flex items-center gap-3 select-none cursor-pointer focus:outline-none"
             >
@@ -75,37 +72,73 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   href="/custom-software-development"
                   onClick={(e) => {
                     e.preventDefault();
-                    if (window.location.pathname !== '/custom-software-development') {
-                      window.history.pushState({}, '', '/custom-software-development');
-                      window.dispatchEvent(new Event('app-navigate'));
-                    }
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    navigateTo('/custom-software-development');
                   }}
                   className="hover:text-[#0066ff] transition-colors cursor-pointer"
                 >
                   Custom Software Development
                 </a>
               </li>
-              <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Enterprise AI & Autonomous Systems</a></li>
+              <li>
+                <a
+                  href="#capabilities"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('#capabilities');
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Enterprise AI & Autonomous Systems
+                </a>
+              </li>
               <li>
                 <a
                   href="/mobile-app-development-company"
                   onClick={(e) => {
                     e.preventDefault();
-                    if (window.location.pathname !== '/mobile-app-development-company') {
-                      window.history.pushState({}, '', '/mobile-app-development-company');
-                      window.dispatchEvent(new Event('app-navigate'));
-                    }
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    navigateTo('/mobile-app-development-company');
                   }}
                   className="hover:text-[#0066ff] transition-colors cursor-pointer"
                 >
                   Mobile App & Web Platforms
                 </a>
               </li>
-              <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Cloud Engineering & DevOps</a></li>
-              <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Blockchain & Smart Contracts</a></li>
-              <li><a href="#case-study" className="hover:text-[#0066ff] transition-colors">Case Studies & Outcomes</a></li>
+              <li>
+                <a
+                  href="#capabilities"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('#capabilities');
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Cloud Engineering & DevOps
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#capabilities"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('#capabilities');
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Blockchain & Smart Contracts
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#case-study"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('#case-study');
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Case Studies & Outcomes
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -133,6 +166,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   <a href="tel:+919664471637" className="hover:text-[#0066ff] text-slate-200 font-medium transition-colors">
                     +91 96644 71637
+                  </a>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <a href="tel:01169269401" className="hover:text-[#0066ff] text-slate-200 font-medium transition-colors">
+                    011-69269401
                   </a>
                 </div>
               </div>
@@ -187,13 +226,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
             <a href="https://x.com" target="_blank" rel="noreferrer" className="w-6 h-6 rounded bg-white/10 hover:bg-white hover:text-black flex items-center justify-center transition-colors">
               <IconBrandX size={12} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-6 h-6 rounded bg-white/10 hover:bg-[#ff5421] hover:text-white flex items-center justify-center transition-colors">
+            <a href="https://www.instagram.com/asthasoft/?hl=en" target="_blank" rel="noreferrer" className="w-6 h-6 rounded bg-white/10 hover:bg-[#ff5421] hover:text-white flex items-center justify-center transition-colors">
               <IconBrandInstagram size={13} />
             </a>
             <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-6 h-6 rounded bg-white/10 hover:bg-[#0066ff] hover:text-white flex items-center justify-center transition-colors">
               <IconBrandFacebook size={13} />
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-6 h-6 rounded bg-white/10 hover:bg-red-600 hover:text-white flex items-center justify-center transition-colors">
+            <a href="https://www.youtube.com/@asthasoft" target="_blank" rel="noreferrer" className="w-6 h-6 rounded bg-white/10 hover:bg-red-600 hover:text-white flex items-center justify-center transition-colors">
               <IconBrandYoutube size={13} />
             </a>
           </div>

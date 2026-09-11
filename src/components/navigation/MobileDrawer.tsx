@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -25,6 +25,7 @@ import {
   SOLUTIONS_COLUMNS,
   INDUSTRIES_LINKS,
 } from '../../data/navigationData';
+import { navigateTo } from '../../utils/navigation';
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -37,10 +38,22 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   onClose,
   onOpenScopingModal,
 }) => {
-  const [openSection, setOpenSection] = useState<string | null>('what-we-do');
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setOpenSection(null);
+    }
+  }, [isOpen]);
 
   const toggleSection = (sectionId: string) => {
     setOpenSection(openSection === sectionId ? null : sectionId);
+  };
+
+  const handleLinkClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    onClose();
+    navigateTo(href);
   };
 
   return (
@@ -68,15 +81,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
             <div className="p-4 sm:p-5 flex items-center justify-between border-b border-slate-100 bg-white">
               <a
                 href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onClose();
-                  if (window.location.pathname !== '/') {
-                    window.history.pushState({}, '', '/');
-                    window.dispatchEvent(new Event('app-navigate'));
-                  }
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+                onClick={(e) => handleLinkClick(e, '/')}
                 className="flex items-center gap-2.5 cursor-pointer focus:outline-none"
               >
                 <img
@@ -136,8 +141,8 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                       <a
                         key={link.title}
                         href={link.href}
-                        onClick={onClose}
-                        className="block py-1 text-xs text-slate-600 hover:text-[#0066ff] transition-colors"
+                        onClick={(e) => handleLinkClick(e, link.href)}
+                        className="block py-1 text-xs text-slate-600 hover:text-[#0066ff] transition-colors cursor-pointer"
                       >
                         <div className="flex items-center justify-between">
                           <span>{link.title}</span>
@@ -183,15 +188,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                       <div className="space-y-0.5">
                         <a
                           href="/custom-software-development"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            onClose();
-                            if (window.location.pathname !== '/custom-software-development') {
-                              window.history.pushState({}, '', '/custom-software-development');
-                              window.dispatchEvent(new Event('app-navigate'));
-                            }
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                          }}
+                          onClick={(e) => handleLinkClick(e, '/custom-software-development')}
                           className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Globe className="w-4 h-4 text-slate-600 shrink-0" />
@@ -199,15 +196,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                         </a>
                         <a
                           href="/mobile-app-development-company"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            onClose();
-                            if (window.location.pathname !== '/mobile-app-development-company') {
-                              window.history.pushState({}, '', '/mobile-app-development-company');
-                              window.dispatchEvent(new Event('app-navigate'));
-                            }
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                          }}
+                          onClick={(e) => handleLinkClick(e, '/mobile-app-development-company')}
                           className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Smartphone className="w-4 h-4 text-slate-600 shrink-0" />
@@ -215,32 +204,32 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Hexagon className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>Blockchain Development</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Cpu className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>AI Product Development</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Layers className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>SaaS Development</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <FileCode className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>MVP Development</span>
@@ -257,32 +246,32 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                       <div className="space-y-0.5">
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Cloud className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>Cloud Engineering</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Terminal className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>DevOps</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <UserCheck className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>IT Ops Management</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Box className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>Dedicated Engineering Teams</span>
@@ -299,24 +288,24 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                       <div className="space-y-0.5">
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Palette className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>UI/UX & web design</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Monitor className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>Custom web development</span>
                         </a>
                         <a
                           href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          onClick={(e) => handleLinkClick(e, '#capabilities')}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Box className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>Dedicated engineering teams</span>
@@ -357,8 +346,8 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                             <a
                               key={item.title}
                               href={item.href}
-                              onClick={onClose}
-                              className="block py-1 text-xs text-slate-600 hover:text-[#0066ff]"
+                              onClick={(e) => handleLinkClick(e, item.href)}
+                              className="block py-1 text-xs text-slate-600 hover:text-[#0066ff] cursor-pointer"
                             >
                               {item.title}
                             </a>
@@ -394,8 +383,8 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                       <a
                         key={item.title}
                         href={item.href}
-                        onClick={onClose}
-                        className="block py-1 text-xs text-slate-600 hover:text-[#0066ff]"
+                        onClick={(e) => handleLinkClick(e, item.href)}
+                        className="block py-1 text-xs text-slate-600 hover:text-[#0066ff] cursor-pointer"
                       >
                         {item.title}
                       </a>
@@ -407,8 +396,8 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
               {/* 5. Our Work */}
               <a
                 href="#case-study"
-                onClick={onClose}
-                className="block py-2.5 px-3 text-sm font-semibold text-slate-800 hover:text-[#0066ff] transition-colors"
+                onClick={(e) => handleLinkClick(e, '#case-study')}
+                className="block py-2.5 px-3 text-sm font-semibold text-slate-800 hover:text-[#0066ff] transition-colors cursor-pointer"
               >
                 Our Work
               </a>
@@ -445,13 +434,17 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                       <span className="text-sm font-bold text-slate-900 block leading-tight">
                         India
                       </span>
-                      <div className="flex items-center gap-1.5 text-xs font-semibold text-[#0066ff]">
+                      <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold text-[#0066ff]">
                         <a href="tel:+917023318111" className="hover:underline">
                           +91-7023318111
                         </a>
                         <span className="text-slate-300">/</span>
                         <a href="tel:+919664471637" className="hover:underline">
                           9664471637
+                        </a>
+                        <span className="text-slate-300">/</span>
+                        <a href="tel:01169269401" className="hover:underline">
+                          011-69269401
                         </a>
                       </div>
                     </div>

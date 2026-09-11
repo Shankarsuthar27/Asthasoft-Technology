@@ -31,19 +31,57 @@ import {
   Truck,
   Building,
 } from 'lucide-react';
-import {
-  IconBrandFlutter,
-  IconBrandReact,
-  IconBrandKotlin,
-  IconBrandSwift,
-  IconBrandFirebase,
-  IconBrandAws,
-} from '@tabler/icons-react';
+import { TechLogo } from '../components/ui/TechLogo';
+import { submitQuickEnquiry } from '../services/firebase';
 
 interface MobileAppDevelopmentPageProps {
   onOpenScopingModal: (source?: string) => void;
   onOpenCallModal: (context?: string) => void;
 }
+
+// Tech Stack Categories and Items for Mobile App Development
+const MOBILE_TECH_STACK_DATA: Record<string, Array<{ name: string; desc: string }>> = {
+  ios: [
+    { name: 'Swift 6.0', desc: 'Modern Native iOS' },
+    { name: 'SwiftUI', desc: 'Declarative UI Engine' },
+    { name: 'Objective-C', desc: 'Apple Core Foundation' },
+    { name: 'Apple ARKit', desc: 'Augmented & Spatial Reality' },
+    { name: 'CoreML', desc: 'On-Device ML Inference' },
+    { name: 'Combine', desc: 'Reactive Event Pipelines' },
+  ],
+  android: [
+    { name: 'Kotlin', desc: 'First-Class Android' },
+    { name: 'Jetpack Compose', desc: 'Modern Reactive UI' },
+    { name: 'Java 21', desc: 'Enterprise JVM Stack' },
+    { name: 'Android NDK', desc: 'High-Performance C++' },
+    { name: 'Coroutines', desc: 'Async Concurrency' },
+    { name: 'Room DB', desc: 'Structured SQLite Layer' },
+  ],
+  cross: [
+    { name: 'Flutter 3.x', desc: 'Multi-Platform 120FPS' },
+    { name: 'React Native', desc: 'Cross-Platform Native' },
+    { name: 'Dart', desc: 'AOT Compiled Language' },
+    { name: 'Expo CLI', desc: 'Cloud Mobile Toolchain' },
+    { name: 'TypeScript', desc: 'Static Typing & Safety' },
+    { name: 'Redux / Zustand', desc: 'State Architecture' },
+  ],
+  backend: [
+    { name: 'Node.js', desc: 'Scalable Microservices' },
+    { name: 'Python FastAPI', desc: 'High-Throughput APIs' },
+    { name: 'AWS Lambda', desc: 'Serverless Functions' },
+    { name: 'GraphQL', desc: 'Declarative Data Layer' },
+    { name: 'Firebase Cloud', desc: 'Realtime Sync & Push' },
+    { name: 'WebSockets', desc: 'Ultra-Low Latency' },
+  ],
+  database: [
+    { name: 'PostgreSQL', desc: 'Enterprise Relational DB' },
+    { name: 'MySQL', desc: 'Scalable Relational DB' },
+    { name: 'Redis', desc: 'In-Memory Cache & PubSub' },
+    { name: 'MongoDB', desc: 'Flexible Document NoSQL' },
+    { name: 'Firebase Cloud', desc: 'Realtime Sync & DB' },
+    { name: 'Supabase', desc: 'Postgres & Auth Engine' },
+  ],
+};
 
 export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> = ({
   onOpenScopingModal,
@@ -58,20 +96,37 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
   // FAQ accordion state
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  // In-page quick enquiry form state
-  const [formName, setFormName] = useState('');
-  const [formEmail, setFormEmail] = useState('');
-  const [formPhone, setFormPhone] = useState('');
-  const [formBudget, setFormBudget] = useState('$10k - $25k');
-  const [formBrief, setFormBrief] = useState('');
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  // Roadmap Consultation Form state matching reference design
+  const [roadmapName, setRoadmapName] = useState('');
+  const [roadmapEmail, setRoadmapEmail] = useState('');
+  const [roadmapPhone, setRoadmapPhone] = useState('');
+  const [roadmapProjectType, setRoadmapProjectType] = useState('Taxi Booking App');
+  const [roadmapTimeline, setRoadmapTimeline] = useState('Within 1 Month');
+  const [roadmapBudget, setRoadmapBudget] = useState('₹3 lac – ₹5 lac');
+  const [roadmapMessage, setRoadmapMessage] = useState('');
+  const [isRoadmapSubmitting, setIsRoadmapSubmitting] = useState(false);
+  const [isRoadmapSubmitted, setIsRoadmapSubmitted] = useState(false);
 
-  const handleInPageFormSubmit = (e: React.FormEvent) => {
+  const handleRoadmapSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => {
-      onOpenScopingModal('Mobile App In-Page Lead Form');
-    }, 400);
+    setIsRoadmapSubmitting(true);
+    try {
+      await submitQuickEnquiry({
+        fullName: roadmapName,
+        email: roadmapEmail,
+        phone: `+91 ${roadmapPhone}`,
+        service: roadmapProjectType,
+        budget: roadmapBudget,
+        timeline: roadmapTimeline,
+        notes: roadmapMessage.trim() || `App roadmap request for ${roadmapProjectType}. Timeline: ${roadmapTimeline}, Budget: ${roadmapBudget}`,
+      });
+      setIsRoadmapSubmitted(true);
+    } catch (err) {
+      console.error('Roadmap submit error:', err);
+      setIsRoadmapSubmitted(true);
+    } finally {
+      setIsRoadmapSubmitting(false);
+    }
   };
 
   const toggleFaq = (index: number) => {
@@ -169,7 +224,7 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 {/* Visual Card Container */}
                 <div className="relative rounded-3xl overflow-hidden bg-white p-3 shadow-2xl shadow-blue-500/10 border border-slate-200/80">
                   <img
-                    src="/mobile_app_hero.jpg"
+                    src="/Phone.png"
                     alt="Asthasoft Mobile App Development"
                     className="w-full h-auto object-cover rounded-2xl"
                   />
@@ -281,8 +336,8 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
               whileHover={{ y: -6 }}
               className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
             >
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                <IconBrandFlutter size={26} stroke={2} />
+              <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center p-2.5 mb-5 group-hover:scale-105 transition-transform">
+                <TechLogo name="Flutter" className="w-full h-full object-contain" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">
                 Cross-Platform Flutter & React Native
@@ -952,56 +1007,24 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                   transition={{ duration: 0.22 }}
                   className="grid grid-cols-2 sm:grid-cols-3 gap-4"
                 >
-                  {selectedTechStack === 'ios' && (
-                    <>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Swift 6.0</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">SwiftUI</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Objective-C</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Apple ARKit</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">CoreML</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Combine</div>
-                    </>
-                  )}
-                  {selectedTechStack === 'android' && (
-                    <>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Kotlin</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Jetpack Compose</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Java 21</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Android NDK</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Coroutines</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Room DB</div>
-                    </>
-                  )}
-                  {selectedTechStack === 'cross' && (
-                    <>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Flutter 3.x</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">React Native</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Dart</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Expo CLI</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">TypeScript</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Redux / Zustand</div>
-                    </>
-                  )}
-                  {selectedTechStack === 'backend' && (
-                    <>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Node.js</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Python FastAPI</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">AWS Lambda</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">GraphQL</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Firebase Cloud</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">WebSockets</div>
-                    </>
-                  )}
-                  {selectedTechStack === 'database' && (
-                    <>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">PostgreSQL</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">MongoDB</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Redis</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">SQLite</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Realm Mobile</div>
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Supabase</div>
-                    </>
-                  )}
+                  {(MOBILE_TECH_STACK_DATA[selectedTechStack] || []).map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all flex items-center gap-3.5 group cursor-default"
+                    >
+                      <div className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 p-2 group-hover:scale-110 transition-transform">
+                        <TechLogo name={tech.name} className="w-full h-full object-contain" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="font-bold text-sm text-slate-900 leading-snug truncate group-hover:text-[#0066ff] transition-colors">
+                          {tech.name}
+                        </div>
+                        <div className="text-[11px] text-slate-500 font-medium truncate mt-0.5">
+                          {tech.desc}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -1101,137 +1124,246 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
       </section>
 
       {/* ------------------------------------------------------------- */}
-      {/* 10. IN-PAGE APP CONSULTATION LEAD FORM matching screenshot */}
+      {/* 10. GET YOUR CUSTOM APP DEVELOPMENT ROADMAP FORM (MATCHING SCREENSHOTS) */}
       {/* ------------------------------------------------------------- */}
-      <section className="py-20 bg-gradient-to-r from-[#003db3] via-[#0052cc] to-[#0066ff] text-white overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left: Heading & Benefits */}
+      <section className="relative py-16 sm:py-20 bg-[#0066ff] text-white overflow-hidden font-body">
+        {/* Ambient Wavy Contour Lines Background matching reference image */}
+        <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
+          <svg className="w-full h-full object-cover" viewBox="0 0 1440 600" fill="none" preserveAspectRatio="none">
+            <path d="M-100 80 C 300 10, 800 180, 1540 60" stroke="white" strokeWidth="1.5" />
+            <path d="M-100 120 C 300 50, 800 220, 1540 100" stroke="white" strokeWidth="1.5" />
+            <path d="M-100 160 C 300 90, 800 260, 1540 140" stroke="white" strokeWidth="1.5" />
+            <path d="M-100 200 C 300 130, 800 300, 1540 180" stroke="white" strokeWidth="1.5" />
+            <path d="M-100 240 C 300 170, 800 340, 1540 220" stroke="white" strokeWidth="1.5" />
+            <path d="M-100 280 C 300 210, 800 380, 1540 260" stroke="white" strokeWidth="1.5" />
+          </svg>
+        </div>
+
+        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left Column: Heading, Subtext, Checklist & Disclaimer matching screenshot */}
             <motion.div
               whileInView={{ opacity: 1, x: 0 }}
               initial={{ opacity: 0, x: -25 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="lg:col-span-6 space-y-6"
+              className="lg:col-span-6 space-y-5 sm:space-y-6"
             >
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-                Turn Your Mobile App Vision into Reality
+              <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight leading-[1.18] text-white">
+                Get Your Custom App Development Roadmap
               </h2>
-              <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
-                Connect with our Senior Mobile Solutions Architect. We sign strict NDAs and deliver a comprehensive technical blueprint and fixed estimate within 24 hours.
+
+              <p className="text-white/90 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
+                From &lsquo;What if&rsquo;, to &lsquo;Wow, it&rsquo;s live&rsquo; - Turn Your Raw Ideas into Live Mobile Apps. Choose <strong className="font-bold text-white">right mobile app development company</strong>. Start Today.
               </p>
-              <div className="space-y-3 text-sm font-medium text-blue-100">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-300 shrink-0" />
-                  <span>Mutual NDA signed before discussing project requirements</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-300 shrink-0" />
-                  <span>Direct architectural scoping with Senior Mobile Lead</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-300 shrink-0" />
-                  <span>Transparent timeline, sprint roadmap, and fixed cost breakdown</span>
-                </div>
+
+              <div className="space-y-3 pt-1">
+                <h3 className="text-base sm:text-lg font-bold text-white">
+                  What You'll Get (100% Free):
+                </h3>
+
+                <ul className="space-y-2.5">
+                  {[
+                    'App Feature Scope & User Flow',
+                    'Tech Stack Recommendation',
+                    'High-Level System Architecture',
+                    'MVP Vs Phase-2 Clarity',
+                    'Ballpark Cost & Timeline Estimate',
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-2.5 text-sm sm:text-[15px] font-medium text-white">
+                      <svg className="w-4 h-4 text-white shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="2" y="2" width="16" height="16" rx="3" />
+                        <path d="M6 10l3 3 5-6" />
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
+
+              <p className="italic text-blue-100 text-sm sm:text-base font-normal pt-2">
+                No Obligation. No Sales Pressure. NDA Available.
+              </p>
             </motion.div>
 
-            {/* Right: Clean White Form Card */}
+            {/* Right Column: Clean White Form Card matching exact screenshots */}
             <motion.div
               whileInView={{ opacity: 1, x: 0 }}
               initial={{ opacity: 0, x: 25 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="lg:col-span-6 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100"
+              className="lg:col-span-6"
             >
-              <h3 className="text-xl font-bold text-slate-900 mb-1">
-                Request a Free App Estimate
-              </h3>
-              <p className="text-xs text-slate-500 mb-5">
-                Fill out the quick brief below and our architect will reach out today.
-              </p>
+              <div className="bg-white text-slate-800 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-4 sm:mb-5">
+                  Describe Your App Idea With an Expert
+                </h3>
 
-              {formSubmitted ? (
-                <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-2">
-                  <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto" />
-                  <div className="text-base font-bold text-emerald-900">Request Dispatched!</div>
-                  <div className="text-xs text-emerald-700">
-                    Our Senior Mobile Architect has received your details and will dial you within 30 minutes.
-                  </div>
-                </div>
-              ) : (
-                <form onSubmit={handleInPageFormSubmit} className="space-y-3.5">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Your Name *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. John Doe"
-                      value={formName}
-                      onChange={(e) => setFormName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0066ff]"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">Work Email *</label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="john@company.com"
-                        value={formEmail}
-                        onChange={(e) => setFormEmail(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0066ff]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">Phone Number *</label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+1 (555) 000-0000"
-                        value={formPhone}
-                        onChange={(e) => setFormPhone(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0066ff]"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Estimated Budget Range</label>
-                    <select
-                      value={formBudget}
-                      onChange={(e) => setFormBudget(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0066ff] bg-white"
+                {isRoadmapSubmitted ? (
+                  <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
+                    <h4 className="text-lg font-bold text-emerald-900">Roadmap Request Submitted!</h4>
+                    <p className="text-xs sm:text-sm text-emerald-700">
+                      Thank you, {roadmapName}. Our Senior Mobile Solutions Architect will review your {roadmapProjectType} project requirements and contact you within 30 minutes.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsRoadmapSubmitted(false);
+                        setRoadmapName('');
+                        setRoadmapEmail('');
+                        setRoadmapPhone('');
+                        setRoadmapMessage('');
+                      }}
+                      className="mt-3 px-5 py-2 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs font-semibold transition-colors cursor-pointer"
                     >
-                      <option value="< $10,000">&lt; $10,000 (MVP / Prototype)</option>
-                      <option value="$10k - $25k">$10,000 - $25,000 (Standard App)</option>
-                      <option value="$25k - $50k">$25,000 - $50,000 (Enterprise App)</option>
-                      <option value="$50,000+">$50,000+ (High-Scale Platform)</option>
-                    </select>
+                      Submit Another Request
+                    </button>
                   </div>
+                ) : (
+                  <form onSubmit={handleRoadmapSubmit} className="space-y-3.5">
+                    {/* Row 1: Full Name & Email Id */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-normal text-slate-700 mb-1">
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="Your Name"
+                          value={roadmapName}
+                          onChange={(e) => setRoadmapName(e.target.value)}
+                          className="w-full px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 border border-slate-300/80 rounded-md focus:outline-none focus:border-[#0066ff] focus:ring-1 focus:ring-[#0066ff] bg-white transition-all"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-normal text-slate-700 mb-1">
+                          Email Id
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="Your Email ID"
+                          value={roadmapEmail}
+                          onChange={(e) => setRoadmapEmail(e.target.value)}
+                          className="w-full px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 border border-slate-300/80 rounded-md focus:outline-none focus:border-[#0066ff] focus:ring-1 focus:ring-[#0066ff] bg-white transition-all"
+                        />
+                      </div>
+                    </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">Project Brief (Optional)</label>
-                    <textarea
-                      rows={2}
-                      placeholder="Brief us about your app concept, target users, or timeline..."
-                      value={formBrief}
-                      onChange={(e) => setFormBrief(e.target.value)}
-                      className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#0066ff]"
-                    />
-                  </div>
+                    {/* Row 2: Contact Number & Project Type */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-normal text-slate-700 mb-1">
+                          Contact Number
+                        </label>
+                        <div className="flex items-center border border-slate-300/80 rounded-md overflow-hidden focus-within:border-[#0066ff] focus-within:ring-1 focus-within:ring-[#0066ff] bg-white transition-all">
+                          <div className="flex items-center gap-1.5 px-2.5 py-2 bg-slate-50/70 border-r border-slate-200 text-xs font-medium text-slate-700 shrink-0 select-none">
+                            {/* Indian Flag 🇮🇳 SVG */}
+                            <svg className="w-4 h-3 rounded-[1px] shadow-xs" viewBox="0 0 24 16">
+                              <rect width="24" height="5.33" fill="#FF9933" />
+                              <rect y="5.33" width="24" height="5.33" fill="#FFFFFF" />
+                              <rect y="10.66" width="24" height="5.33" fill="#138808" />
+                              <circle cx="12" cy="8" r="2" fill="#000080" />
+                            </svg>
+                            <span className="text-xs text-slate-800 font-medium">+91</span>
+                          </div>
+                          <input
+                            type="tel"
+                            required
+                            placeholder="Phone Number"
+                            value={roadmapPhone}
+                            onChange={(e) => setRoadmapPhone(e.target.value)}
+                            className="w-full px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none bg-transparent"
+                          />
+                        </div>
+                      </div>
 
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white font-bold text-sm shadow-md transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <span>Get Free Consultation</span>
-                    <Send className="w-4 h-4" />
-                  </button>
-                </form>
-              )}
+                      <div>
+                        <label className="block text-xs font-normal text-slate-700 mb-1">
+                          Project Type
+                        </label>
+                        <select
+                          value={roadmapProjectType}
+                          onChange={(e) => setRoadmapProjectType(e.target.value)}
+                          className="w-full px-3 py-2 text-xs sm:text-sm text-slate-800 border border-slate-300/80 rounded-md focus:outline-none focus:border-[#0066ff] focus:ring-1 focus:ring-[#0066ff] bg-white transition-all cursor-pointer"
+                        >
+                          <option value="Taxi Booking App">Taxi Booking App</option>
+                          <option value="E-commerce App">E-commerce App</option>
+                          <option value="Food Delivery App">Food Delivery App</option>
+                          <option value="Dating App">Dating App</option>
+                          <option value="Banking App">Banking App</option>
+                          <option value="Telemedicine App">Telemedicine App</option>
+                          <option value="Professional Hiring App">Professional Hiring App</option>
+                          <option value="E-Learning App">E-Learning App</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Row 3: What's your timeline & Project Budget */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-normal text-slate-700 mb-1">
+                          What's your timeline
+                        </label>
+                        <select
+                          value={roadmapTimeline}
+                          onChange={(e) => setRoadmapTimeline(e.target.value)}
+                          className="w-full px-3 py-2 text-xs sm:text-sm text-slate-800 border border-slate-300/80 rounded-md focus:outline-none focus:border-[#0066ff] focus:ring-1 focus:ring-[#0066ff] bg-white transition-all cursor-pointer"
+                        >
+                          <option value="Within 1 Month">Within 1 Month</option>
+                          <option value="1 - 3 Months">1 - 3 Months</option>
+                          <option value="3 - 6 Months">3 - 6 Months</option>
+                          <option value="More than 6 Months">More than 6 Months</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-normal text-slate-700 mb-1">
+                          Project Budget
+                        </label>
+                        <select
+                          value={roadmapBudget}
+                          onChange={(e) => setRoadmapBudget(e.target.value)}
+                          className="w-full px-3 py-2 text-xs sm:text-sm text-slate-800 border border-slate-300/80 rounded-md focus:outline-none focus:border-[#0066ff] focus:ring-1 focus:ring-[#0066ff] bg-white transition-all cursor-pointer"
+                        >
+                          <option value="₹3 lac – ₹5 lac">₹3 lac – ₹5 lac</option>
+                          <option value="₹5 lac – ₹10 lac">₹5 lac – ₹10 lac</option>
+                          <option value="₹10 lac – ₹20 lac">₹10 lac – ₹20 lac</option>
+                          <option value="₹20 lac+">₹20 lac+</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Row 4: Message */}
+                    <div>
+                      <label className="block text-xs font-normal text-slate-700 mb-1">
+                        Message
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder="Tell us about your project..."
+                        value={roadmapMessage}
+                        onChange={(e) => setRoadmapMessage(e.target.value)}
+                        className="w-full px-3 py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 border border-slate-300/80 rounded-md focus:outline-none focus:border-[#0066ff] focus:ring-1 focus:ring-[#0066ff] bg-white transition-all resize-y"
+                      />
+                    </div>
+
+                    {/* Button */}
+                    <div className="pt-1">
+                      <button
+                        type="submit"
+                        disabled={isRoadmapSubmitting}
+                        className="w-full py-3 px-4 rounded-lg bg-[#0066ff] hover:bg-[#0052cc] text-white font-semibold text-sm sm:text-base shadow-sm transition-all active:scale-[0.99] cursor-pointer text-center disabled:opacity-70"
+                      >
+                        {isRoadmapSubmitting ? 'Scheduling...' : 'Schedule a Call with Experts'}
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
             </motion.div>
           </div>
         </div>

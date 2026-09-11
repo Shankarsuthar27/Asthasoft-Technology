@@ -32,6 +32,8 @@ import {
   Terminal,
 } from 'lucide-react';
 
+import { TechLogo } from '../components/ui/TechLogo';
+
 interface CustomSoftwareDevelopmentPageProps {
   onOpenScopingModal: (source?: string) => void;
   onOpenCallModal: (context?: string) => void;
@@ -48,31 +50,38 @@ const TECH_STACK_CATEGORIES = [
 ];
 
 const TECH_ITEMS = [
-  { name: 'React.js', category: 'frontend', tag: 'UI Framework', icon: '⚛️' },
-  { name: 'Next.js', category: 'frontend', tag: 'Full-Stack React', icon: '▲' },
-  { name: 'TypeScript', category: 'frontend', tag: 'Typed JavaScript', icon: 'TS' },
-  { name: 'Vue.js', category: 'frontend', tag: 'Progressive UI', icon: '🟢' },
-  { name: 'Tailwind CSS', category: 'frontend', tag: 'Design Systems', icon: '🎨' },
-  { name: 'Node.js', category: 'backend', tag: 'Runtime Engine', icon: '🟢' },
-  { name: 'Python', category: 'backend', tag: 'Backend & AI', icon: '🐍' },
-  { name: 'Go (Golang)', category: 'backend', tag: 'High-Concurrency', icon: '🐹' },
-  { name: 'Java / Spring', category: 'backend', tag: 'Enterprise Grade', icon: '☕' },
-  { name: '.NET Core', category: 'backend', tag: 'Robust Microservices', icon: '🔷' },
-  { name: 'AWS Cloud', category: 'cloud', tag: 'Cloud Platform', icon: '☁️' },
-  { name: 'Docker', category: 'cloud', tag: 'Containerization', icon: '🐳' },
-  { name: 'Kubernetes', category: 'cloud', tag: 'Container Orchestration', icon: '☸️' },
-  { name: 'Terraform', category: 'cloud', tag: 'Infrastructure as Code', icon: '🏗️' },
-  { name: 'CI/CD Pipelines', category: 'cloud', tag: 'Automated Delivery', icon: '⚡' },
-  { name: 'PostgreSQL', category: 'database', tag: 'Relational DB', icon: '🐘' },
-  { name: 'MongoDB', category: 'database', tag: 'Document NoSQL', icon: '🍃' },
-  { name: 'Redis', category: 'database', tag: 'In-Memory Cache', icon: '🔴' },
-  { name: 'Elasticsearch', category: 'database', tag: 'Distributed Search', icon: '🔍' },
-  { name: 'Flutter', category: 'mobile', tag: 'Cross-Platform', icon: '📱' },
-  { name: 'React Native', category: 'mobile', tag: 'Native iOS & Android', icon: '📲' },
-  { name: 'Swift / Kotlin', category: 'mobile', tag: 'Pure Native Mobile', icon: '🍎' },
-  { name: 'PyTorch / TF', category: 'ai', tag: 'Deep Learning', icon: '🧠' },
-  { name: 'LangChain / RAG', category: 'ai', tag: 'LLM Orchestration', icon: '🦜' },
-  { name: 'OpenAI API', category: 'ai', tag: 'Generative Intelligence', icon: '🤖' },
+  { name: 'React.js', category: 'frontend', tag: 'UI Framework' },
+  { name: 'Next.js', category: 'frontend', tag: 'Full-Stack React' },
+  { name: 'TypeScript', category: 'frontend', tag: 'Typed JavaScript' },
+  { name: 'Vue.js', category: 'frontend', tag: 'Progressive UI' },
+  { name: 'Tailwind CSS', category: 'frontend', tag: 'Design Systems' },
+  { name: 'Node.js', category: 'backend', tag: 'Runtime Engine' },
+  { name: 'Python', category: 'backend', tag: 'Backend & AI' },
+  { name: 'PHP / Laravel', category: 'backend', tag: 'Modern Web & CMS' },
+  { name: 'Java / Spring', category: 'backend', tag: 'Enterprise Grade' },
+  { name: '.NET Core', category: 'backend', tag: 'Robust Microservices' },
+  { name: 'Go (Golang)', category: 'backend', tag: 'High-Concurrency' },
+  { name: 'REST APIs', category: 'backend', tag: 'Microservices & Endpoints' },
+  { name: 'AWS Cloud', category: 'cloud', tag: 'Cloud Platform' },
+  { name: 'Google Cloud (GCP)', category: 'cloud', tag: 'Cloud Infrastructure' },
+  { name: 'Docker', category: 'cloud', tag: 'Containerization' },
+  { name: 'Kubernetes', category: 'cloud', tag: 'Container Orchestration' },
+  { name: 'Cloud CRM', category: 'cloud', tag: 'Enterprise CRM / ERP' },
+  { name: 'Terraform', category: 'cloud', tag: 'Infrastructure as Code' },
+  { name: 'CI/CD Pipelines', category: 'cloud', tag: 'Automated Delivery' },
+  { name: 'PostgreSQL', category: 'database', tag: 'Relational DB' },
+  { name: 'MySQL', category: 'database', tag: 'Scalable Relational DB' },
+  { name: 'MongoDB', category: 'database', tag: 'Document NoSQL' },
+  { name: 'Redis', category: 'database', tag: 'In-Memory Cache' },
+  { name: 'Elasticsearch', category: 'database', tag: 'Distributed Search' },
+  { name: 'Flutter', category: 'mobile', tag: 'Cross-Platform' },
+  { name: 'React Native', category: 'mobile', tag: 'Native iOS & Android' },
+  { name: 'Swift / Kotlin', category: 'mobile', tag: 'Pure Native Mobile' },
+  { name: 'TensorFlow', category: 'ai', tag: 'Deep Learning & ML' },
+  { name: 'PyTorch / TF', category: 'ai', tag: 'Deep Learning' },
+  { name: 'LangChain / RAG', category: 'ai', tag: 'LLM Orchestration' },
+  { name: 'OpenAI API', category: 'ai', tag: 'Generative Intelligence' },
+  { name: 'AI Chatbots', category: 'ai', tag: 'Autonomous Virtual Agents' },
 ];
 
 export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPageProps> = ({
@@ -740,12 +749,12 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="p-4 rounded-xl border border-slate-100 bg-slate-50/70 hover:bg-white hover:border-blue-200 hover:shadow-xs transition-all flex flex-col items-center text-center group"
+                      className="p-4 rounded-xl border border-slate-100 bg-slate-50/70 hover:bg-white hover:border-blue-200 hover:shadow-xs transition-all flex flex-col items-center text-center group cursor-default"
                     >
-                      <div className="w-10 h-10 rounded-lg bg-white shadow-xs flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition-transform">
-                        {tech.icon}
+                      <div className="w-12 h-12 rounded-xl bg-white shadow-xs border border-slate-100 flex items-center justify-center p-2 mb-2.5 group-hover:scale-110 transition-transform">
+                        <TechLogo name={tech.name} className="w-full h-full object-contain" />
                       </div>
-                      <div className="text-sm font-bold text-slate-900">
+                      <div className="text-sm font-bold text-slate-900 group-hover:text-[#0066ff] transition-colors">
                         {tech.name}
                       </div>
                       <div className="text-[11px] text-slate-400 mt-0.5">
