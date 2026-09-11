@@ -13,12 +13,11 @@ import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopment
 import { MobileAppDevelopmentPage } from './pages/MobileAppDevelopmentPage';
 // import { PageEntranceAnimation } from './components/ui/PageEntranceAnimation';
 
-// 5 Conversion Funnels
+// Conversion Funnels
 import { GlobalScopingModal } from './components/funnels/GlobalScopingModal';
 import { PersistentEnquiryDrawer } from './components/funnels/PersistentEnquiryDrawer';
 import { ContextualCallModal } from './components/funnels/ContextualCallModal';
 import { StickyMobileContactBar } from './components/funnels/StickyMobileContactBar';
-import { ExitIntentPromoBanner } from './components/funnels/ExitIntentPromoBanner';
 
 export function App() {
   const [isScopingModalOpen, setIsScopingModalOpen] = useState(false);
@@ -172,9 +171,6 @@ export function App() {
 
       {/* Sticky Mobile Contact Bar: Call Now & WhatsApp matching reference (hidden when mobile drawer or modal is open) */}
       <StickyMobileContactBar isHidden={isMobileDrawerOpen || isScopingModalOpen || isCallModalOpen} />
-
-      {/* Funnel 5: Exit-Intent / Inactivity Promo Banner (#promoPopup) */}
-      <ExitIntentPromoBanner onClaimOffer={handleOpenScopingModal} />
     </div>
   );
 }
