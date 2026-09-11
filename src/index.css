@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-orange: #f58634;
+    --brand-orange-bright: #ff6f04;
+    --brand-orange-deep: #ae500a;
+    --brand-orange-subtle: #fae3d2;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #0c1222;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #131313;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f58634;
+  }
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(19, 19, 19, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(30, 30, 30, 0.85);
+  border-color: rgba(245, 134, 52, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(245, 134, 52, 0.15);
+}
+
+.glass-card-bright {
+  background: linear-gradient(135deg, rgba(33, 37, 41, 0.85) 0%, rgba(19, 19, 19, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+/* AI Sonar & Radar Animation */
+.ai-sonar {
+  position: relative;
+}
+.ai-sonar::before,
+.ai-sonar::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid #ff6f04;
+  opacity: 0.8;
+  animation: sonarWave 2.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.ai-sonar::after {
+  animation-delay: 1.25s;
+}
+
+@keyframes sonarWave {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+  }
+}
+
+/* Floating particles animation */
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-24px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.particle-spark {
+  position: absolute;
+  pointer-events: none;
+  animation: floatParticle 2s ease-in-out infinite;
+}
+
+/* Gradient text helpers */
+.text-gradient-orange {
+  background: linear-gradient(135deg, #ff6f04 0%, #f58634 50%, #fcd34d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-silver {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Marquee infinite scroll container */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Universal Typography: Plus Jakarta Sans across the entire project */
+html, body, button, input, select, textarea {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Brand Typography: Preserved for Asthasoft name exclusively */
+.brand-text, .brand-text * {
+  font-family: 'Michroma', sans-serif !important;
+  letter-spacing: 1px;
+}
+
+/* Hero Section Typography (Plus Jakarta Sans) */
+.hero-title-light {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2.75rem;
+  font-weight: 400; /* Regular */
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  .hero-title-light {
+    font-size: 1.85rem;
+  }
+}
+
+.hero-title-bold {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800; /* Extra Bold */
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+@media (max-width: 640px) {
+  .hero-title-bold {
+    font-size: 2.35rem;
+  }
+}
+
+.hero-description {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #cbd5e1; /* Soft muted white */
+  line-height: 1.6;
+  max-width: 540px;
+}
+
+.cta-button {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 4px;
+}

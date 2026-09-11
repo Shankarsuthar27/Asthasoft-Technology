@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Lock all direct public writes; submissions MUST go through Cloud Functions
+    match /enquiries/{enquiryId} {
+      allow read, write: if false;
+    }
+    
+    // Audit logs are strictly server-side only
+    match /audit_logs/{logId} {
+      allow read, write: if false;
+    }
+  }
+}
