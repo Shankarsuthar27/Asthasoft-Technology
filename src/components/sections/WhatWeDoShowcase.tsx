@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface WhatWeDoShowcaseProps {
   onOpenScopingModal: (source?: string) => void;
@@ -24,7 +25,13 @@ export const WhatWeDoShowcase: React.FC<WhatWeDoShowcaseProps> = ({
         </div>
 
         {/* Feature Container Card with Blue Border matching Image 3 */}
-        <div className="relative rounded-2xl sm:rounded-3xl border-2 border-[#0066ff]/20 bg-white shadow-2xl shadow-blue-500/5 p-5 sm:p-10 lg:p-12 overflow-hidden">
+        <motion.div
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="relative rounded-2xl sm:rounded-3xl border-2 border-[#0066ff]/20 bg-white shadow-2xl shadow-blue-500/5 p-5 sm:p-10 lg:p-12 overflow-hidden"
+        >
           {/* Top Pill Tab / Banner matching Image 3 */}
           <div className="mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-2xl sm:rounded-full bg-[#0066ff] text-white text-xs sm:text-sm font-heading font-bold shadow-md shadow-blue-500/30 text-left">
@@ -151,7 +158,7 @@ export const WhatWeDoShowcase: React.FC<WhatWeDoShowcaseProps> = ({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

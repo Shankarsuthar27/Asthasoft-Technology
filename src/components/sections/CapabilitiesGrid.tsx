@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface CapabilitiesGridProps {
   onOpenScopingModal: (source?: string) => void;
@@ -103,7 +104,13 @@ export const CapabilitiesGrid: React.FC<CapabilitiesGridProps> = ({
     <section id="capabilities" className="py-12 sm:py-20 lg:py-24 bg-[#edf2f8] font-body">
       <div className="max-w-[1300px] mx-auto px-4 sm:px-6">
         {/* Large White Container with 3x2 Grid separated by borders, exact duplicate of Image 2 */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-200/70 border border-slate-200/90 overflow-hidden">
+        <motion.div
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-200/70 border border-slate-200/90 overflow-hidden"
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-200">
             {/* Row 1 */}
             {capabilities.slice(0, 3).map((item) => (
@@ -177,7 +184,7 @@ export const CapabilitiesGrid: React.FC<CapabilitiesGridProps> = ({
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

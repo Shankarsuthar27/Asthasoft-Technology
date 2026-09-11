@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TopGlobalBar } from './components/navigation/TopGlobalBar';
 import { MainHeader } from './components/navigation/MainHeader';
 import { MobileDrawer } from './components/navigation/MobileDrawer';
@@ -81,38 +82,48 @@ export function App() {
         onOpenScopingModal={handleOpenScopingModal}
       />
 
-      {/* Route Views */}
-      {isMobileAppPage ? (
-        <MobileAppDevelopmentPage
-          onOpenScopingModal={handleOpenScopingModal}
-          onOpenCallModal={handleOpenCallModal}
-        />
-      ) : isCustomSoftwarePage ? (
-        <CustomSoftwareDevelopmentPage
-          onOpenScopingModal={handleOpenScopingModal}
-          onOpenCallModal={handleOpenCallModal}
-        />
-      ) : (
-        <main>
-          {/* Section 1: Hero matching Image 1 & 4 */}
-          <Hero
-            onOpenScopingModal={handleOpenScopingModal}
-            onRequestCall={handleOpenCallModal}
-          />
+      {/* Animated Route Views */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentPath}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -14 }}
+          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {isMobileAppPage ? (
+            <MobileAppDevelopmentPage
+              onOpenScopingModal={handleOpenScopingModal}
+              onOpenCallModal={handleOpenCallModal}
+            />
+          ) : isCustomSoftwarePage ? (
+            <CustomSoftwareDevelopmentPage
+              onOpenScopingModal={handleOpenScopingModal}
+              onOpenCallModal={handleOpenCallModal}
+            />
+          ) : (
+            <main>
+              {/* Section 1: Hero matching Image 1 & 4 */}
+              <Hero
+                onOpenScopingModal={handleOpenScopingModal}
+                onRequestCall={handleOpenCallModal}
+              />
 
-          {/* Clean 1-Row Trust & Credentials Bar */}
-          <SocialProofBar />
+              {/* Clean 1-Row Trust & Credentials Bar */}
+              <SocialProofBar />
 
-          {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
-          <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
+              {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
+              <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
 
-          {/* Section 3: What We Do & Legacy Modernization matching Image 3 */}
-          <WhatWeDoShowcase onOpenScopingModal={handleOpenScopingModal} />
+              {/* Section 3: What We Do & Legacy Modernization matching Image 3 */}
+              <WhatWeDoShowcase onOpenScopingModal={handleOpenScopingModal} />
 
-          {/* Section 4: Featured Case Study Card matching Latest Reference Images */}
-          <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
-        </main>
-      )}
+              {/* Section 4: Featured Case Study Card matching Latest Reference Images */}
+              <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
+            </main>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
       {/* Clean & Modern Footer */}
       <Footer onOpenScopingModal={handleOpenScopingModal} />

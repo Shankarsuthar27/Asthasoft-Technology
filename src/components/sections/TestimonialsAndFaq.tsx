@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Star,
   ShieldCheck,
@@ -90,9 +91,14 @@ export const TestimonialsAndFaq: React.FC<TestimonialsAndFaqProps> = ({
 
         {/* Testimonials 3-Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-          {TESTIMONIALS.map((t) => (
-            <div
+          {TESTIMONIALS.map((t, idx) => (
+            <motion.div
               key={t.author}
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: idx * 0.1 }}
+              whileHover={{ y: -5 }}
               className="rounded-3xl p-6 sm:p-8 bg-dark-card border border-white/10 hover:border-brand-orange/40 transition-all duration-300 flex flex-col justify-between group shadow-xl"
             >
               <div className="space-y-4">
@@ -125,7 +131,7 @@ export const TestimonialsAndFaq: React.FC<TestimonialsAndFaqProps> = ({
                   {t.company}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -165,11 +171,21 @@ export const TestimonialsAndFaq: React.FC<TestimonialsAndFaqProps> = ({
                     />
                   </button>
 
-                  {isOpen && (
-                    <div className="px-5 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/5 pt-3">
-                      {faq.a}
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/5 pt-3">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}

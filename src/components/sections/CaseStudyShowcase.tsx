@@ -143,7 +143,13 @@ export const CaseStudyShowcase: React.FC<CaseStudyShowcaseProps> = ({
         </div>
 
         {/* Main Case Study Card matching Reference Screenshot */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xl overflow-hidden p-5 sm:p-8 lg:p-12 relative">
+        <motion.div
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xl overflow-hidden p-5 sm:p-8 lg:p-12 relative"
+        >
           {/* Subtle Top Accent Bar */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400 via-[#0066ff] to-[#ff5421]" />
 
@@ -320,7 +326,7 @@ export const CaseStudyShowcase: React.FC<CaseStudyShowcaseProps> = ({
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

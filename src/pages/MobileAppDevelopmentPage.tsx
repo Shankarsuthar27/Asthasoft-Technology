@@ -90,7 +90,12 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Column: Headlines, Trust Points & CTA */}
-            <div className="lg:col-span-7 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55 }}
+              className="lg:col-span-7 space-y-6"
+            >
               {/* Pill Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-[#0066ff] text-xs sm:text-sm font-semibold tracking-wide">
                 <Sparkles className="w-3.5 h-3.5 text-[#0066ff]" />
@@ -113,19 +118,19 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
 
               {/* 4 Stats Badges Grid matching screenshot */}
               <div className="grid grid-cols-2 sm:grid-cols-2 gap-3.5 max-w-lg pt-1">
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs hover:border-blue-300 transition-colors">
                   <Star className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />
                   <span>4.9/5 Rating on Clutch</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs hover:border-blue-300 transition-colors">
                   <Award className="w-4 h-4 text-[#0066ff] shrink-0" />
                   <span>350+ Apps Delivered</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs hover:border-blue-300 transition-colors">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                   <span>98% Client Satisfaction</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white/80 border border-slate-200/80 p-2.5 rounded-xl shadow-xs hover:border-blue-300 transition-colors">
                   <Download className="w-4 h-4 text-purple-600 shrink-0" />
                   <span>50M+ User Downloads</span>
                 </div>
@@ -151,10 +156,15 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                   <span>Rapid 30-Min Call</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Column: Dynamic Mobile App Mockup Illustration */}
-            <div className="lg:col-span-5 relative flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="lg:col-span-5 relative flex justify-center"
+            >
               <div className="relative w-full max-w-[460px]">
                 {/* Visual Card Container */}
                 <div className="relative rounded-3xl overflow-hidden bg-white p-3 shadow-2xl shadow-blue-500/10 border border-slate-200/80">
@@ -165,7 +175,11 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                   />
 
                   {/* Floating App Store Badge */}
-                  <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3">
+                  <motion.div
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3"
+                  >
                     <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-[#0066ff]">
                       <Smartphone className="w-5 h-5" />
                     </div>
@@ -177,13 +191,13 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                         iOS • Android • Flutter
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Ambient glow behind card */}
                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/15 to-purple-500/15 rounded-3xl blur-xl -z-10" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -235,7 +249,14 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Card 1 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Apple className="w-6 h-6" />
               </div>
@@ -249,10 +270,17 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 <span>View native capabilities</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <IconBrandFlutter size={26} stroke={2} />
               </div>
@@ -266,10 +294,17 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 <span>View cross-platform apps</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.16 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Sliders className="w-6 h-6" />
               </div>
@@ -283,10 +318,17 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 <span>Explore app UI/UX</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 4 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.24 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Lock className="w-6 h-6" />
               </div>
@@ -300,10 +342,17 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 <span>View security standards</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 5 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.32 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Cloud className="w-6 h-6" />
               </div>
@@ -317,10 +366,17 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 <span>Explore cloud backends</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 6: Royal Blue CTA Card */}
-            <div className="bg-gradient-to-br from-[#0052cc] to-[#0066ff] rounded-2xl p-7 text-white shadow-lg shadow-blue-500/20 flex flex-col justify-between">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.4 }}
+              whileHover={{ y: -6 }}
+              className="bg-gradient-to-br from-[#0052cc] to-[#0066ff] rounded-2xl p-7 text-white shadow-lg shadow-blue-500/20 flex flex-col justify-between"
+            >
               <div>
                 <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center mb-4">
                   <Zap className="w-6 h-6 text-white" />
@@ -339,7 +395,7 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
               >
                 Schedule a Free Scoping Call →
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -392,9 +448,14 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
             ].map((row, idx) => {
               const CenterIcon = row.icon;
               return (
-                <div
+                <motion.div
                   key={idx}
-                  className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl sm:rounded-full p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs hover:border-blue-300 transition-all"
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: idx * 0.08 }}
+                  whileHover={{ scale: 1.01 }}
+                  className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl sm:rounded-full p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs hover:border-blue-300 hover:shadow-md transition-all"
                 >
                   <div className="w-full sm:w-5/12 text-center sm:text-right">
                     <div className="font-bold text-sm sm:text-base text-slate-900">
@@ -417,7 +478,7 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                       {row.rightDesc}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -471,60 +532,69 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
           </div>
 
           {/* Active Industry Content Card */}
-          <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-              <div className="md:col-span-7 space-y-5">
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-                  {selectedIndustryTab === 'healthcare' && 'HIPAA-Compliant Healthcare & Telehealth Apps'}
-                  {selectedIndustryTab === 'fintech' && 'Next-Gen Mobile Banking & Fintech Applications'}
-                  {selectedIndustryTab === 'retail' && 'High-Conversion Omnichannel E-Commerce Apps'}
-                  {selectedIndustryTab === 'logistics' && 'Real-Time Dispatch & On-Demand Logistics Apps'}
-                  {selectedIndustryTab === 'realestate' && 'Smart Real Estate, Tenant & PropTech Apps'}
-                </h3>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                  We design mobile experiences focused on immediate value delivery, rock-solid compliance, and automated user onboarding.
-                </p>
-                <div className="space-y-2.5 pt-1">
-                  <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>End-to-end encrypted user authentication & biometric security</span>
+          <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm max-w-5xl mx-auto overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedIndustryTab}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.28 }}
+                className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
+              >
+                <div className="md:col-span-7 space-y-5">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                    {selectedIndustryTab === 'healthcare' && 'HIPAA-Compliant Healthcare & Telehealth Apps'}
+                    {selectedIndustryTab === 'fintech' && 'Next-Gen Mobile Banking & Fintech Applications'}
+                    {selectedIndustryTab === 'retail' && 'High-Conversion Omnichannel E-Commerce Apps'}
+                    {selectedIndustryTab === 'logistics' && 'Real-Time Dispatch & On-Demand Logistics Apps'}
+                    {selectedIndustryTab === 'realestate' && 'Smart Real Estate, Tenant & PropTech Apps'}
+                  </h3>
+                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    We design mobile experiences focused on immediate value delivery, rock-solid compliance, and automated user onboarding.
+                  </p>
+                  <div className="space-y-2.5 pt-1">
+                    <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>End-to-end encrypted user authentication & biometric security</span>
+                    </div>
+                    <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>Offline-first SQLite/Realm local caching with automatic cloud sync</span>
+                    </div>
+                    <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>In-app payment integrations (Apple Pay, Google Pay, Stripe, Razorpay)</span>
+                    </div>
+                    <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      <span>Rich automated push notifications and customized deep linking</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Offline-first SQLite/Realm local caching with automatic cloud sync</span>
-                  </div>
-                  <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>In-app payment integrations (Apple Pay, Google Pay, Stripe, Razorpay)</span>
-                  </div>
-                  <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Rich automated push notifications and customized deep linking</span>
+
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={() => onOpenScopingModal(`Industry: ${selectedIndustryTab}`)}
+                      className="px-6 py-3 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white font-semibold text-sm shadow-md flex items-center gap-2 transition-all cursor-pointer"
+                    >
+                      <span>Explore Industry Solutions</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
 
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => onOpenScopingModal(`Industry: ${selectedIndustryTab}`)}
-                    className="px-6 py-3 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white font-semibold text-sm shadow-md flex items-center gap-2 transition-all cursor-pointer"
-                  >
-                    <span>Explore Industry Solutions</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                <div className="md:col-span-5 flex justify-center">
+                  <div className="w-full max-w-[320px] rounded-2xl overflow-hidden shadow-lg border border-slate-200">
+                    <img
+                      src="/mobile_app_hero.jpg"
+                      alt="Industry App Showcase"
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
                 </div>
-              </div>
-
-              <div className="md:col-span-5 flex justify-center">
-                <div className="w-full max-w-[320px] rounded-2xl overflow-hidden shadow-lg border border-slate-200">
-                  <img
-                    src="/mobile_app_hero.jpg"
-                    alt="Industry App Showcase"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
@@ -576,164 +646,174 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
             </div>
 
             {/* Right Tab Content */}
-            <div className="lg:col-span-8 bg-[#f8fafc] rounded-2xl p-7 sm:p-8 border border-slate-200">
-              {selectedServiceTab === 'android' && (
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-slate-900">
-                    High-Performance Android App Development
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    Custom native Android applications developed using Kotlin and Jetpack Compose. Built to support diverse Android OS versions, screen sizes, and device chipsets with maximum responsiveness.
-                  </p>
-                  <div className="space-y-2 pt-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>Optimized for Android 15 & backwards compatible to Android 8.0</span>
+            <div className="lg:col-span-8 bg-[#f8fafc] rounded-2xl p-7 sm:p-8 border border-slate-200 overflow-hidden min-h-[360px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedServiceTab}
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -12 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {selectedServiceTab === 'android' && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        High-Performance Android App Development
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        Custom native Android applications developed using Kotlin and Jetpack Compose. Built to support diverse Android OS versions, screen sizes, and device chipsets with maximum responsiveness.
+                      </p>
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>Optimized for Android 15 & backwards compatible to Android 8.0</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>Google Play Store optimization (ASO) and policy compliance</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>Zero memory leaks with automated performance profilers</span>
+                        </div>
+                      </div>
+                      <div className="pt-4">
+                        <button
+                          type="button"
+                          onClick={() => onOpenScopingModal('Android Development')}
+                          className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
+                        >
+                          Build an Android App →
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>Google Play Store optimization (ASO) and policy compliance</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>Zero memory leaks with automated performance profilers</span>
-                    </div>
-                  </div>
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      onClick={() => onOpenScopingModal('Android Development')}
-                      className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
-                    >
-                      Build an Android App →
-                    </button>
-                  </div>
-                </div>
-              )}
+                  )}
 
-              {selectedServiceTab === 'ios' && (
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-slate-900">
-                    Bespoke iOS App Engineering
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    Native Swift & SwiftUI applications tailored for iPhones, iPads, and Apple Watch. Utilizing Apple ARKit, CoreML, and widgets to create magical user experiences.
-                  </p>
-                  <div className="space-y-2 pt-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>Strict compliance with Apple App Store Review Guidelines</span>
+                  {selectedServiceTab === 'ios' && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Bespoke iOS App Engineering
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        Native Swift & SwiftUI applications tailored for iPhones, iPads, and Apple Watch. Utilizing Apple ARKit, CoreML, and widgets to create magical user experiences.
+                      </p>
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>Strict compliance with Apple App Store Review Guidelines</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>Seamless Apple Pay, iCloud Sync, and FaceID integration</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>Fluid 120Hz ProMotion animations and responsive layouts</span>
+                        </div>
+                      </div>
+                      <div className="pt-4">
+                        <button
+                          type="button"
+                          onClick={() => onOpenScopingModal('iOS Development')}
+                          className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
+                        >
+                          Build an iOS App →
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>Seamless Apple Pay, iCloud Sync, and FaceID integration</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>Fluid 120Hz ProMotion animations and responsive layouts</span>
-                    </div>
-                  </div>
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      onClick={() => onOpenScopingModal('iOS Development')}
-                      className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
-                    >
-                      Build an iOS App →
-                    </button>
-                  </div>
-                </div>
-              )}
+                  )}
 
-              {selectedServiceTab === 'cross' && (
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-slate-900">
-                    Cross-Platform Flutter & React Native
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    Write once and deploy everywhere with native compilation speed. Reduce development cost by 40% while preserving platform-specific look and feel.
-                  </p>
-                  <div className="space-y-2 pt-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>Over 90% shared business logic between iOS and Android</span>
+                  {selectedServiceTab === 'cross' && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Cross-Platform Flutter & React Native
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        Write once and deploy everywhere with native compilation speed. Reduce development cost by 40% while preserving platform-specific look and feel.
+                      </p>
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>Over 90% shared business logic between iOS and Android</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <span>High-velocity Hot Reload for rapid prototyping & testing</span>
+                        </div>
+                      </div>
+                      <div className="pt-4">
+                        <button
+                          type="button"
+                          onClick={() => onOpenScopingModal('Cross-Platform Development')}
+                          className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
+                        >
+                          Explore Cross-Platform →
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span>High-velocity Hot Reload for rapid prototyping & testing</span>
+                  )}
+
+                  {selectedServiceTab === 'pwa' && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Progressive Web Apps (PWA)
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        App-like web experiences installable without App Store friction. Offline capabilities, background push notifications, and ultra-lightweight storage footprints.
+                      </p>
+                      <div className="pt-4">
+                        <button
+                          type="button"
+                          onClick={() => onOpenScopingModal('PWA Development')}
+                          className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
+                        >
+                          Explore PWAs →
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      onClick={() => onOpenScopingModal('Cross-Platform Development')}
-                      className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
-                    >
-                      Explore Cross-Platform →
-                    </button>
-                  </div>
-                </div>
-              )}
+                  )}
 
-              {selectedServiceTab === 'pwa' && (
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-slate-900">
-                    Progressive Web Apps (PWA)
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    App-like web experiences installable without App Store friction. Offline capabilities, background push notifications, and ultra-lightweight storage footprints.
-                  </p>
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      onClick={() => onOpenScopingModal('PWA Development')}
-                      className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
-                    >
-                      Explore PWAs →
-                    </button>
-                  </div>
-                </div>
-              )}
+                  {selectedServiceTab === 'iot' && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Wearable & IoT App Solutions
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        Connecting smart hardware, BLE beacons, Apple Watch, and WearOS gadgets into a unified companion mobile ecosystem.
+                      </p>
+                      <div className="pt-4">
+                        <button
+                          type="button"
+                          onClick={() => onOpenScopingModal('IoT App Development')}
+                          className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
+                        >
+                          Explore IoT Apps →
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
-              {selectedServiceTab === 'iot' && (
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-slate-900">
-                    Wearable & IoT App Solutions
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    Connecting smart hardware, BLE beacons, Apple Watch, and WearOS gadgets into a unified companion mobile ecosystem.
-                  </p>
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      onClick={() => onOpenScopingModal('IoT App Development')}
-                      className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
-                    >
-                      Explore IoT Apps →
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {selectedServiceTab === 'design' && (
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-slate-900">
-                    Mobile App UI/UX & Design Systems
-                  </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    Comprehensive design tokens, interactive clickable wireframes, user testing feedback sessions, and conversion-optimized checkout layouts.
-                  </p>
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      onClick={() => onOpenScopingModal('Mobile UI/UX Design')}
-                      className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
-                    >
-                      Explore App Design →
-                    </button>
-                  </div>
-                </div>
-              )}
+                  {selectedServiceTab === 'design' && (
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Mobile App UI/UX & Design Systems
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed">
+                        Comprehensive design tokens, interactive clickable wireframes, user testing feedback sessions, and conversion-optimized checkout layouts.
+                      </p>
+                      <div className="pt-4">
+                        <button
+                          type="button"
+                          onClick={() => onOpenScopingModal('Mobile UI/UX Design')}
+                          className="px-6 py-3 rounded-xl bg-[#0066ff] text-white font-semibold text-sm hover:bg-[#0052cc] transition-all cursor-pointer"
+                        >
+                          Explore App Design →
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -784,8 +864,13 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 desc: 'App Store & Google Play submission, ASO keywords, and production monitoring.',
               },
             ].map((p, idx) => (
-              <div
+              <motion.div
                 key={idx}
+                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 24 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: idx * 0.08 }}
+                whileHover={{ y: -6 }}
                 className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs hover:shadow-md hover:border-blue-300 transition-all text-center flex flex-col items-center group relative overflow-hidden"
               >
                 {/* Blue ribbon icon */}
@@ -801,7 +886,7 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 <p className="text-xs text-slate-500 leading-relaxed">
                   {p.desc}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -857,57 +942,68 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
             </div>
 
             {/* Right: Tech items display */}
-            <div className="md:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {selectedTechStack === 'ios' && (
-                <>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Swift 6.0</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">SwiftUI</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Objective-C</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Apple ARKit</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">CoreML</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Combine</div>
-                </>
-              )}
-              {selectedTechStack === 'android' && (
-                <>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Kotlin</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Jetpack Compose</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Java 21</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Android NDK</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Coroutines</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Room DB</div>
-                </>
-              )}
-              {selectedTechStack === 'cross' && (
-                <>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Flutter 3.x</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">React Native</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Dart</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Expo CLI</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">TypeScript</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Redux / Zustand</div>
-                </>
-              )}
-              {selectedTechStack === 'backend' && (
-                <>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Node.js</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Python FastAPI</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">AWS Lambda</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">GraphQL</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Firebase Cloud</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">WebSockets</div>
-                </>
-              )}
-              {selectedTechStack === 'database' && (
-                <>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">PostgreSQL</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">MongoDB</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Redis</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">SQLite</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Realm Mobile</div>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm">Supabase</div>
-                </>
-              )}
+            <div className="md:col-span-8 min-h-[160px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedTechStack}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.22 }}
+                  className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+                >
+                  {selectedTechStack === 'ios' && (
+                    <>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Swift 6.0</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">SwiftUI</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Objective-C</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Apple ARKit</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">CoreML</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Combine</div>
+                    </>
+                  )}
+                  {selectedTechStack === 'android' && (
+                    <>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Kotlin</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Jetpack Compose</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Java 21</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Android NDK</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Coroutines</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Room DB</div>
+                    </>
+                  )}
+                  {selectedTechStack === 'cross' && (
+                    <>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Flutter 3.x</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">React Native</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Dart</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Expo CLI</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">TypeScript</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Redux / Zustand</div>
+                    </>
+                  )}
+                  {selectedTechStack === 'backend' && (
+                    <>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Node.js</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Python FastAPI</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">AWS Lambda</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">GraphQL</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Firebase Cloud</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">WebSockets</div>
+                    </>
+                  )}
+                  {selectedTechStack === 'database' && (
+                    <>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">PostgreSQL</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">MongoDB</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Redis</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">SQLite</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Realm Mobile</div>
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 text-center font-bold text-sm hover:border-blue-300 hover:shadow-xs transition-all">Supabase</div>
+                    </>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -930,7 +1026,13 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-8">
+          <motion.div
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-8"
+          >
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               <div className="md:col-span-5 flex justify-center">
                 <div className="w-full max-w-[340px] rounded-2xl overflow-hidden shadow-lg border border-slate-200">
@@ -994,18 +1096,24 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ------------------------------------------------------------- */}
       {/* 10. IN-PAGE APP CONSULTATION LEAD FORM matching screenshot */}
       {/* ------------------------------------------------------------- */}
-      <section className="py-20 bg-gradient-to-r from-[#003db3] via-[#0052cc] to-[#0066ff] text-white">
+      <section className="py-20 bg-gradient-to-r from-[#003db3] via-[#0052cc] to-[#0066ff] text-white overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left: Heading & Benefits */}
-            <div className="lg:col-span-6 space-y-6">
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -25 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-6 space-y-6"
+            >
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                 Turn Your Mobile App Vision into Reality
               </h2>
@@ -1026,10 +1134,16 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                   <span>Transparent timeline, sprint roadmap, and fixed cost breakdown</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right: Clean White Form Card */}
-            <div className="lg:col-span-6 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100">
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 25 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="lg:col-span-6 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100"
+            >
               <h3 className="text-xl font-bold text-slate-900 mb-1">
                 Request a Free App Estimate
               </h3>
@@ -1118,7 +1232,7 @@ export const MobileAppDevelopmentPage: React.FC<MobileAppDevelopmentPageProps> =
                   </button>
                 </form>
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

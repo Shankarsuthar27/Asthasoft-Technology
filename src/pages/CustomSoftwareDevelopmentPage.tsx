@@ -103,7 +103,12 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Column: Headlines, Trust points & CTAs */}
-            <div className="lg:col-span-7 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55 }}
+              className="lg:col-span-7 space-y-6"
+            >
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-[#0066ff] text-xs sm:text-sm font-semibold tracking-wide">
                 <Sparkles className="w-3.5 h-3.5 text-[#0066ff]" />
@@ -164,10 +169,15 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   <span>Schedule Rapid Call</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Column: 3D Layered Glass Tech Graphic with Floating SLA Pill */}
-            <div className="lg:col-span-5 relative flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="lg:col-span-5 relative flex justify-center"
+            >
               <div className="relative w-full max-w-[480px]">
                 {/* Visual Card Container */}
                 <div className="relative rounded-3xl overflow-hidden bg-white p-3 shadow-2xl shadow-blue-500/10 border border-slate-200/80">
@@ -177,8 +187,12 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                     className="w-full h-auto object-cover rounded-2xl"
                   />
 
-                  {/* Floating Metric Card matching reference */}
-                  <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3.5 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3.5">
+                  {/* Floating Metric Card matching reference with floating animation */}
+                  <motion.div
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-3.5 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-3.5"
+                  >
                     <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#0066ff] font-black text-lg">
                       <ShieldCheck className="w-5 h-5 text-[#0066ff]" />
                     </div>
@@ -190,13 +204,13 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                         Platform Reliability & Uptime SLA
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Ambient glow behind card */}
                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-3xl blur-xl -z-10" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -254,7 +268,14 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
           {/* Service Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Card 1 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Code2 className="w-6 h-6" />
               </div>
@@ -268,10 +289,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>Explore consulting</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Workflow className="w-6 h-6" />
               </div>
@@ -285,10 +313,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>Explore custom engineering</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.16 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Cpu className="w-6 h-6" />
               </div>
@@ -302,10 +337,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>Explore modernization</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 4 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.24 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group"
+            >
               <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                 <Cloud className="w-6 h-6" />
               </div>
@@ -319,10 +361,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>Explore cloud architecture</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 5 */}
-            <div className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group md:col-span-2 lg:col-span-2">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.32 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group md:col-span-2 lg:col-span-2"
+            >
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                 <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                   <BrainCircuit className="w-6 h-6" />
@@ -340,7 +389,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -369,7 +418,14 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
           {/* 6 Step Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Step 1 */}
-            <div className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group"
+            >
               <div className="text-3xl font-black text-[#0066ff] mb-4">01</div>
               <h3 className="text-lg font-bold text-white mb-2">
                 Discovery & Requirement Analysis
@@ -377,10 +433,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                 We conduct deep architectural scoping, map end-user journeys, gather business logic constraints, and create precise Software Requirement Specifications (SRS).
               </p>
-            </div>
+            </motion.div>
 
             {/* Step 2 */}
-            <div className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group"
+            >
               <div className="text-3xl font-black text-[#0066ff] mb-4">02</div>
               <h3 className="text-lg font-bold text-white mb-2">
                 Architecture & System Planning
@@ -388,10 +451,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                 Design modular, fault-tolerant microservice topologies, database schema normalization, security compliance matrices, and third-party API integration maps.
               </p>
-            </div>
+            </motion.div>
 
             {/* Step 3 */}
-            <div className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.16 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group"
+            >
               <div className="text-3xl font-black text-[#0066ff] mb-4">03</div>
               <h3 className="text-lg font-bold text-white mb-2">
                 UI/UX Prototyping
@@ -399,10 +469,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                 Craft human-centric design tokens, wireframes, and clickable interactive Figma prototypes validated with usability testing before any production code is committed.
               </p>
-            </div>
+            </motion.div>
 
             {/* Step 4 */}
-            <div className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.24 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group"
+            >
               <div className="text-3xl font-black text-[#0066ff] mb-4">04</div>
               <h3 className="text-lg font-bold text-white mb-2">
                 Agile Sprints & Development
@@ -410,10 +487,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                 Rapid two-week agile sprint cadences following clean-code standards (SOLID, DRY), peer code reviews, continuous automated integration, and bi-weekly client demos.
               </p>
-            </div>
+            </motion.div>
 
             {/* Step 5 */}
-            <div className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.32 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group"
+            >
               <div className="text-3xl font-black text-[#0066ff] mb-4">05</div>
               <h3 className="text-lg font-bold text-white mb-2">
                 Testing & Quality Assurance
@@ -421,10 +505,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                 Multi-layer testing: unit, integration, automated regression, stress load testing, and rigorous penetration assessments to guarantee a zero-defect production release.
               </p>
-            </div>
+            </motion.div>
 
             {/* Step 6 */}
-            <div className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.4 }}
+              whileHover={{ y: -6 }}
+              className="bg-[#131b2e] border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/60 transition-all group"
+            >
               <div className="text-3xl font-black text-[#0066ff] mb-4">06</div>
               <h3 className="text-lg font-bold text-white mb-2">
                 Deployment & Hypercare Support
@@ -432,7 +523,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                 Zero-downtime blue/green deployments, full CI/CD automation, comprehensive technical documentation handover, and 90-day dedicated hypercare support.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -444,7 +535,13 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Column: Heading & Value Points */}
-            <div className="lg:col-span-6 space-y-6">
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55 }}
+              className="lg:col-span-6 space-y-6"
+            >
               <div className="text-xs font-bold tracking-wider text-[#0066ff] uppercase">
                 WHY CHOOSE US
               </div>
@@ -486,12 +583,19 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Column: 2x2 Stat Cards Grid matching screenshot */}
             <div className="lg:col-span-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+                <motion.div
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-blue-300 transition-all"
+                >
                   <div className="text-2xl sm:text-3xl font-black text-[#0066ff] mb-1.5">
                     40%+
                   </div>
@@ -501,9 +605,16 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   <p className="text-xs text-slate-500 leading-relaxed">
                     Accelerated product launches utilizing pre-tested modular components and automated CI/CD.
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+                <motion.div
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-blue-300 transition-all"
+                >
                   <div className="text-2xl sm:text-3xl font-black text-[#0066ff] mb-1.5">
                     99.9%
                   </div>
@@ -513,9 +624,16 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   <p className="text-xs text-slate-500 leading-relaxed">
                     Fault-tolerant multi-zone cloud engineering with automated disaster recovery protocols.
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+                <motion.div
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.2 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-blue-300 transition-all"
+                >
                   <div className="text-2xl sm:text-3xl font-black text-[#0066ff] mb-1.5">
                     60%
                   </div>
@@ -525,9 +643,16 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   <p className="text-xs text-slate-500 leading-relaxed">
                     Eliminate recurring third-party seat licensing and legacy infrastructure bloat permanently.
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs">
+                <motion.div
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: 0.3 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-blue-300 transition-all"
+                >
                   <div className="text-2xl sm:text-3xl font-black text-[#0066ff] mb-1.5">
                     24/7
                   </div>
@@ -537,7 +662,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   <p className="text-xs text-slate-500 leading-relaxed">
                     Continuous monitoring, proactive security patches, and instant incident resolution.
                   </p>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -659,7 +784,14 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Industry 1 */}
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              whileHover={{ y: -6 }}
+              className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]"
+            >
               <div>
                 <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
                   <CreditCard className="w-5 h-5" />
@@ -675,10 +807,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>View Fintech solutions</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Industry 2 */}
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              whileHover={{ y: -6 }}
+              className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]"
+            >
               <div>
                 <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
                   <Stethoscope className="w-5 h-5" />
@@ -694,10 +833,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>View Healthcare solutions</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Industry 3 */}
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.16 }}
+              whileHover={{ y: -6 }}
+              className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]"
+            >
               <div>
                 <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
                   <Truck className="w-5 h-5" />
@@ -713,10 +859,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>View Logistics solutions</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Industry 4 */}
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.24 }}
+              whileHover={{ y: -6 }}
+              className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]"
+            >
               <div>
                 <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
                   <ShoppingCart className="w-5 h-5" />
@@ -732,10 +885,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>View Retail solutions</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Industry 5 */}
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.32 }}
+              whileHover={{ y: -6 }}
+              className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]"
+            >
               <div>
                 <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
                   <Building2 className="w-5 h-5" />
@@ -751,10 +911,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>View PropTech solutions</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
 
             {/* Industry 6 */}
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.4 }}
+              whileHover={{ y: -6 }}
+              className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0c1222] to-[#131b2e] p-7 text-white border border-slate-800 shadow-md group hover:border-[#0066ff]/60 transition-all flex flex-col justify-between min-h-[260px]"
+            >
               <div>
                 <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 border border-blue-500/20">
                   <GraduationCap className="w-5 h-5" />
@@ -770,7 +937,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                 <span>View EdTech solutions</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -779,7 +946,13 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
       {/* 8. FULL-WIDTH HYPERAUTOMATION CTA BANNER */}
       {/* ------------------------------------------------------------- */}
       <section className="py-20 bg-gradient-to-r from-[#003db3] via-[#0052cc] to-[#0066ff] text-white relative overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
+        <motion.div
+          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.96 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+          className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6"
+        >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Let's Start Your Journey Towards <br />
             <span className="italic font-serif font-light text-blue-100">
@@ -800,7 +973,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ------------------------------------------------------------- */}
@@ -822,7 +995,14 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Model 1 */}
-            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm hover:border-blue-300 transition-all flex flex-col justify-between">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-lg transition-all flex flex-col justify-between"
+            >
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0066ff] text-xs font-bold">
                   <Users className="w-3.5 h-3.5" />
@@ -859,10 +1039,17 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   Hire Dedicated Pod →
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Model 2 */}
-            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm hover:border-blue-300 transition-all flex flex-col justify-between">
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              whileHover={{ y: -6 }}
+              className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-lg transition-all flex flex-col justify-between"
+            >
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold">
                   <ShieldCheck className="w-3.5 h-3.5" />
@@ -899,7 +1086,7 @@ export const CustomSoftwareDevelopmentPage: React.FC<CustomSoftwareDevelopmentPa
                   Get Fixed Price Estimate →
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
