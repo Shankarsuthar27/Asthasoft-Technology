@@ -131,8 +131,8 @@ export function App() {
                 onRequestCall={handleOpenCallModal}
               />
 
-              {/* Clean 1-Row Trust & Credentials Bar */}
-              <SocialProofBar />
+              {/* Clean 1-Row Trust & Credentials Bar + Sub-Brand Products Bar */}
+              <SocialProofBar onOpenScopingModal={handleOpenScopingModal} />
 
               {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
               <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
