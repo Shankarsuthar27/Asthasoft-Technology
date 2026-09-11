@@ -10,6 +10,7 @@ import { WhatWeDoShowcase } from './components/sections/WhatWeDoShowcase';
 import { IndustriesAppSolutionsSection } from './components/sections/IndustriesAppSolutionsSection';
 import { TechStackSection } from './components/sections/TechStackSection';
 import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
+import { ServicesDirectorySection } from './components/sections/ServicesDirectorySection';
 import { Footer } from './components/sections/Footer';
 import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopmentPage';
 import { MobileAppDevelopmentPage } from './pages/MobileAppDevelopmentPage';
@@ -173,6 +174,9 @@ export function App() {
 
               {/* Section 5: Featured Case Study Card matching Latest Reference Images */}
               <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
+
+              {/* SEO & Geo-Targeted Services Directory */}
+              <ServicesDirectorySection onOpenScopingModal={handleOpenScopingModal} />
             </main>
           )}
         </motion.div>
