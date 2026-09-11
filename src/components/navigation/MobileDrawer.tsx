@@ -407,7 +407,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                 type="button"
                 onClick={() => {
                   onClose();
-                  onOpenScopingModal('Mobile Drawer Contact Link');
+                  navigateTo('/contact');
                 }}
                 className="block w-full text-left py-2.5 px-3 text-sm font-semibold text-slate-800 hover:text-[#0066ff] transition-colors cursor-pointer"
               >

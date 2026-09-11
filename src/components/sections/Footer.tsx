@@ -139,6 +139,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   Case Studies & Outcomes
                 </a>
               </li>
+              <li>
+                <a
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('/contact');
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Contact & Global Studios
+                </a>
+              </li>
             </ul>
           </div>
 

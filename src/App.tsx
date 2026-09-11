@@ -11,6 +11,7 @@ import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
 import { Footer } from './components/sections/Footer';
 import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopmentPage';
 import { MobileAppDevelopmentPage } from './pages/MobileAppDevelopmentPage';
+import { ContactPage } from './pages/ContactPage';
 // import { PageEntranceAnimation } from './components/ui/PageEntranceAnimation';
 
 // Conversion Funnels
@@ -74,6 +75,20 @@ export function App() {
 
   const isCustomSoftwarePage = currentPath === '/custom-software-development';
   const isMobileAppPage = currentPath === '/mobile-app-development-company';
+  const isContactPage = currentPath === '/contact';
+
+  // Dynamic document title
+  React.useEffect(() => {
+    if (currentPath === '/contact') {
+      document.title = 'Contact Asthasoft | Digital Transformation Strategy & Global Studios';
+    } else if (currentPath === '/mobile-app-development-company') {
+      document.title = 'Top Mobile App Development Company in India | Asthasoft Technologies';
+    } else if (currentPath === '/custom-software-development') {
+      document.title = 'Custom Software Development Company India | Asthasoft Technologies';
+    } else {
+      document.title = 'Asthasoft Technologies | Enterprise AI & Custom Software Engineering';
+    }
+  }, [currentPath]);
 
   return (
     <div className="min-h-screen bg-[#0c1222] text-white selection:bg-[#0066ff] selection:text-white relative">
@@ -113,7 +128,12 @@ export function App() {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
           }}
         >
-          {isMobileAppPage ? (
+          {isContactPage ? (
+            <ContactPage
+              onOpenScopingModal={handleOpenScopingModal}
+              onOpenCallModal={handleOpenCallModal}
+            />
+          ) : isMobileAppPage ? (
             <MobileAppDevelopmentPage
               onOpenScopingModal={handleOpenScopingModal}
               onOpenCallModal={handleOpenCallModal}

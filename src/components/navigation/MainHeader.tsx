@@ -571,12 +571,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
             </a>
 
             <a
-              href="#contact"
+              href="/contact"
               onClick={(e) => {
                 e.preventDefault();
-                onOpenScopingModal('Contact Nav Link');
+                navigateTo('/contact');
               }}
-              className="px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#0066ff] transition-colors"
+              className="px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#0066ff] transition-colors cursor-pointer"
             >
               Contact
             </a>
