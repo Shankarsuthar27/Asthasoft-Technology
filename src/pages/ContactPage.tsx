@@ -112,39 +112,39 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
               {/* 4-Metric Grid Box matching reference */}
               <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-6 shadow-sm mb-6 max-w-xl">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
-                  <div className="pt-2 sm:pt-0 sm:px-3 text-center sm:text-left first:pl-0">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-0 sm:divide-x divide-slate-100">
+                  <div className="p-3 sm:p-0 sm:px-3 bg-slate-50/60 sm:bg-transparent rounded-xl sm:rounded-none text-center sm:text-left first:pl-0">
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-slate-400 uppercase block mb-1">
                       Projects Delivered
                     </span>
-                    <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    <span className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                       1500+
                     </span>
                   </div>
 
-                  <div className="pt-2 sm:pt-0 sm:px-3 text-center sm:text-left">
+                  <div className="p-3 sm:p-0 sm:px-3 bg-slate-50/60 sm:bg-transparent rounded-xl sm:rounded-none text-center sm:text-left">
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-slate-400 uppercase block mb-1">
                       Awards Received
                     </span>
-                    <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    <span className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                       200+
                     </span>
                   </div>
 
-                  <div className="pt-2 sm:pt-0 sm:px-3 text-center sm:text-left">
+                  <div className="p-3 sm:p-0 sm:px-3 bg-slate-50/60 sm:bg-transparent rounded-xl sm:rounded-none text-center sm:text-left">
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-slate-400 uppercase block mb-1">
                       Avg. Response
                     </span>
-                    <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    <span className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                       &lt; 4h
                     </span>
                   </div>
 
-                  <div className="pt-2 sm:pt-0 sm:px-3 text-center sm:text-left last:pr-0">
+                  <div className="p-3 sm:p-0 sm:px-3 bg-slate-50/60 sm:bg-transparent rounded-xl sm:rounded-none text-center sm:text-left last:pr-0">
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-slate-400 uppercase block mb-1">
                       Client Retention
                     </span>
-                    <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    <span className="text-xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                       95%
                     </span>
                   </div>
@@ -394,7 +394,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Left: Interactive Embedded Google Map */}
             <div className="lg:col-span-7 xl:col-span-8 bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-sm flex flex-col">
-              <div className="relative w-full h-[420px] sm:h-[480px] lg:h-full min-h-[420px] rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 border border-slate-100">
+              <div className="relative w-full h-[290px] sm:h-[420px] lg:h-full min-h-[290px] sm:min-h-[420px] rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 border border-slate-100">
                 <iframe
                   title="Asthasoft Office Location - Glitz Cinema Jalore"
                   src="https://maps.google.com/maps?q=Glitz+cinema+jalore,+jalore,+Rajasthan+343001&t=&z=16&ie=UTF8&iwloc=&output=embed"

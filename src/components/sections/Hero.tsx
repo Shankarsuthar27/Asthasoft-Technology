@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({
             className="lg:col-span-6 xl:col-span-6 relative w-full flex justify-center lg:justify-end"
           >
             {/* Scale wrapper for responsive presentation on phones/tablets */}
-            <div className="relative w-full max-w-[560px] h-[450px] xs:h-[490px] sm:h-[530px] flex items-center justify-center select-none origin-center sm:origin-right scale-[0.82] xs:scale-[0.92] sm:scale-100">
+            <div className="relative w-full max-w-[560px] h-[390px] xs:h-[460px] sm:h-[530px] flex items-center justify-center select-none origin-center sm:origin-right scale-[0.70] min-[370px]:scale-[0.80] xs:scale-[0.92] sm:scale-100">
               
               {/* 1. Top-Left Floating Cyan/Blue Wave Metric Card */}
               <motion.div

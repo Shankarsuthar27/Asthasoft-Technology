@@ -159,7 +159,8 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
 
     const element = document.getElementById(`tech-domain-${categoryId}`);
     if (element) {
-      const yOffset = -110;
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+      const yOffset = isMobile ? -130 : -110;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
@@ -171,9 +172,11 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
 
   return (
     <section id="tech-stack" className="py-16 sm:py-24 bg-white border-y border-slate-200/90 font-body relative overflow-visible">
-      {/* Background Decorative Gradients */}
-      <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-blue-50/70 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-indigo-50/60 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Background Decorative Gradients - contained inside overflow-hidden to eliminate horizontal scrolling */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-blue-50/70 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-indigo-50/60 rounded-full blur-3xl" />
+      </div>
 
       <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -187,32 +190,77 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
           </p>
         </div>
 
-        {/* Mobile Horizontal Sticky Quick Switcher */}
-        <div className="lg:hidden sticky top-16 z-30 bg-white/95 backdrop-blur-md py-3 -mx-4 px-4 overflow-x-auto flex items-center gap-2 border-y border-slate-200 shadow-xs mb-8">
-          {TECH_CATEGORIES.map((cat) => {
-            const isActive = cat.id === selectedCategoryId;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => scrollToCategory(cat.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shrink-0 ${
-                  isActive
-                    ? 'bg-[#0066ff] text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
-              >
-                <span>{cat.name}</span>
-                <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-white text-slate-500'
+        {/* Mobile Horizontal Sticky Quick Switcher with Active Domain Context */}
+        <div className="lg:hidden sticky top-[56px] z-30 bg-white/95 backdrop-blur-md py-2.5 px-3 sm:px-4 rounded-2xl border border-slate-200 shadow-sm mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#0066ff] flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0066ff] animate-pulse" />
+              Technology Domains
+            </span>
+            <span className="text-[10px] text-slate-400 font-medium">
+              Tap to jump to layer
+            </span>
+          </div>
+
+          <div className="overflow-x-auto no-scrollbar flex items-center gap-2 pb-0.5">
+            {TECH_CATEGORIES.map((cat) => {
+              const CatIcon = cat.icon;
+              const isActive = cat.id === selectedCategoryId;
+              const count = TECH_ITEMS.filter((i) => i.category === cat.id).length;
+
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => scrollToCategory(cat.id)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                    isActive
+                      ? 'bg-[#0066ff] text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  {TECH_ITEMS.filter((i) => i.category === cat.id).length}
-                </span>
-              </button>
-            );
-          })}
+                  <CatIcon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#0066ff]'}`} />
+                  <span>{cat.name}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                      isActive ? 'bg-white/20 text-white' : 'bg-white text-slate-500'
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile Advisory & Guarantee Banner */}
+        <div className="lg:hidden mb-6">
+          <div className="bg-[#f8fafc] rounded-2xl p-4 border border-slate-200/90 shadow-sm space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                Technology Architecture
+              </span>
+              <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
+                Enterprise LTS
+              </span>
+            </div>
+            <div className="text-xs font-semibold text-slate-800 leading-snug">
+              Unsure which stack fits your scalability requirements?
+            </div>
+            <button
+              type="button"
+              onClick={() => onOpenScopingModal?.('Mobile Tech Stack Advisory')}
+              className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider text-center transition-all cursor-pointer flex items-center justify-center gap-2 shadow-xs"
+            >
+              <span>Consult our Tech Lead</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <div className="pt-2 border-t border-slate-200/80 flex items-center gap-2 text-[11px] text-blue-900 font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#0066ff] shrink-0" />
+              <span>100% Source Code & IP Handover with zero recurring license fees.</span>
+            </div>
+          </div>
         </div>
 
         {/* Layout: Left Sticky Sidebar + Right Stacking Cards */}
@@ -303,7 +351,7 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
           </div>
 
           {/* Right Column: Stacking Domain Cards on Scroll */}
-          <div className="lg:col-span-8 space-y-8 sm:space-y-10 relative">
+          <div className="lg:col-span-8 space-y-8 sm:space-y-10 lg:space-y-12 relative pb-16">
             {TECH_CATEGORIES.map((cat, idx) => {
               const items = TECH_ITEMS.filter((i) => i.category === cat.id);
               const CatIcon = cat.icon;
@@ -312,57 +360,56 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
                 <div
                   key={cat.id}
                   id={`tech-domain-${cat.id}`}
-                  className="sticky top-28 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-[0_12px_36px_rgba(0,0,0,0.06)] p-6 sm:p-8 transition-all"
+                  className="tech-domain-card rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-[0_10px_32px_rgba(0,0,0,0.07)] p-4 sm:p-6 lg:p-8 transition-all"
                   style={{
-                    top: `calc(6.8rem + ${idx * 14}px)`,
-                    zIndex: idx + 10,
+                    ['--card-index' as any]: idx,
                   }}
                 >
                   {/* Card Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 mb-6 border-b border-slate-100">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 sm:pb-5 mb-4 sm:mb-6 border-b border-slate-100">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center border border-blue-100 shrink-0">
-                        <CatIcon className="w-5 h-5" />
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 text-[#0066ff] flex items-center justify-center border border-blue-100 shrink-0">
+                        <CatIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
                       <div>
                         <div className="text-[10px] font-bold uppercase tracking-wider text-[#0066ff]">
                           Technology Layer {idx + 1} of {TECH_CATEGORIES.length}
                         </div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+                        <h3 className="text-lg sm:text-2xl font-bold text-slate-900">
                           {cat.name}
                         </h3>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200/80 shrink-0 self-start sm:self-auto">
-                      <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                    <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-slate-500 bg-slate-50 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-200/80 shrink-0 self-start sm:self-auto">
+                      <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500" />
                       <span>Production-Grade LTS</span>
                     </div>
                   </div>
 
-                  {/* Grid of Tech Items */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4">
+                  {/* Grid of Tech Items: 2 cols on mobile, 3 cols on tablet/desktop */}
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4">
                     {items.map((tech) => (
                       <div
                         key={tech.name}
-                        className="p-4 rounded-2xl border border-slate-150 bg-slate-50/50 hover:bg-white hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between group cursor-default"
+                        className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200/80 bg-slate-50/50 hover:bg-white hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between group cursor-default"
                       >
-                        <div className="flex items-start gap-3 mb-2.5">
-                          <div className="w-11 h-11 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center p-2 shrink-0 shadow-xs group-hover:scale-110 transition-transform">
+                        <div className="flex items-start gap-2 sm:gap-3 mb-1.5 sm:mb-2.5">
+                          <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-white border border-slate-200/80 flex items-center justify-center p-1.5 sm:p-2 shrink-0 shadow-xs group-hover:scale-110 transition-transform">
                             <TechLogo name={tech.name} className="w-full h-full object-contain" />
                           </div>
                           <div className="min-w-0">
-                            <div className="font-bold text-slate-900 text-sm group-hover:text-[#0066ff] transition-colors leading-tight">
+                            <div className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#0066ff] transition-colors leading-tight truncate">
                               {tech.name}
                             </div>
-                            <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 bg-white border border-slate-200 px-1.5 py-0.5 rounded-md">
+                            <span className="inline-block mt-0.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-slate-500 bg-white border border-slate-200 px-1 sm:px-1.5 py-0.2 rounded truncate max-w-full">
                               {tech.tag}
                             </span>
                           </div>
                         </div>
 
                         {tech.description && (
-                          <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 mt-1">
+                          <p className="text-[11px] sm:text-xs text-slate-500 leading-snug line-clamp-2 mt-1">
                             {tech.description}
                           </p>
                         )}
@@ -371,17 +418,17 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({
                   </div>
 
                   {/* Card Bottom Bar */}
-                  <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500">
-                    <span className="text-slate-500 font-medium">
+                  <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 text-xs text-slate-500">
+                    <span className="text-slate-500 font-medium text-[11px] sm:text-xs">
                       {cat.subtitle}
                     </span>
                     {onOpenCallModal && (
                       <button
                         type="button"
                         onClick={() => onOpenCallModal(`Tech Stack - ${cat.name}`)}
-                        className="font-semibold text-[#0066ff] hover:underline flex items-center gap-1 self-start sm:self-auto cursor-pointer"
+                        className="font-semibold text-[#0066ff] hover:underline flex items-center gap-1 self-start sm:self-auto cursor-pointer text-xs"
                       >
-                        <PhoneCall className="w-3.5 h-3.5" />
+                        <PhoneCall className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         <span>Discuss {cat.name} with an Architect →</span>
                       </button>
                     )}

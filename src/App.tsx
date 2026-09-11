@@ -7,6 +7,7 @@ import { Hero } from './components/sections/Hero';
 import { SocialProofBar } from './components/sections/SocialProofBar';
 import { CapabilitiesGrid } from './components/sections/CapabilitiesGrid';
 import { WhatWeDoShowcase } from './components/sections/WhatWeDoShowcase';
+import { IndustriesAppSolutionsSection } from './components/sections/IndustriesAppSolutionsSection';
 import { TechStackSection } from './components/sections/TechStackSection';
 import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
 import { Footer } from './components/sections/Footer';
@@ -92,7 +93,7 @@ export function App() {
   }, [currentPath]);
 
   return (
-    <div className="min-h-screen bg-[#0c1222] text-white selection:bg-[#0066ff] selection:text-white relative">
+    <div className="min-h-screen bg-[#0c1222] text-white selection:bg-[#0066ff] selection:text-white relative overflow-x-clip w-full max-w-full">
       {/* Cinematic Enterprise Page Entrance Animation */}
       {/* <PageEntranceAnimation /> */}
 
@@ -160,6 +161,9 @@ export function App() {
 
               {/* Section 3: What We Do & Legacy Modernization matching Image 3 */}
               <WhatWeDoShowcase onOpenScopingModal={handleOpenScopingModal} />
+
+              {/* Industries We Serve with App Solutions matching user reference image */}
+              <IndustriesAppSolutionsSection onOpenScopingModal={handleOpenScopingModal} />
 
               {/* Section 4: Enterprise Tech Stack Section with Verified Logos & Domain Switcher */}
               <TechStackSection
