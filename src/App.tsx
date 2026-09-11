@@ -8,6 +8,7 @@ import { CapabilitiesGrid } from './components/sections/CapabilitiesGrid';
 import { WhatWeDoShowcase } from './components/sections/WhatWeDoShowcase';
 import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
 import { Footer } from './components/sections/Footer';
+import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopmentPage';
 // import { PageEntranceAnimation } from './components/ui/PageEntranceAnimation';
 
 // 5 Conversion Funnels
@@ -24,6 +25,27 @@ export function App() {
   const [isCallModalOpen, setIsCallModalOpen] = useState(false);
   const [callContext, setCallContext] = useState('General Consultation');
 
+  const [currentPath, setCurrentPath] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname.replace(/\/$/, '') || '/';
+    }
+    return '/';
+  });
+
+  React.useEffect(() => {
+    const handleLocationChange = () => {
+      const p = window.location.pathname.replace(/\/$/, '') || '/';
+      setCurrentPath(p);
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('app-navigate', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('app-navigate', handleLocationChange);
+    };
+  }, []);
+
   const handleOpenScopingModal = (source: string = 'General Portal CTA') => {
     setScopingSource(source);
     setIsScopingModalOpen(true);
@@ -33,6 +55,8 @@ export function App() {
     setCallContext(context);
     setIsCallModalOpen(true);
   };
+
+  const isCustomSoftwarePage = currentPath === '/custom-software-development';
 
   return (
     <div className="min-h-screen bg-[#0c1222] text-white selection:bg-[#0066ff] selection:text-white relative">
@@ -55,26 +79,33 @@ export function App() {
         onOpenScopingModal={handleOpenScopingModal}
       />
 
-      {/* Main Core Page Sections matching Reference Images */}
-      <main>
-        {/* Section 1: Hero matching Image 1 & 4 */}
-        <Hero
+      {/* Route Views */}
+      {isCustomSoftwarePage ? (
+        <CustomSoftwareDevelopmentPage
           onOpenScopingModal={handleOpenScopingModal}
-          onRequestCall={handleOpenCallModal}
+          onOpenCallModal={handleOpenCallModal}
         />
+      ) : (
+        <main>
+          {/* Section 1: Hero matching Image 1 & 4 */}
+          <Hero
+            onOpenScopingModal={handleOpenScopingModal}
+            onRequestCall={handleOpenCallModal}
+          />
 
-        {/* Clean 1-Row Trust & Credentials Bar */}
-        <SocialProofBar />
+          {/* Clean 1-Row Trust & Credentials Bar */}
+          <SocialProofBar />
 
-        {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
-        <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
+          {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
+          <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
 
-        {/* Section 3: What We Do & Legacy Modernization matching Image 3 */}
-        <WhatWeDoShowcase onOpenScopingModal={handleOpenScopingModal} />
+          {/* Section 3: What We Do & Legacy Modernization matching Image 3 */}
+          <WhatWeDoShowcase onOpenScopingModal={handleOpenScopingModal} />
 
-        {/* Section 4: Featured Case Study Card matching Latest Reference Images */}
-        <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
-      </main>
+          {/* Section 4: Featured Case Study Card matching Latest Reference Images */}
+          <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
+        </main>
+      )}
 
       {/* Clean & Modern Footer */}
       <Footer onOpenScopingModal={handleOpenScopingModal} />

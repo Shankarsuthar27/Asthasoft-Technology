@@ -67,8 +67,16 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
         <div className="flex items-center justify-between">
           {/* Official Logo: Asthasoft Technologies Pvt. Ltd. */}
           <a
-            href="#"
-            className="flex items-center gap-2.5 group focus:outline-none"
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname !== '/') {
+                window.history.pushState({}, '', '/');
+                window.dispatchEvent(new Event('app-navigate'));
+              }
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center gap-2.5 group focus:outline-none cursor-pointer"
             aria-label="Asthasoft Technologies Pvt. Ltd. Home"
           >
             <img
@@ -181,7 +189,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                         </div>
                         <div className="space-y-1">
                           {[
-                            { name: 'Custom Software Development', icon: Globe, href: '#services' },
+                            { name: 'Custom Software Development', icon: Globe, href: '/custom-software-development' },
                             { name: 'Mobile App Development', icon: Smartphone, href: '#services' },
                             { name: 'Blockchain Development', icon: Layers, href: '#services' },
                             { name: 'AI Product Development', icon: Cpu, href: '#services-ai' },
@@ -193,7 +201,18 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
                               <a
                                 key={item.name}
                                 href={item.href}
-                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors"
+                                onClick={(e) => {
+                                  if (item.href.startsWith('/')) {
+                                    e.preventDefault();
+                                    setActiveMenu(null);
+                                    if (window.location.pathname !== item.href) {
+                                      window.history.pushState({}, '', item.href);
+                                      window.dispatchEvent(new Event('app-navigate'));
+                                    }
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                  }
+                                }}
+                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-[#f4f8ff] group transition-colors cursor-pointer"
                               >
                                 <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#0066ff] flex items-center justify-center shrink-0 group-hover:bg-[#0066ff] group-hover:text-white transition-colors">
                                   <IconComp className="w-4 h-4" />

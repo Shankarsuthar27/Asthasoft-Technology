@@ -66,7 +66,19 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
           >
             {/* Header with Asthasoft Logo and Blue Square Close Button matching screenshot */}
             <div className="p-4 sm:p-5 flex items-center justify-between border-b border-slate-100 bg-white">
-              <div className="flex items-center gap-2.5">
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onClose();
+                  if (window.location.pathname !== '/') {
+                    window.history.pushState({}, '', '/');
+                    window.dispatchEvent(new Event('app-navigate'));
+                  }
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="flex items-center gap-2.5 cursor-pointer focus:outline-none"
+              >
                 <img
                   src="/logo.png"
                   alt="Asthasoft Technologies Pvt. Ltd."
@@ -86,7 +98,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                     Technologies Pvt. Ltd.
                   </span>
                 </div>
-              </div>
+              </a>
 
               {/* Blue Square Close Button with White X matching screenshot */}
               <button
@@ -170,9 +182,17 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                       </div>
                       <div className="space-y-0.5">
                         <a
-                          href="#capabilities"
-                          onClick={onClose}
-                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors"
+                          href="/custom-software-development"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            onClose();
+                            if (window.location.pathname !== '/custom-software-development') {
+                              window.history.pushState({}, '', '/custom-software-development');
+                              window.dispatchEvent(new Event('app-navigate'));
+                            }
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="flex items-center gap-3 py-1.5 px-1 rounded-md text-xs sm:text-[13px] text-slate-700 hover:text-[#0066ff] hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                           <Globe className="w-4 h-4 text-slate-600 shrink-0" />
                           <span>Custom Software Development</span>

@@ -19,7 +19,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10 sm:mb-12">
           {/* Col 1: Brand */}
           <div className="space-y-4 sm:col-span-2 md:col-span-1">
-            <div className="flex items-center gap-3 select-none">
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                if (window.location.pathname !== '/') {
+                  window.history.pushState({}, '', '/');
+                  window.dispatchEvent(new Event('app-navigate'));
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="flex items-center gap-3 select-none cursor-pointer focus:outline-none"
+            >
               <img
                 src="/logo.png"
                 alt="Asthasoft Technologies Pvt. Ltd."
@@ -39,14 +50,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   Technologies Pvt. Ltd.
                 </span>
               </div>
-            </div>
+            </a>
             <p className="text-xs text-slate-400 leading-relaxed max-w-xs">
               Asthasoft Technologies Pvt. Ltd. — Enterprise AI Systems, Custom Software, and Cloud Infrastructure Engineering.
             </p>
             <div className="pt-1">
               <button
                 onClick={() => onOpenScopingModal('Footer Scoping Button')}
-                className="px-5 py-2 rounded-full bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs font-semibold shadow-md transition-all cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs font-semibold shadow-md transition-all active:scale-95 cursor-pointer"
               >
                 Talk to an expert
               </button>
@@ -59,7 +70,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
               Solutions & Services
             </h4>
             <ul className="space-y-2 text-xs text-slate-400">
-              <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Custom Software Development</a></li>
+              <li>
+                <a
+                  href="/custom-software-development"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (window.location.pathname !== '/custom-software-development') {
+                      window.history.pushState({}, '', '/custom-software-development');
+                      window.dispatchEvent(new Event('app-navigate'));
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Custom Software Development
+                </a>
+              </li>
               <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Enterprise AI & Autonomous Systems</a></li>
               <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Mobile App & Web Platforms</a></li>
               <li><a href="#capabilities" className="hover:text-[#0066ff] transition-colors">Cloud Engineering & DevOps</a></li>
