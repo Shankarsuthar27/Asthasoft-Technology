@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { LeadSchema, type LeadFormData } from './LeadSchema';
 import { submitEnquiry } from '../../services/firebase';
+import { sendLeadEmailNotification } from '../../services/emailService';
 
 interface GlobalScopingModalProps {
   isOpen: boolean;
@@ -144,6 +145,22 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
         ticketId: response.enquiryId,
         message: response.message,
       });
+
+      // Dispatch real-time email notification to admin via Resend API
+      sendLeadEmailNotification({
+        fullName: data.fullName,
+        email: data.email,
+        countryCode: selectedCountry.code,
+        phone: data.phone,
+        service: data.service || 'Custom Enterprise Software',
+        projectDescription: data.projectDescription,
+        ndaRequested: Boolean(data.ndaRequested),
+        source: initialSource || 'Request a Scoping Session Modal',
+        ticketId: response.enquiryId,
+      }).catch((emailErr) => {
+        console.warn('Background admin email dispatch error:', emailErr);
+      });
+
       reset();
     } catch (err: any) {
       console.error('Submission failed:', err);

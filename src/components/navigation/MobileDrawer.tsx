@@ -439,10 +439,6 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
                           +91-7023318111
                         </a>
                         <span className="text-slate-300">/</span>
-                        <a href="tel:+919664471637" className="hover:underline">
-                          9664471637
-                        </a>
-                        <span className="text-slate-300">/</span>
                         <a href="tel:01169269401" className="hover:underline">
                           011-69269401
                         </a>

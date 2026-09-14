@@ -176,12 +176,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <a href="tel:+919664471637" className="hover:text-[#0066ff] text-slate-200 font-medium transition-colors">
-                    +91 96644 71637
-                  </a>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   <a href="tel:01169269401" className="hover:text-[#0066ff] text-slate-200 font-medium transition-colors">
                     011-69269401
                   </a>

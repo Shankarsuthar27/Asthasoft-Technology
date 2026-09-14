@@ -485,12 +485,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                         >
                           +91-7023318111
                         </a>
-                        <a
-                          href="tel:+919664471637"
-                          className="block text-xs sm:text-sm font-semibold text-slate-800 hover:text-[#0066ff] transition-colors"
-                        >
-                          +91 96644 71637
-                        </a>
                         <div className="flex items-center gap-2 pt-0.5">
                           <a
                             href="tel:01169269401"

@@ -31,17 +31,6 @@ export const TopGlobalBar: React.FC = () => {
               <span className="text-slate-300 font-medium">+91-7023318111</span>
             </a>
 
-            <span className="text-white/20 hidden xs:inline">|</span>
-
-            {/* Direct Line 2 */}
-            <a
-              href="tel:+919664471637"
-              className="hidden xs:flex items-center gap-1.5 hover:text-brand-orange transition-colors group whitespace-nowrap"
-              title="Direct Phone Line 2"
-            >
-              <span className="text-slate-300 font-medium">+91 96644 71637</span>
-            </a>
-
             <span className="text-white/20 hidden md:inline">|</span>
 
             {/* Direct Line 3 (Landline) */}

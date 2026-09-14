@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TopGlobalBar } from './components/navigation/TopGlobalBar';
 import { MainHeader } from './components/navigation/MainHeader';
 import { MobileDrawer } from './components/navigation/MobileDrawer';
+
 import { Hero } from './components/sections/Hero';
 import { SocialProofBar } from './components/sections/SocialProofBar';
 import { CapabilitiesGrid } from './components/sections/CapabilitiesGrid';
@@ -10,6 +11,7 @@ import { WhatWeDoShowcase } from './components/sections/WhatWeDoShowcase';
 import { IndustriesAppSolutionsSection } from './components/sections/IndustriesAppSolutionsSection';
 import { TechStackSection } from './components/sections/TechStackSection';
 import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
+import { SubBrandsShowcase } from './components/sections/SubBrandsShowcase';
 import { ServicesDirectorySection } from './components/sections/ServicesDirectorySection';
 import { Footer } from './components/sections/Footer';
 import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopmentPage';
@@ -174,6 +176,9 @@ export function App() {
 
               {/* Section 5: Featured Case Study Card matching Latest Reference Images */}
               <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
+
+              {/* Sub-Brand Products: AsthaSMS | AsthaHost | AsthaPay */}
+              <SubBrandsShowcase onOpenScopingModal={handleOpenScopingModal} />
 
               {/* SEO & Geo-Targeted Services Directory */}
               <ServicesDirectorySection onOpenScopingModal={handleOpenScopingModal} />
