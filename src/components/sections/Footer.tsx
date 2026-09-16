@@ -76,19 +76,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   }}
                   className="hover:text-[#0066ff] transition-colors cursor-pointer"
                 >
-                  Custom Software Development
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#capabilities"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigateTo('#capabilities');
-                  }}
-                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
-                >
-                  Enterprise AI & Autonomous Systems
+                  Custom Software for Enterprises
                 </a>
               </li>
               <li>
@@ -100,7 +88,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   }}
                   className="hover:text-[#0066ff] transition-colors cursor-pointer"
                 >
-                  Mobile App & Web Platforms
+                  Cross-Platform Mobile App Development
                 </a>
               </li>
               <li>
@@ -112,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   }}
                   className="hover:text-[#0066ff] transition-colors cursor-pointer"
                 >
-                  Cloud Engineering & DevOps
+                  FinTech & Digital Banking Platforms
                 </a>
               </li>
               <li>
@@ -124,7 +112,31 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
                   }}
                   className="hover:text-[#0066ff] transition-colors cursor-pointer"
                 >
-                  Blockchain & Smart Contracts
+                  Cloud Native & Microservices Architecture
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#capabilities"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('#capabilities');
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  Enterprise Workflow Automation
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#capabilities"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('#capabilities');
+                  }}
+                  className="hover:text-[#0066ff] transition-colors cursor-pointer"
+                >
+                  White-Label Digital Wallet Engineering
                 </a>
               </li>
               <li>

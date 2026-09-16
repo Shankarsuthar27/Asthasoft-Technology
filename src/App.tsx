@@ -82,16 +82,26 @@ export function App() {
   const isMobileAppPage = currentPath === '/mobile-app-development-company';
   const isContactPage = currentPath === '/contact';
 
-  // Dynamic document title
+  // Dynamic document title and meta description for BoFu SEO
   React.useEffect(() => {
+    let title = 'Custom Software Development Company for Enterprises & FinTech | Asthasoft Technologies';
+    let desc = 'Asthasoft Technologies is a leading custom software development company for enterprises, fintech app development agency, and cross-platform mobile app engineering team.';
+
     if (currentPath === '/contact') {
-      document.title = 'Contact Asthasoft | Digital Transformation Strategy & Global Studios';
+      title = 'Hire Dedicated Custom Software & Mobile App Developers | Asthasoft Technologies';
+      desc = 'Schedule an enterprise scoping session with Asthasoft Technologies. Hire dedicated custom software developers, fintech specialists, and offshore mobile app engineering pods.';
     } else if (currentPath === '/mobile-app-development-company') {
-      document.title = 'Top Mobile App Development Company in India | Asthasoft Technologies';
+      title = 'Cross Platform Mobile App Development Company | React Native & Flutter | Asthasoft';
+      desc = 'Enterprise cross-platform mobile app development company. We engineer iOS, Android, React Native, and Flutter mobile applications with MVP builds and transparent cost breakdowns.';
     } else if (currentPath === '/custom-software-development') {
-      document.title = 'Custom Software Development Company India | Asthasoft Technologies';
-    } else {
-      document.title = 'Asthasoft Technologies | Enterprise AI & Custom Software Engineering';
+      title = 'Custom Software Development Company for Enterprises | Bespoke SaaS & Pods | Asthasoft';
+      desc = 'Custom software development company for enterprises. Hire dedicated custom software development teams, bespoke business software development, and legacy modernization architects.';
+    }
+
+    document.title = title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', desc);
     }
   }, [currentPath]);
 
