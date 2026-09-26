@@ -166,8 +166,11 @@ export function App() {
                 onRequestCall={handleOpenCallModal}
               />
 
-              {/* Clean 1-Row Trust & Credentials Bar + Sub-Brand Products Bar */}
+              {/* Clean 1-Row Trust & Credentials Bar */}
               <SocialProofBar onOpenScopingModal={handleOpenScopingModal} />
+
+              {/* Sub-Brand Products: AsthaSMS | AsthaHost | AsthaPay */}
+              <SubBrandsShowcase onOpenScopingModal={handleOpenScopingModal} />
 
               {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
               <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
@@ -186,9 +189,6 @@ export function App() {
 
               {/* Section 5: Featured Case Study Card matching Latest Reference Images */}
               <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
-
-              {/* Sub-Brand Products: AsthaSMS | AsthaHost | AsthaPay */}
-              <SubBrandsShowcase onOpenScopingModal={handleOpenScopingModal} />
 
               {/* SEO & Geo-Targeted Services Directory */}
               <ServicesDirectorySection onOpenScopingModal={handleOpenScopingModal} />

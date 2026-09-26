@@ -12,7 +12,7 @@ export const LeadSchema = z.object({
   service: z.string().optional(),
   projectDescription: z
     .string()
-    .min(20, "Please provide at least 20 characters of detail"),
+    .min(2, "Please provide at least 2 characters of detail"),
   ndaRequested: z.boolean(),
   mathCaptchaAnswer: z.number({
     required_error: "Captcha solution required",
