@@ -48,115 +48,80 @@ export default async function handler(req: any, res: any) {
       <html>
       <head>
         <meta charset="utf-8">
-        <title>New Scoping Session Request</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Lead - Asthasoft Technologies</title>
       </head>
-      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f19; color: #f8fafc; padding: 24px 12px; margin: 0;">
-        <div style="max-width: 600px; margin: 0 auto; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+      <body style="margin: 0; padding: 24px 12px; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.5;">
+        <div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
           
-          <!-- Header Banner -->
-          <div style="background: linear-gradient(135deg, #0066ff 0%, #1d4ed8 100%); padding: 24px 28px; text-align: left;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td>
-                  <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 800; letter-spacing: 0.5px;">ASTHASOFT TECHNOLOGIES</h1>
-                  <p style="margin: 4px 0 0 0; color: #dbeafe; font-size: 13px; font-weight: 500;">🚀 New Scoping Session Request Captured</p>
-                </td>
-                <td align="right">
-                  <span style="display: inline-block; background-color: rgba(255,255,255,0.2); color: #ffffff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 9999px;">
-                    LEAD ALERT
-                  </span>
-                </td>
-              </tr>
-            </table>
+          <!-- Header -->
+          <div style="background-color: #0f172a; padding: 20px 24px; border-bottom: 3px solid #2563eb;">
+            <h2 style="margin: 0; color: #ffffff; font-size: 18px; font-weight: 700; letter-spacing: 0.5px;">ASTHASOFT TECHNOLOGIES</h2>
+            <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 13px;">New Project Scoping Lead</p>
           </div>
 
-          <!-- Body Content -->
-          <div style="padding: 28px;">
-            <!-- Ticket Info Pill -->
-            <div style="background-color: #1e293b; border-left: 4px solid #0066ff; padding: 12px 16px; border-radius: 6px; margin-bottom: 24px;">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td>
-                    <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Ticket ID</span>
-                    <div style="color: #60a5fa; font-size: 15px; font-weight: 700; font-family: monospace;">${ticketId}</div>
-                  </td>
-                  <td align="right">
-                    <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Time (IST)</span>
-                    <div style="color: #cbd5e1; font-size: 12px;">${formattedDate}</div>
-                  </td>
-                </tr>
-              </table>
+          <!-- Body -->
+          <div style="padding: 24px;">
+            
+            <div style="margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px;">Ticket #${ticketId}</span>
+              <h3 style="margin: 4px 0 0 0; font-size: 16px; color: #0f172a;">${fullName} requested a scoping consultation</h3>
             </div>
 
-            <!-- Client Details Section -->
-            <h3 style="color: #f1f5f9; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0; border-bottom: 1px solid #1f2937; padding-bottom: 6px;">
-              Client Information
-            </h3>
-
-            <table width="100%" cellpadding="8" cellspacing="0" border="0" style="margin-bottom: 24px; font-size: 13px;">
-              <tr style="border-bottom: 1px solid #1f2937;">
-                <td width="35%" style="color: #94a3b8; font-weight: 600;">Full Name:</td>
-                <td style="color: #ffffff; font-weight: 700;">${fullName}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #1f2937;">
-                <td style="color: #94a3b8; font-weight: 600;">Email Address:</td>
-                <td>
-                  <a href="mailto:${email}" style="color: #38bdf8; text-decoration: none; font-weight: 600;">${email}</a>
-                </td>
-              </tr>
-              <tr style="border-bottom: 1px solid #1f2937;">
-                <td style="color: #94a3b8; font-weight: 600;">Phone Number:</td>
-                <td style="color: #ffffff; font-weight: 600;">
-                  <a href="tel:${countryCode}${phone}" style="color: #38bdf8; text-decoration: none;">${countryCode} ${phone}</a>
-                </td>
-              </tr>
-              <tr style="border-bottom: 1px solid #1f2937;">
-                <td style="color: #94a3b8; font-weight: 600;">Requested Service:</td>
-                <td style="color: #facc15; font-weight: 700;">${service}</td>
-              </tr>
-              ${budget ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Estimated Budget:</td><td style="color: #38bdf8; font-weight: 700;">${budget}</td></tr>` : ''}
-              ${timeline ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Timeline:</td><td style="color: #cbd5e1;">${timeline}</td></tr>` : ''}
-              ${preferredTime ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Preferred Call Time:</td><td style="color: #facc15; font-weight: 700;">${preferredTime}</td></tr>` : ''}
-              <tr style="border-bottom: 1px solid #1f2937;">
-                <td style="color: #94a3b8; font-weight: 600;">Mutual NDA Status:</td>
-                <td>
-                  <span style="display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background-color: ${
-                    ndaRequested ? 'rgba(16, 185, 129, 0.2)' : 'rgba(148, 163, 184, 0.2)'
-                  }; color: ${ndaRequested ? '#34d399' : '#94a3b8'};">
-                    ${ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
-                  </span>
-                </td>
+            <!-- Details -->
+            <table width="100%" cellpadding="6" cellspacing="0" border="0" style="font-size: 14px; margin-bottom: 20px;">
+              <tr>
+                <td width="35%" style="color: #64748b; font-weight: 500; vertical-align: top;">Client Name</td>
+                <td style="color: #0f172a; font-weight: 600;">${fullName}</td>
               </tr>
               <tr>
-                <td style="color: #94a3b8; font-weight: 600;">Acquisition Source:</td>
-                <td style="color: #cbd5e1; font-family: monospace; font-size: 12px;">${source}</td>
+                <td style="color: #64748b; font-weight: 500; vertical-align: top;">Email</td>
+                <td><a href="mailto:${email}" style="color: #2563eb; text-decoration: none; font-weight: 500;">${email}</a></td>
+              </tr>
+              <tr>
+                <td style="color: #64748b; font-weight: 500; vertical-align: top;">Phone</td>
+                <td><a href="tel:${countryCode}${phone}" style="color: #2563eb; text-decoration: none; font-weight: 500;">${countryCode} ${phone}</a></td>
+              </tr>
+              <tr>
+                <td style="color: #64748b; font-weight: 500; vertical-align: top;">Service</td>
+                <td style="color: #0f172a; font-weight: 600;">${service}</td>
+              </tr>
+              ${budget ? `<tr><td style="color: #64748b; font-weight: 500; vertical-align: top;">Budget</td><td style="color: #0f172a; font-weight: 500;">${budget}</td></tr>` : ''}
+              ${timeline ? `<tr><td style="color: #64748b; font-weight: 500; vertical-align: top;">Timeline</td><td style="color: #0f172a; font-weight: 500;">${timeline}</td></tr>` : ''}
+              ${preferredTime ? `<tr><td style="color: #64748b; font-weight: 500; vertical-align: top;">Preferred Time</td><td style="color: #0f172a; font-weight: 500;">${preferredTime}</td></tr>` : ''}
+              <tr>
+                <td style="color: #64748b; font-weight: 500; vertical-align: top;">NDA Status</td>
+                <td style="color: #0f172a;">${ndaRequested ? 'Yes (Formal NDA requested)' : 'Standard Confidentiality'}</td>
+              </tr>
+              <tr>
+                <td style="color: #64748b; font-weight: 500; vertical-align: top;">Source</td>
+                <td style="color: #64748b; font-size: 13px;">${source}</td>
               </tr>
             </table>
 
-            <!-- Project Scope / Description Box -->
-            <h3 style="color: #f1f5f9; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0; border-bottom: 1px solid #1f2937; padding-bottom: 6px;">
-              Project Scope & Requirements
-            </h3>
-            <div style="background-color: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 16px; color: #e2e8f0; font-size: 13px; line-height: 1.6; white-space: pre-wrap; margin-bottom: 28px;">
-${projectDescription}
+            <!-- Requirements -->
+            <div style="margin-bottom: 24px;">
+              <div style="font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 6px;">Project Requirements:</div>
+              <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; font-size: 14px; color: #334155; line-height: 1.6; white-space: pre-wrap;">${projectDescription}</div>
             </div>
 
-            <!-- Action Buttons -->
-            <div style="text-align: center;">
-              <a href="mailto:${email}?subject=Re:%20Asthasoft%20Project%20Scoping%20Session%20[Ticket%20${ticketId}]" style="display: inline-block; background-color: #0066ff; color: #ffffff; font-weight: 700; font-size: 13px; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-right: 8px;">
-                Reply to Client (${email})
+            <!-- Actions -->
+            <div style="padding-top: 8px;">
+              <a href="mailto:${email}?subject=Re:%20Asthasoft%20Project%20Scoping%20Session%20[Ticket%20${ticketId}]" style="display: inline-block; background-color: #2563eb; color: #ffffff; font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 6px; text-decoration: none; margin-right: 10px;">
+                Reply to Client
               </a>
-              <a href="tel:${countryCode}${phone}" style="display: inline-block; background-color: #10b981; color: #ffffff; font-weight: 700; font-size: 13px; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
-                Call Client Directly
+              <a href="tel:${countryCode}${phone}" style="display: inline-block; background-color: #f1f5f9; color: #0f172a; font-size: 14px; font-weight: 600; padding: 10px 18px; border-radius: 6px; text-decoration: none; border: 1px solid #cbd5e1;">
+                Call Client
               </a>
             </div>
 
           </div>
 
-          <!-- Footer Note -->
-          <div style="background-color: #0b0f19; padding: 16px 28px; border-top: 1px solid #1f2937; text-align: center; color: #64748b; font-size: 11px;">
-            Asthasoft Technologies Lead Capture System · Automated Transmission via Resend
+          <!-- Footer -->
+          <div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 12px 24px; font-size: 12px; color: #94a3b8; text-align: center;">
+            Received on ${formattedDate} · Asthasoft Technologies
           </div>
+
         </div>
       </body>
       </html>
@@ -186,7 +151,7 @@ ${projectDescription}
       body: JSON.stringify({
         from: 'Asthasoft Scoping <onboarding@resend.dev>',
         to: [ADMIN_EMAIL],
-        subject: `🚀 [New Scoping Request] ${fullName} - ${service}`,
+        subject: `New Scoping Request: ${fullName} - ${service}`,
         html: emailHtml,
         text: plainText,
         reply_to: email && email.includes('@') ? email : undefined,
