@@ -15,6 +15,7 @@ import {
   Mail,
 } from 'lucide-react';
 import { submitQuickEnquiry } from '../services/firebase';
+import { sendLeadEmailNotification } from '../services/emailService';
 
 interface ContactPageProps {
   onOpenScopingModal?: (context?: string) => void;
@@ -51,7 +52,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
     setIsSubmitting(true);
     try {
-      await submitQuickEnquiry({
+      const response = await submitQuickEnquiry({
         fullName: fullName,
         email: email,
         phone: `${countryCode} ${contactNumber}`,
@@ -59,6 +60,21 @@ export const ContactPage: React.FC<ContactPageProps> = ({
         budget: budget,
         notes: projectBrief || 'Enquiry submitted via /contact strategy brief form.',
       });
+
+      // Dispatch real-time lead notification to ADMIN_EMAIL
+      await sendLeadEmailNotification({
+        fullName,
+        email,
+        countryCode,
+        phone: contactNumber,
+        service,
+        budget,
+        projectDescription: projectBrief || 'Enquiry submitted via /contact strategy brief form.',
+        ndaRequested: true,
+        source: 'Contact Page - Strategy Form',
+        ticketId: response.enquiryId,
+      });
+
       setIsSubmitted(true);
     } catch (err) {
       console.error('Submission error:', err);
@@ -191,11 +207,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   >
                     <CheckCircle2 className="w-14 h-14 text-emerald-600 mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-slate-900 mb-2">Requirement Brief Received!</h3>
-                    <p className="text-sm text-slate-600 max-w-md mx-auto mb-6">
+                    <p className="text-sm text-slate-600 max-w-md mx-auto mb-4">
                       Thank you, <span className="font-semibold text-slate-800">{fullName}</span>. Our Principal
                       Solutions Architect has received your project parameters and will respond within 4 hours
                       with initial feasibility insights.
                     </p>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-100/70 text-emerald-800 text-xs font-semibold mb-6">
+                      <Mail className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Transmitted to Admin ({import.meta.env.VITE_ADMIN_EMAIL || 'asthasofttechnologies@gmail.com'})</span>
+                    </div>
                     <button
                       type="button"
                       onClick={() => setIsSubmitted(false)}

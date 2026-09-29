@@ -32,6 +32,9 @@ export default async function handler(req: any, res: any) {
       ndaRequested = true,
       source = 'Request a Scoping Session Modal',
       ticketId = `ASTHA-${Date.now().toString(36).toUpperCase()}`,
+      budget,
+      timeline,
+      preferredTime,
     } = body || {};
 
     const formattedDate = new Date().toLocaleString('en-US', {
@@ -111,6 +114,9 @@ export default async function handler(req: any, res: any) {
                 <td style="color: #94a3b8; font-weight: 600;">Requested Service:</td>
                 <td style="color: #facc15; font-weight: 700;">${service}</td>
               </tr>
+              ${budget ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Estimated Budget:</td><td style="color: #38bdf8; font-weight: 700;">${budget}</td></tr>` : ''}
+              ${timeline ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Timeline:</td><td style="color: #cbd5e1;">${timeline}</td></tr>` : ''}
+              ${preferredTime ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Preferred Call Time:</td><td style="color: #facc15; font-weight: 700;">${preferredTime}</td></tr>` : ''}
               <tr style="border-bottom: 1px solid #1f2937;">
                 <td style="color: #94a3b8; font-weight: 600;">Mutual NDA Status:</td>
                 <td>
@@ -156,6 +162,20 @@ ${projectDescription}
       </html>
     `;
 
+    const plainText = `ASTHASOFT TECHNOLOGIES - NEW SCOPING REQUEST
+Ticket ID: ${ticketId}
+Time: ${formattedDate}
+Full Name: ${fullName}
+Email: ${email}
+Phone: ${countryCode} ${phone}
+Service: ${service}
+${budget ? `Budget: ${budget}\n` : ''}${timeline ? `Timeline: ${timeline}\n` : ''}${preferredTime ? `Preferred Call Time: ${preferredTime}\n` : ''}NDA Requested: ${ndaRequested ? 'YES' : 'Standard'}
+Source: ${source}
+
+Project Description:
+${projectDescription}
+`;
+
     // Dispatch via Resend HTTP API
     const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -168,6 +188,7 @@ ${projectDescription}
         to: [ADMIN_EMAIL],
         subject: `🚀 [New Scoping Request] ${fullName} - ${service}`,
         html: emailHtml,
+        text: plainText,
         reply_to: email && email.includes('@') ? email : undefined,
       }),
     });
@@ -187,6 +208,7 @@ ${projectDescription}
       message: 'Scoping session details dispatched to admin email successfully.',
       resendId: resendData.id,
       ticketId,
+      adminEmail: ADMIN_EMAIL,
     });
   } catch (error: any) {
     console.error('Server error processing scoping email:', error);

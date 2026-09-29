@@ -5,7 +5,7 @@ export const LeadSchema = z.object({
   fullName: z
     .string()
     .min(2, "Name must contain letters only.")
-    .regex(/^[a-zA-Z\s]+$/, "Letters only"),
+    .regex(/^[a-zA-Z\s.'-]+$/, "Please enter a valid name"),
   email: z.string().email("Please provide a valid work email"),
   countryCode: z.string().min(1, "Country code required"),
   phone: z.string().min(7, "Invalid phone number"),

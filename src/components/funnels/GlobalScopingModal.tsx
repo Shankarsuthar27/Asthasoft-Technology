@@ -12,6 +12,7 @@ import {
   ArrowRight,
   ShieldCheck,
   AlertCircle,
+  Mail,
 } from 'lucide-react';
 import { LeadSchema, type LeadFormData } from './LeadSchema';
 import { submitEnquiry } from '../../services/firebase';
@@ -57,6 +58,7 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
   const [submissionSuccess, setSubmissionSuccess] = useState<{
     ticketId: string;
     message: string;
+    emailDispatched?: boolean;
   } | null>(null);
 
   // Generate arithmetic problem matching screenshot (e.g. 2 x 2 = 4)
@@ -77,14 +79,6 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
     }
     setCaptchaError(null);
   };
-
-  useEffect(() => {
-    if (isOpen) {
-      generateMathProblem();
-      setSubmissionSuccess(null);
-      setCaptchaError(null);
-    }
-  }, [isOpen]);
 
   const {
     register,
@@ -112,6 +106,28 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
     setValue('countryCode', found.code);
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      generateMathProblem();
+      setSubmissionSuccess(null);
+      setCaptchaError(null);
+      setValue('source', initialSource || 'Request a Scoping Session Modal');
+      
+      const lowerSource = (initialSource || '').toLowerCase();
+      if (lowerSource.includes('mobile') || lowerSource.includes('android') || lowerSource.includes('ios')) {
+        setValue('service', 'Mobile App Development (iOS & Android)');
+      } else if (lowerSource.includes('ai') || lowerSource.includes('llm')) {
+        setValue('service', 'Enterprise AI & Agentic Systems');
+      } else if (lowerSource.includes('cloud') || lowerSource.includes('devops')) {
+        setValue('service', 'Cloud Architecture & DevOps');
+      } else if (lowerSource.includes('fintech') || lowerSource.includes('payment')) {
+        setValue('service', 'FinTech & Payment Solutions');
+      } else {
+        setValue('service', 'Custom Enterprise Software');
+      }
+    }
+  }, [isOpen, initialSource, setValue]);
+
   const onSubmit = async (data: LeadFormData) => {
     if (Number(data.mathCaptchaAnswer) !== mathProblem.answer) {
       setCaptchaError(
@@ -127,7 +143,21 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
     try {
       const response = await submitEnquiry({
         ...data,
-        source: initialSource,
+        countryCode: selectedCountry.code,
+        source: initialSource || data.source,
+      });
+
+      // Dispatch real-time email notification to admin via Resend API
+      const emailResult = await sendLeadEmailNotification({
+        fullName: data.fullName,
+        email: data.email,
+        countryCode: selectedCountry.code,
+        phone: data.phone,
+        service: data.service || 'Custom Enterprise Software',
+        projectDescription: data.projectDescription,
+        ndaRequested: Boolean(data.ndaRequested),
+        source: initialSource || 'Request a Scoping Session Modal',
+        ticketId: response.enquiryId,
       });
 
       try {
@@ -144,27 +174,13 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
       setSubmissionSuccess({
         ticketId: response.enquiryId,
         message: response.message,
-      });
-
-      // Dispatch real-time email notification to admin via Resend API
-      sendLeadEmailNotification({
-        fullName: data.fullName,
-        email: data.email,
-        countryCode: selectedCountry.code,
-        phone: data.phone,
-        service: data.service || 'Custom Enterprise Software',
-        projectDescription: data.projectDescription,
-        ndaRequested: Boolean(data.ndaRequested),
-        source: initialSource || 'Request a Scoping Session Modal',
-        ticketId: response.enquiryId,
-      }).catch((emailErr) => {
-        console.warn('Background admin email dispatch error:', emailErr);
+        emailDispatched: emailResult.success,
       });
 
       reset();
     } catch (err: any) {
       console.error('Submission failed:', err);
-      setCaptchaError('Transmission failed. Please email sales@asthasoftindia.com directly.');
+      setCaptchaError('Transmission failed. Please email asthasofttechnologies@gmail.com directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -217,6 +233,10 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
                   <div className="flex items-center gap-2 text-emerald-600 font-semibold">
                     <CheckCircle2 className="w-4 h-4 shrink-0" />
                     <span>Cryptographic NDA Automatically Queued</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[#0066ff] font-semibold">
+                    <Mail className="w-4 h-4 shrink-0" />
+                    <span>All Details Emailed to Admin ({import.meta.env.VITE_ADMIN_EMAIL || 'asthasofttechnologies@gmail.com'})</span>
                   </div>
                   <div className="flex items-center gap-2 text-slate-600">
                     <Clock className="w-4 h-4 text-[#1d4ed8] shrink-0" />
@@ -396,6 +416,26 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
                         </div>
                       </div>
 
+                      {/* Service Required */}
+                      <div>
+                        <label className="block text-xs font-bold text-slate-800 mb-1">
+                          Service Required <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          {...register('service')}
+                          className="w-full pb-2 pt-1 border-b text-sm text-slate-900 bg-transparent outline-none transition-colors border-slate-200 focus:border-[#1d4ed8] cursor-pointer font-medium"
+                        >
+                          <option value="Custom Enterprise Software">Custom Enterprise Software</option>
+                          <option value="Mobile App Development (iOS & Android)">Mobile App Development (iOS & Android)</option>
+                          <option value="Enterprise AI & Agentic Systems">Enterprise AI & Agentic Systems</option>
+                          <option value="Cloud Architecture & DevOps">Cloud Architecture & DevOps</option>
+                          <option value="FinTech & Payment Solutions">FinTech & Payment Solutions</option>
+                          <option value="Messaging & SMS/OTP/RCS Infrastructure">Messaging & SMS Infrastructure</option>
+                          <option value="Dedicated Engineering Pod">Dedicated Engineering Pod</option>
+                          <option value="Legacy Codebase Modernization">Legacy Modernization</option>
+                        </select>
+                      </div>
+
                       {/* Project Description (How can we help?) * */}
                       <div>
                         <label className="block text-xs font-bold text-slate-800 mb-1">
@@ -467,7 +507,7 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
                           {isSubmitting ? (
                             <>
                               <RefreshCw className="w-4 h-4 animate-spin" />
-                              <span>Submitting...</span>
+                              <span>Submitting & Notifying Admin...</span>
                             </>
                           ) : (
                             <>

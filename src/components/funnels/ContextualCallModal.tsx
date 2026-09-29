@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { QuickCallSchema, type QuickCallFormData } from './LeadSchema';
 import { submitQuickCall } from '../../services/firebase';
+import { sendLeadEmailNotification } from '../../services/emailService';
 
 interface ContextualCallModalProps {
   isOpen: boolean;
@@ -52,6 +53,21 @@ export const ContextualCallModal: React.FC<ContextualCallModalProps> = ({
         ...data,
         serviceContext,
       });
+
+      // Dispatch real-time call request notification to ADMIN_EMAIL
+      await sendLeadEmailNotification({
+        fullName: data.fullName,
+        email: 'N/A (Instant Call Request)',
+        countryCode: data.countryCode,
+        phone: data.phone,
+        service: data.serviceContext || serviceContext,
+        preferredTime: data.preferredTime,
+        projectDescription: `Request for direct 30-min call. Preferred time: ${data.preferredTime || 'Within 30 Minutes'}`,
+        ndaRequested: true,
+        source: 'Contextual Rapid Call Lightbox',
+        ticketId: res.enquiryId,
+      });
+
       setSuccessResponse(res.message);
       reset();
     } catch (e) {

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { QuickEnquirySchema, type QuickEnquiryFormData } from './LeadSchema';
 import { submitQuickEnquiry } from '../../services/firebase';
+import { sendLeadEmailNotification } from '../../services/emailService';
 
 export const PersistentEnquiryDrawer: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,6 +43,22 @@ export const PersistentEnquiryDrawer: React.FC = () => {
     setIsSubmitting(true);
     try {
       const response = await submitQuickEnquiry(data);
+      
+      // Dispatch real-time lead notification to ADMIN_EMAIL
+      await sendLeadEmailNotification({
+        fullName: data.fullName,
+        email: data.email,
+        countryCode: data.countryCode || '+91',
+        phone: data.phone,
+        service: data.service,
+        budget: data.budget,
+        timeline: data.timeline,
+        projectDescription: data.notes || 'Submitted via Persistent Slide-In Enquiry Drawer',
+        ndaRequested: true,
+        source: 'Persistent Slide-In Enquiry Drawer',
+        ticketId: response.enquiryId,
+      });
+
       setSuccessMessage(response.message);
       reset();
     } catch (e) {

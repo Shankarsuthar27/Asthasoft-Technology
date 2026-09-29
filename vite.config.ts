@@ -2,9 +2,6 @@ import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 
 function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
-  const RESEND_API_KEY = apiKey || process.env.RESEND_API_KEY || '';
-  const ADMIN_EMAIL = adminEmail || process.env.ADMIN_EMAIL || 'asthasofttechnologies@gmail.com';
-
   return {
     name: 'resend-dev-api-middleware',
     configureServer(server) {
@@ -43,7 +40,13 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
               ndaRequested = true,
               source = 'Request a Scoping Session Modal',
               ticketId = `ASTHA-${Date.now().toString(36).toUpperCase()}`,
+              budget,
+              timeline,
+              preferredTime,
             } = data;
+
+            const targetAdminEmail = process.env.ADMIN_EMAIL || adminEmail || 'asthasofttechnologies@gmail.com';
+            const targetApiKey = process.env.RESEND_API_KEY || apiKey || '';
 
             const formattedDate = new Date().toLocaleString('en-US', {
               timeZone: 'Asia/Kolkata',
@@ -51,14 +54,16 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
               timeStyle: 'medium',
             });
 
+            console.log(`\n📨 [Scoping Email Dispatcher] Preparing lead alert for ${fullName} (${email}) -> Sending to ${targetAdminEmail}`);
+
             const emailHtml = `
               <!DOCTYPE html>
               <html>
               <head><meta charset="utf-8"></head>
-              <body style="font-family: sans-serif; background-color: #0b0f19; color: #f8fafc; padding: 24px 12px; margin: 0;">
-                <div style="max-width: 600px; margin: 0 auto; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; overflow: hidden;">
+              <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0b0f19; color: #f8fafc; padding: 24px 12px; margin: 0;">
+                <div style="max-width: 600px; margin: 0 auto; background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                   <div style="background: linear-gradient(135deg, #0066ff, #1d4ed8); padding: 24px 28px;">
-                    <h1 style="margin: 0; color: #ffffff; font-size: 20px;">ASTHASOFT TECHNOLOGIES</h1>
+                    <h1 style="margin: 0; color: #ffffff; font-size: 20px; font-weight: 800;">ASTHASOFT TECHNOLOGIES</h1>
                     <p style="margin: 4px 0 0; color: #dbeafe; font-size: 13px;">🚀 New Scoping Session Request Captured</p>
                   </div>
                   <div style="padding: 28px;">
@@ -73,7 +78,7 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
                       </tr>
                       <tr style="border-bottom: 1px solid #1f2937;">
                         <td style="color: #94a3b8; font-weight: 600;">Email:</td>
-                        <td><a href="mailto:${email}" style="color: #38bdf8; text-decoration: none;">${email}</a></td>
+                        <td><a href="mailto:${email}" style="color: #38bdf8; text-decoration: none; font-weight: 600;">${email}</a></td>
                       </tr>
                       <tr style="border-bottom: 1px solid #1f2937;">
                         <td style="color: #94a3b8; font-weight: 600;">Phone:</td>
@@ -83,6 +88,9 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
                         <td style="color: #94a3b8; font-weight: 600;">Service:</td>
                         <td style="color: #facc15; font-weight: 700;">${service}</td>
                       </tr>
+                      ${budget ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Budget:</td><td style="color: #38bdf8; font-weight: 700;">${budget}</td></tr>` : ''}
+                      ${timeline ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Timeline:</td><td style="color: #cbd5e1;">${timeline}</td></tr>` : ''}
+                      ${preferredTime ? `<tr style="border-bottom: 1px solid #1f2937;"><td style="color: #94a3b8; font-weight: 600;">Preferred Call Time:</td><td style="color: #facc15; font-weight: 700;">${preferredTime}</td></tr>` : ''}
                       <tr style="border-bottom: 1px solid #1f2937;">
                         <td style="color: #94a3b8; font-weight: 600;">NDA Requested:</td>
                         <td style="color: ${ndaRequested ? '#34d399' : '#94a3b8'}; font-weight: 700;">
@@ -112,26 +120,48 @@ ${projectDescription}
               </html>
             `;
 
+            const plainText = `ASTHASOFT TECHNOLOGIES - NEW SCOPING REQUEST
+Ticket ID: ${ticketId}
+Time: ${formattedDate}
+Full Name: ${fullName}
+Email: ${email}
+Phone: ${countryCode} ${phone}
+Service: ${service}
+${budget ? `Budget: ${budget}\n` : ''}${timeline ? `Timeline: ${timeline}\n` : ''}${preferredTime ? `Preferred Call Time: ${preferredTime}\n` : ''}NDA Requested: ${ndaRequested ? 'YES' : 'Standard'}
+Source: ${source}
+
+Project Description:
+${projectDescription}
+`;
+
             const resendRes = await fetch('https://api.resend.com/emails', {
               method: 'POST',
               headers: {
-                Authorization: `Bearer ${RESEND_API_KEY}`,
+                Authorization: `Bearer ${targetApiKey}`,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
                 from: 'Asthasoft Scoping <onboarding@resend.dev>',
-                to: [ADMIN_EMAIL],
+                to: [targetAdminEmail],
                 subject: `🚀 [New Scoping Request] ${fullName} - ${service}`,
                 html: emailHtml,
+                text: plainText,
                 reply_to: email && email.includes('@') ? email : undefined,
               }),
             });
 
-            const resendData = await resendRes.json();
+            const resendData = (await resendRes.json()) as any;
+            if (resendRes.ok) {
+              console.log(`✅ [Scoping Email Dispatcher] Delivered to ${targetAdminEmail}! Resend ID: ${resendData.id}`);
+            } else {
+              console.error(`❌ [Scoping Email Dispatcher] Resend API Error:`, resendData);
+            }
+
             res.statusCode = resendRes.status;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(resendData));
           } catch (err: any) {
+            console.error('❌ [Scoping Email Dispatcher] Internal error:', err);
             res.statusCode = 500;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({ error: err.message }));
@@ -153,4 +183,3 @@ export default defineConfig(({ mode }) => {
     base: '/',
   };
 });
-
