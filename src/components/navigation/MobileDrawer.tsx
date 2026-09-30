@@ -395,8 +395,8 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 
               {/* 5. Our Work */}
               <a
-                href="#case-study"
-                onClick={(e) => handleLinkClick(e, '#case-study')}
+                href="#our-work"
+                onClick={(e) => handleLinkClick(e, '#our-work')}
                 className="block py-2.5 px-3 text-sm font-semibold text-slate-800 hover:text-[#0066ff] transition-colors cursor-pointer"
               >
                 Our Work

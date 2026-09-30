@@ -12,6 +12,7 @@ import { IndustriesAppSolutionsSection } from './components/sections/IndustriesA
 import { TechStackSection } from './components/sections/TechStackSection';
 import { TestimonialsShowcase } from './components/sections/TestimonialsShowcase';
 import { SubBrandsShowcase } from './components/sections/SubBrandsShowcase';
+import { OurWorkShowcase } from './components/sections/OurWorkShowcase';
 import { ServicesDirectorySection } from './components/sections/ServicesDirectorySection';
 import { Footer } from './components/sections/Footer';
 import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopmentPage';
@@ -174,6 +175,12 @@ export function App() {
 
               {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
               <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
+
+              {/* Our Work: Real Production Deployments & JSD Car Rental ERP Showcase */}
+              <OurWorkShowcase
+                onOpenScopingModal={handleOpenScopingModal}
+                onRequestCall={handleOpenCallModal}
+              />
 
               {/* Section 3: Proven 5-Step Engineering & Delivery Lifecycle */}
               <EngineeringProcessSection onOpenScopingModal={handleOpenScopingModal} />

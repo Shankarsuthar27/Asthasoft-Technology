@@ -560,10 +560,10 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
 
             {/* Direct Links matching screenshot */}
             <a
-              href="#services"
+              href="#our-work"
               onClick={(e) => {
                 e.preventDefault();
-                navigateTo('#services');
+                navigateTo('#our-work');
               }}
               className="px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#0066ff] transition-colors cursor-pointer"
             >
