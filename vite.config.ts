@@ -5,7 +5,7 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
   return {
     name: 'resend-dev-api-middleware',
     configureServer(server) {
-      server.middlewares.use('/api/send-scoping-email', async (req, res) => {
+      const emailHandler = async (req: any, res: any) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -23,7 +23,7 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
         }
 
         let body = '';
-        req.on('data', (chunk) => {
+        req.on('data', (chunk: any) => {
           body += chunk;
         });
 
@@ -45,7 +45,7 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
               preferredTime,
             } = data;
 
-            const targetAdminEmail = process.env.ADMIN_EMAIL || adminEmail || 'asthasofttechnologies@gmail.com';
+            const targetAdminEmail = process.env.ADMIN_EMAIL || adminEmail || 'hostelsuthar@gmail.com';
             const targetApiKey = process.env.RESEND_API_KEY || apiKey || '';
 
             const formattedDate = new Date().toLocaleString('en-US', {
@@ -106,15 +106,18 @@ Sent automatically by Asthasoft Technologies Lead Intake System.
 
             res.statusCode = resendRes.status;
             res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(resendData));
+            res.end(JSON.stringify({ ...resendData, success: resendRes.ok, adminEmail: targetAdminEmail }));
           } catch (err: any) {
             console.error('❌ [Scoping Email Dispatcher] Internal error:', err);
             res.statusCode = 500;
             res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({ error: err.message }));
+            res.end(JSON.stringify({ error: err.message, success: false }));
           }
         });
-      });
+      };
+
+      server.middlewares.use('/api/send-scoping-email.php', emailHandler);
+      server.middlewares.use('/api/send-scoping-email', emailHandler);
     },
   };
 }
@@ -123,7 +126,7 @@ Sent automatically by Asthasoft Technologies Lead Intake System.
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const apiKey = env.RESEND_API_KEY || process.env.RESEND_API_KEY || '';
-  const adminEmail = env.ADMIN_EMAIL || process.env.ADMIN_EMAIL || 'asthasofttechnologies@gmail.com';
+  const adminEmail = env.ADMIN_EMAIL || process.env.ADMIN_EMAIL || 'hostelsuthar@gmail.com';
 
   return {
     plugins: [react(), resendDevApiPlugin(apiKey, adminEmail)],

@@ -1,5 +1,5 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'asthasofttechnologies@gmail.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hostelsuthar@gmail.com';
 
 export default async function handler(req: any, res: any) {
   // Set CORS headers so local and staging origins can communicate freely
@@ -68,6 +68,14 @@ DIRECT ACTIONS
 
 Sent automatically by Asthasoft Technologies Lead Intake System.
 `;
+
+    if (!RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set in environment variables.');
+      return res.status(500).json({
+        success: false,
+        error: 'RESEND_API_KEY is not configured on the server environment.',
+      });
+    }
 
     // Dispatch via Resend HTTP API
     const resendResponse = await fetch('https://api.resend.com/emails', {

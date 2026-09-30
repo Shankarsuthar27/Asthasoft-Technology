@@ -1,8 +1,15 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # 1. API Route: Direct /api/send-scoping-email to PHP dispatcher
+  RewriteRule ^api/send-scoping-email/?$ /api/send-scoping-email.php [L,QSA]
+
+  # 2. Existing files and directories bypass rewrite
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
+
+  # 3. SPA routing fallback
   RewriteRule . /index.html [L]
 </IfModule>
