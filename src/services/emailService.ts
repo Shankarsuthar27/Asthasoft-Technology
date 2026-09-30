@@ -103,9 +103,9 @@ Sent automatically by Asthasoft Technologies Lead Intake System.
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Asthasoft Scoping <onboarding@resend.dev>',
+          from: 'Asthasoft Technologies <onboarding@resend.dev>',
           to: [adminEmail],
-          subject: `New Request ${fullName} - ${service}`,
+          subject: `New Client Inquiry: ${fullName} - ${service}`,
           text: plainText,
           reply_to: email && email.includes('@') ? email : undefined,
         }),

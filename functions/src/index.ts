@@ -53,7 +53,7 @@ async function notifySlack(enquiryData: Record<string, unknown>) {
 
   try {
     const payload = {
-      text: `🚀 *New Enterprise Lead Captured!*`,
+      text: ` *New Enterprise Lead Captured!*`,
       blocks: [
         {
           type: "section",
@@ -131,9 +131,9 @@ Sent automatically by Asthasoft Technologies Lead Intake System.
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Asthasoft Scoping <onboarding@resend.dev>",
+        from: "Asthasoft Technologies <onboarding@resend.dev>",
         to: [adminEmail],
-        subject: `🚀 [New Scoping Request] ${enquiryData.fullName} - ${enquiryData.serviceCategory}`,
+        subject: `New Client Inquiry: ${enquiryData.fullName} - ${enquiryData.serviceCategory}`,
         text: plainText,
         reply_to: enquiryData.email,
       }),
