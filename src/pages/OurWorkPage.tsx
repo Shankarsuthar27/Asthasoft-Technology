@@ -272,51 +272,92 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[#38bdf8] text-xs font-semibold uppercase tracking-wider mb-5">
             <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-            <span>Asthasoft Engineering Portfolio</span>
+            <span>Asthasoft Engineering Portfolio & Case Studies</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8">
-              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.12]">
-                Transformative Digital Systems{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066ff] via-[#38bdf8] to-cyan-300">
-                  Engineered For Scalable Growth
-                </span>
-              </h1>
-              <p className="mt-5 text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed max-w-3xl">
-                Explore custom software, enterprise fleet ERPs, fintech rails, and cloud applications designed and delivered by Asthasoft Technologies. Every product is engineered for zero-downtime reliability, high throughput, and measurable commercial ROI.
-              </p>
+          {/* HIGH-IMPACT TOP CTA HERO BANNER */}
+          <div className="rounded-3xl bg-gradient-to-r from-blue-700 via-[#0052cc] to-indigo-800 p-8 sm:p-12 md:p-14 text-center text-white shadow-2xl relative overflow-hidden mb-10">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+
+            <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/20 text-white text-xs font-bold tracking-wider uppercase mb-4">
+              READY TO BUILD YOUR CUSTOM SYSTEM?
+            </span>
+
+            <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black max-w-4xl mx-auto leading-tight">
+              Let's Build Software That Powers Your Entire Business Operations
+            </h1>
+
+            <p className="mt-4 text-xs sm:text-sm md:text-base text-blue-100 max-w-3xl mx-auto leading-relaxed">
+              Whether you need a car rental ERP, fintech gateway, SaaS application, or internal workflow system — Asthasoft delivers within budget and strict timelines.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => onOpenScopingModal('Our Work Top CTA')}
+                className="px-6 sm:px-8 py-3.5 rounded-full bg-white text-[#0066ff] hover:bg-slate-100 font-heading font-bold text-xs sm:text-sm shadow-xl active:scale-95 transition-all cursor-pointer"
+              >
+                Schedule Free Scoping Session
+              </button>
+
+              {onOpenCallModal ? (
+                <button
+                  type="button"
+                  onClick={() => onOpenCallModal('Our Work Consultation')}
+                  className="px-6 sm:px-8 py-3.5 rounded-full bg-blue-900/40 hover:bg-blue-900/60 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <PhoneCall className="w-4 h-4 text-cyan-300" />
+                  <span>Call in 30 Min</span>
+                </button>
+              ) : (
+                <a
+                  href="tel:+917023318111"
+                  className="px-6 sm:px-8 py-3.5 rounded-full bg-blue-900/40 hover:bg-blue-900/60 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <PhoneCall className="w-4 h-4 text-cyan-300" />
+                  <span>Call +91-7023318111</span>
+                </a>
+              )}
             </div>
 
-            <div className="lg:col-span-4 flex flex-col gap-3">
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                    <span className="block text-2xl font-black text-white">50+</span>
-                    <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
-                      Deployed Systems
-                    </span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                    <span className="block text-2xl font-black text-emerald-400">99.98%</span>
-                    <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
-                      Proven Uptime
-                    </span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                    <span className="block text-2xl font-black text-amber-300">₹100Cr+</span>
-                    <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
-                      Annual Transaction Volume
-                    </span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                    <span className="block text-2xl font-black text-purple-300">100%</span>
-                    <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
-                      On-Time Delivery
-                    </span>
-                  </div>
-                </div>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-blue-200">
+              <span className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-cyan-300" /> No Obligation Consultation
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-cyan-300" /> Strict NDA Signed First
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Check className="w-4 h-4 text-cyan-300" /> Transparent Milestone Pricing
+              </span>
+            </div>
+          </div>
+
+          {/* Key Deliveries Summary Bar */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
+              <span className="block text-2xl sm:text-3xl font-black text-white">50+</span>
+              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+                Deployed Systems
+              </span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
+              <span className="block text-2xl sm:text-3xl font-black text-emerald-400">99.98%</span>
+              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+                Proven Uptime
+              </span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
+              <span className="block text-2xl sm:text-3xl font-black text-amber-300">₹100Cr+</span>
+              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+                Annual Volume
+              </span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
+              <span className="block text-2xl sm:text-3xl font-black text-purple-300">100%</span>
+              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+                On-Time Delivery
+              </span>
             </div>
           </div>
         </div>
@@ -734,68 +775,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
           </div>
         </div>
       </section>
-
-      {/* FINAL BOTTOM CTA SECTION */}
-      <section className="py-14 sm:py-20 relative overflow-hidden">
-        <div className="max-w-[1340px] mx-auto px-4 sm:px-6 relative z-10">
-          <div className="rounded-3xl bg-gradient-to-r from-blue-700 via-[#0052cc] to-indigo-800 p-8 sm:p-12 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-
-            <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/20 text-white text-xs font-bold tracking-wider uppercase mb-4">
-              READY TO BUILD YOUR CUSTOM SYSTEM?
-            </span>
-
-            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black max-w-3xl mx-auto leading-tight">
-              Let's Build Software That Powers Your Entire Business Operations
-            </h2>
-
-            <p className="mt-4 text-xs sm:text-sm md:text-base text-blue-100 max-w-2xl mx-auto leading-relaxed">
-              Whether you need a car rental ERP, fintech gateway, SaaS application, or internal workflow system — Asthasoft delivers within budget and strict timelines.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <button
-                type="button"
-                onClick={() => onOpenScopingModal('Our Work Bottom CTA')}
-                className="px-6 sm:px-8 py-3.5 rounded-full bg-white text-[#0066ff] hover:bg-slate-100 font-heading font-bold text-xs sm:text-sm shadow-xl active:scale-95 transition-all cursor-pointer"
-              >
-                Schedule Free Scoping Session
-              </button>
-
-              {onOpenCallModal ? (
-                <button
-                  type="button"
-                  onClick={() => onOpenCallModal('Our Work Consultation')}
-                  className="px-6 sm:px-8 py-3.5 rounded-full bg-blue-900/40 hover:bg-blue-900/60 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
-                >
-                  <PhoneCall className="w-4 h-4 text-cyan-300" />
-                  <span>Call in 30 Min</span>
-                </button>
-              ) : (
-                <a
-                  href="tel:+917023318111"
-                  className="px-6 sm:px-8 py-3.5 rounded-full bg-blue-900/40 hover:bg-blue-900/60 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
-                >
-                  <PhoneCall className="w-4 h-4 text-cyan-300" />
-                  <span>Call +91-7023318111</span>
-                </a>
-              )}
-            </div>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-blue-200">
-              <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-cyan-300" /> No Obligation Consultation
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-cyan-300" /> Strict NDA Signed First
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-cyan-300" /> Transparent Milestone Pricing
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
+
