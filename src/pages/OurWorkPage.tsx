@@ -136,6 +136,13 @@ const ADDITIONAL_PROJECTS = [
   },
 ];
 
+const METRICS_DATA = [
+  { value: '50+', label: 'Deployed Systems', color: 'text-slate-900' },
+  { value: '99.98%', label: 'Proven Uptime', color: 'text-emerald-600' },
+  { value: '₹100Cr+', label: 'Annual Volume', color: 'text-amber-600' },
+  { value: '100%', label: 'On-Time Delivery', color: 'text-purple-600' },
+];
+
 export const OurWorkPage: React.FC<OurWorkPageProps> = ({
   onOpenScopingModal,
   onOpenCallModal,
@@ -157,7 +164,12 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-[#0066ff] selection:text-white pb-20 font-body">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen bg-slate-50 text-slate-900 selection:bg-[#0066ff] selection:text-white pb-20 font-body"
+    >
       {/* Lightbox Modal */}
       <AnimatePresence>
         {lightboxImage && (
@@ -169,10 +181,10 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             onClick={() => setLightboxImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              initial={{ scale: 0.93, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.93, opacity: 0, y: 15 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 320 }}
               onClick={(e) => e.stopPropagation()}
               className="bg-white border border-slate-200 rounded-2xl overflow-hidden max-w-5xl w-full shadow-2xl relative flex flex-col"
             >
@@ -205,7 +217,9 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
                   {lightboxImage.description}
                 </p>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="button"
                   onClick={() => {
                     setLightboxImage(null);
@@ -214,7 +228,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                   className="px-4 py-2 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs font-semibold shrink-0 cursor-pointer shadow-sm"
                 >
                   Request Similar Software
-                </button>
+                </motion.button>
               </div>
             </motion.div>
           </motion.div>
@@ -222,53 +236,83 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       </AnimatePresence>
 
       {/* Hero Header Area */}
-      <section className="relative pt-8 sm:pt-12 pb-10 bg-white border-b border-slate-200/80">
+      <section className="relative pt-6 sm:pt-10 pb-10 bg-white border-b border-slate-200/80">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-
           {/* HIGH-IMPACT TOP CTA HERO BANNER */}
-          <div className="rounded-3xl bg-gradient-to-r from-[#0052cc] via-[#0066ff] to-[#0284c7] p-8 sm:p-12 md:p-14 text-center text-white shadow-xl shadow-blue-500/15 relative overflow-hidden mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-3xl bg-gradient-to-r from-[#0052cc] via-[#0066ff] to-[#0284c7] p-8 sm:p-12 md:p-14 text-center text-white shadow-xl shadow-blue-500/15 relative overflow-hidden mb-8"
+          >
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
-            <span className="inline-block px-3.5 py-1 rounded-full bg-white/20 text-white text-[11px] font-bold tracking-wider uppercase mb-3">
+            <motion.span
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="inline-block px-3.5 py-1 rounded-full bg-white/20 text-white text-[11px] font-bold tracking-wider uppercase mb-3"
+            >
               READY TO BUILD YOUR CUSTOM SYSTEM?
-            </span>
+            </motion.span>
 
-            <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black max-w-4xl mx-auto leading-tight">
+            <motion.h1
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.55 }}
+              className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black max-w-4xl mx-auto leading-tight"
+            >
               Let's Build Software That Powers Your Entire Business Operations
-            </h1>
+            </motion.h1>
 
-            <p className="mt-4 text-xs sm:text-sm md:text-base text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.22, duration: 0.55 }}
+              className="mt-4 text-xs sm:text-sm md:text-base text-blue-100 max-w-3xl mx-auto leading-relaxed"
+            >
               Whether you need a car rental ERP, fintech gateway, SaaS application, or internal workflow system — Asthasoft delivers within budget and strict timelines.
-            </p>
+            </motion.p>
 
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
-              <button
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.55 }}
+              className="mt-7 flex flex-wrap items-center justify-center gap-3.5"
+            >
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 type="button"
                 onClick={() => onOpenScopingModal('Our Work Top CTA')}
-                className="px-6 sm:px-8 py-3.5 rounded-full bg-white text-[#0066ff] hover:bg-slate-50 font-heading font-bold text-xs sm:text-sm shadow-md active:scale-95 transition-all cursor-pointer"
+                className="px-6 sm:px-8 py-3.5 rounded-full bg-white text-[#0066ff] hover:bg-slate-50 font-heading font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
               >
                 Schedule Free Scoping Session
-              </button>
+              </motion.button>
 
               {onOpenCallModal ? (
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   type="button"
                   onClick={() => onOpenCallModal('Our Work Consultation')}
-                  className="px-6 sm:px-8 py-3.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-6 sm:px-8 py-3.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <PhoneCall className="w-4 h-4 text-white" />
                   <span>Call in 30 Min</span>
-                </button>
+                </motion.button>
               ) : (
-                <a
+                <motion.a
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   href="tel:+917023318111"
-                  className="px-6 sm:px-8 py-3.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-6 sm:px-8 py-3.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <PhoneCall className="w-4 h-4 text-white" />
                   <span>Call +91-7023318111</span>
-                </a>
+                </motion.a>
               )}
-            </div>
+            </motion.div>
 
             <div className="mt-7 flex flex-wrap items-center justify-center gap-6 text-xs text-blue-100 font-medium">
               <span className="flex items-center gap-1.5">
@@ -281,34 +325,27 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 <Check className="w-4 h-4 text-white" /> Transparent Milestone Pricing
               </span>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Simple Key Metrics Bar */}
+          {/* Simple Key Metrics Bar with Stagger Animation */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
-              <span className="block text-2xl sm:text-3xl font-black text-slate-900">50+</span>
-              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                Deployed Systems
-              </span>
-            </div>
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
-              <span className="block text-2xl sm:text-3xl font-black text-emerald-600">99.98%</span>
-              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                Proven Uptime
-              </span>
-            </div>
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
-              <span className="block text-2xl sm:text-3xl font-black text-amber-600">₹100Cr+</span>
-              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                Annual Volume
-              </span>
-            </div>
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
-              <span className="block text-2xl sm:text-3xl font-black text-purple-600">100%</span>
-              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                On-Time Delivery
-              </span>
-            </div>
+            {METRICS_DATA.map((metric, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.15 + i * 0.08 }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center hover:border-blue-400/80 hover:shadow-sm transition-all cursor-default"
+              >
+                <span className={`block text-2xl sm:text-3xl font-black ${metric.color}`}>
+                  {metric.value}
+                </span>
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                  {metric.label}
+                </span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -317,7 +354,13 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       <section className="py-12 sm:py-16">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+          >
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[#0066ff] text-xs font-bold uppercase tracking-wider mb-2">
                 <Car className="w-3.5 h-3.5" />
@@ -339,12 +382,18 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 Client: <strong className="text-slate-900">Jalore, Rajasthan, India</strong>
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Interactive Showcase Card in Light Theme */}
-          <div className="rounded-3xl bg-white border border-slate-200/90 p-5 sm:p-8 shadow-sm">
-            {/* Tab Navigation */}
-            <div className="flex flex-wrap items-center gap-2 mb-6 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/70 max-w-fit">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.55 }}
+            className="rounded-3xl bg-white border border-slate-200/90 p-5 sm:p-8 shadow-sm"
+          >
+            {/* Tab Navigation with Animated Sliding Indicator */}
+            <div className="flex flex-wrap items-center gap-1.5 mb-6 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/70 max-w-fit">
               {CAR_RENTAL_SCREENSHOTS.map((tab) => {
                 const isActive = activeScreenshotTab === tab.id;
                 return (
@@ -352,182 +401,187 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveScreenshotTab(tab.id)}
-                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+                    className={`relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors cursor-pointer flex items-center gap-2 ${
                       isActive
-                        ? 'bg-[#0066ff] text-white shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                        ? 'text-white'
+                        : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    <span>{tab.shortTitle}</span>
                     {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                      <motion.div
+                        layoutId="activeTabPill"
+                        className="absolute inset-0 bg-[#0066ff] rounded-xl shadow-xs"
+                        transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                      />
+                    )}
+                    <span className="relative z-10">{tab.shortTitle}</span>
+                    {isActive && (
+                      <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                     )}
                   </button>
                 );
               })}
             </div>
 
-            {/* Main Interactive Screen Showcase */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              {/* Left: Screen Preview with Zoomable Lightbox */}
-              <div className="lg:col-span-8 flex flex-col gap-2.5">
-                <div
-                  className="group relative rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md cursor-pointer"
-                  onClick={() => setLightboxImage(activeScreenshot)}
-                  title="Click to view full screen"
-                >
-                  <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
-                    <span className="px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur-md text-[11px] font-mono font-bold text-white border border-white/20">
-                      {activeScreenshot.badge}
-                    </span>
-                    <div className="p-2 rounded-lg bg-slate-900/70 backdrop-blur-md text-white group-hover:bg-[#0066ff] transition-colors shadow-sm">
-                      <Maximize2 className="w-4 h-4" />
+            {/* Main Interactive Screen Showcase with Smooth Cross-Fade Transition */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeScreenshot.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+              >
+                {/* Left: Screen Preview with Zoomable Lightbox */}
+                <div className="lg:col-span-8 flex flex-col gap-2.5">
+                  <motion.div
+                    whileHover={{ scale: 1.008 }}
+                    transition={{ duration: 0.2 }}
+                    className="group relative rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md cursor-pointer"
+                    onClick={() => setLightboxImage(activeScreenshot)}
+                    title="Click to view full screen"
+                  >
+                    <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur-md text-[11px] font-mono font-bold text-white border border-white/20">
+                        {activeScreenshot.badge}
+                      </span>
+                      <div className="p-2 rounded-lg bg-slate-900/70 backdrop-blur-md text-white group-hover:bg-[#0066ff] transition-colors shadow-sm">
+                        <Maximize2 className="w-4 h-4" />
+                      </div>
                     </div>
+
+                    <img
+                      src={activeScreenshot.src}
+                      alt={activeScreenshot.title}
+                      className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:scale-[1.01]"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                      <p className="text-xs font-semibold text-white flex items-center gap-1.5">
+                        <Maximize2 className="w-3.5 h-3.5 text-[#38bdf8]" />
+                        Click image for full-screen zoom preview
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  <div className="flex items-center justify-between text-xs text-slate-500 px-1">
+                    <span>Module: {activeScreenshot.title}</span>
+                    <span className="text-[#0066ff] font-mono text-[11px] font-semibold">Production Build · Asthasoft Verified</span>
                   </div>
+                </div>
 
-                  <img
-                    src={activeScreenshot.src}
-                    alt={activeScreenshot.title}
-                    className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:scale-[1.01]"
-                  />
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                    <p className="text-xs font-semibold text-white flex items-center gap-1.5">
-                      <Maximize2 className="w-3.5 h-3.5 text-[#38bdf8]" />
-                      Click image for full-screen zoom preview
+                {/* Right: Technical Architecture & Feature Highlights */}
+                <div className="lg:col-span-4 flex flex-col gap-5">
+                  <div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-1">
+                      System Functionality
+                    </div>
+                    <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                      {activeScreenshot.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                      {activeScreenshot.description}
                     </p>
                   </div>
-                </div>
 
-                <div className="flex items-center justify-between text-xs text-slate-500 px-1">
-                  <span>Module: {activeScreenshot.title}</span>
-                  <span className="text-[#0066ff] font-mono text-[11px] font-semibold">Production Build · Asthasoft Verified</span>
-                </div>
-              </div>
-
-              {/* Right: Technical Architecture & Feature Highlights */}
-              <div className="lg:col-span-4 flex flex-col gap-5">
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-1">
-                    System Functionality
-                  </div>
-                  <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug">
-                    {activeScreenshot.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
-                    {activeScreenshot.description}
-                  </p>
-                </div>
-
-                {/* Specific Capabilities */}
-                <div className="space-y-2">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                    Key Engineered Capabilities:
-                  </span>
-                  {activeScreenshot.highlights.map((item, i) => (
-                    <div
-                      key={i}
-                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200/80"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span className="text-xs text-slate-700 leading-snug">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tech Badges */}
-                <div className="pt-2 border-t border-slate-200">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
-                    Core Technologies:
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['React 18', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Telematics Sync'].map(
-                      (tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-[11px] text-slate-700 font-mono"
-                        >
-                          {tech}
+                  {/* Specific Capabilities */}
+                  <div className="space-y-2">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                      Key Engineered Capabilities:
+                    </span>
+                    {activeScreenshot.highlights.map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -6 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.05 }}
+                        className="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200/80"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <span className="text-xs text-slate-700 leading-snug">
+                          {item}
                         </span>
-                      )
-                    )}
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Tech Badges */}
+                  <div className="pt-2 border-t border-slate-200">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                      Core Technologies:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['React 18', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Telematics Sync'].map(
+                        (tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-[11px] text-slate-700 font-mono"
+                          >
+                            {tech}
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Call to Action */}
+                  <div className="pt-2">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="button"
+                      onClick={() => onOpenScopingModal('Car Rental Case Study CTA')}
+                      className="w-full py-3 px-4 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs sm:text-sm font-bold shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Request Similar Custom ERP</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.button>
                   </div>
                 </div>
-
-                {/* Call to Action */}
-                <div className="pt-2">
-                  <button
-                    type="button"
-                    onClick={() => onOpenScopingModal('Car Rental Case Study CTA')}
-                    className="w-full py-3 px-4 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs sm:text-sm font-bold shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <span>Request Similar Custom ERP</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
 
             {/* Business Impact Metrics */}
             <div className="mt-8 pt-6 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-                <span className="text-xs text-slate-500 font-medium block">
-                  Check-in / Out Time
-                </span>
-                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
-                  &lt; 4 Minutes
-                </span>
-                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
-                  ↓ Down from 25 min manual paper check
-                </span>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-                <span className="text-xs text-slate-500 font-medium block">
-                  Booking Conflict Rate
-                </span>
-                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
-                  0.0% Conflicts
-                </span>
-                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
-                  100% automated time-slot lock
-                </span>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-                <span className="text-xs text-slate-500 font-medium block">
-                  Deposit & Invoicing Accuracy
-                </span>
-                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
-                  100% Automated
-                </span>
-                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
-                  Instant GST 18% & security deposit tally
-                </span>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-                <span className="text-xs text-slate-500 font-medium block">
-                  Fleet Visibility
-                </span>
-                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
-                  Real-Time Live
-                </span>
-                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
-                  Across Jalore & Rajasthan branches
-                </span>
-              </div>
+              {[
+                { title: 'Check-in / Out Time', val: '< 4 Minutes', sub: '↓ Down from 25 min manual paper check' },
+                { title: 'Booking Conflict Rate', val: '0.0% Conflicts', sub: '100% automated time-slot lock' },
+                { title: 'Deposit & Invoicing Accuracy', val: '100% Automated', sub: 'Instant GST 18% & security deposit tally' },
+                { title: 'Fleet Visibility', val: 'Real-Time Live', sub: 'Across Jalore & Rajasthan branches' },
+              ].map((m, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                  className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-colors"
+                >
+                  <span className="text-xs text-slate-500 font-medium block">
+                    {m.title}
+                  </span>
+                  <span className="text-xl font-extrabold text-slate-900 mt-1 block">
+                    {m.val}
+                  </span>
+                  <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
+                    {m.sub}
+                  </span>
+                </motion.div>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Client Feedback Quote */}
       <section className="py-4">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-          <div className="p-6 sm:p-7 rounded-2xl bg-gradient-to-r from-blue-50/80 via-white to-sky-50/60 border border-blue-200/80 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xs">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ y: -2, transition: { duration: 0.2 } }}
+            className="p-6 sm:p-7 rounded-2xl bg-gradient-to-r from-blue-50/80 via-white to-sky-50/60 border border-blue-200/80 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xs"
+          >
             <div className="flex items-start gap-4">
               <div className="w-11 h-11 rounded-xl bg-[#0066ff]/10 text-[#0066ff] flex items-center justify-center shrink-0 border border-blue-200">
                 <Car className="w-5 h-5" />
@@ -544,21 +598,29 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
               </div>
             </div>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               type="button"
               onClick={() => onOpenScopingModal('Client Quote CTA')}
               className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold shrink-0 transition-colors cursor-pointer border border-slate-300 shadow-xs whitespace-nowrap"
             >
               Consult On Fleet Tech
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
       {/* MORE ASTHASOFT ENTERPRISE WORKS & PLATFORMS */}
       <section className="py-12 sm:py-16">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+          >
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
                 <Layers className="w-3.5 h-3.5" />
@@ -572,103 +634,127 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
               </p>
             </div>
 
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-1.5">
+            {/* Filter Buttons with Animated Indicator */}
+            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200/70">
               {(['All', 'ERP & Logistics', 'Fintech & Telecom', 'Cloud Infrastructure'] as const).map(
-                (filter) => (
-                  <button
-                    key={filter}
-                    type="button"
-                    onClick={() => setCategoryFilter(filter)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                      categoryFilter === filter
-                        ? 'bg-[#0066ff] text-white shadow-xs'
-                        : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-200'
-                    }`}
-                  >
-                    {filter}
-                  </button>
-                )
+                (filter) => {
+                  const isActive = categoryFilter === filter;
+                  return (
+                    <button
+                      key={filter}
+                      type="button"
+                      onClick={() => setCategoryFilter(filter)}
+                      className={`relative px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                        isActive
+                          ? 'text-white'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeCategoryPill"
+                          className="absolute inset-0 bg-[#0066ff] rounded-lg shadow-xs"
+                          transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                        />
+                      )}
+                      <span className="relative z-10">{filter}</span>
+                    </button>
+                  );
+                }
               )}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Grid of Projects */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {filteredProjects.map((project, idx) => (
-              <div
-                key={idx}
-                className="rounded-2xl bg-white border border-slate-200/90 p-6 flex flex-col justify-between hover:border-blue-400 hover:shadow-md transition-all duration-200 relative group"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="px-2.5 py-0.5 rounded-md bg-blue-50 border border-blue-200/60 text-[#0066ff] text-[11px] font-semibold">
-                      {project.tag}
-                    </span>
-                    <span className="text-[11px] font-medium text-slate-500">
-                      {project.category}
-                    </span>
-                  </div>
-
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#0066ff] transition-colors mb-1.5">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                    {project.description}
-                  </p>
-
-                  {/* Stats Pill */}
-                  <div className="grid grid-cols-3 gap-2 mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
-                    {project.stats.map((s, sIdx) => (
-                      <div key={sIdx}>
-                        <div className="text-xs sm:text-sm font-extrabold text-slate-900">
-                          {s.value}
-                        </div>
-                        <div className="text-[10px] text-slate-500 uppercase font-medium mt-0.5">
-                          {s.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Tech stack tags */}
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.tech.map((t, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-700 border border-slate-200"
-                      >
-                        {t}
+          {/* Grid of Projects with Animated Entrance and Hover */}
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project) => (
+                <motion.div
+                  layout
+                  key={project.title}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                  className="rounded-2xl bg-white border border-slate-200/90 p-6 flex flex-col justify-between hover:border-blue-400 hover:shadow-md transition-all duration-200 relative group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="px-2.5 py-0.5 rounded-md bg-blue-50 border border-blue-200/60 text-[#0066ff] text-[11px] font-semibold">
+                        {project.tag}
                       </span>
-                    ))}
+                      <span className="text-[11px] font-medium text-slate-500">
+                        {project.category}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#0066ff] transition-colors mb-1.5">
+                      {project.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                      {project.description}
+                    </p>
+
+                    {/* Stats Pill */}
+                    <div className="grid grid-cols-3 gap-2 mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+                      {project.stats.map((s, sIdx) => (
+                        <div key={sIdx}>
+                          <div className="text-xs sm:text-sm font-extrabold text-slate-900">
+                            {s.value}
+                          </div>
+                          <div className="text-[10px] text-slate-500 uppercase font-medium mt-0.5">
+                            {s.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Tech stack tags */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.tech.map((t, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="px-2 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-700 border border-slate-200"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={() => onOpenScopingModal(`Project: ${project.title}`)}
-                    className="text-xs font-bold text-[#0066ff] hover:text-[#0052cc] transition-colors flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>Request Architecture Brief</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => onOpenScopingModal(`Project: ${project.title}`)}
+                      className="text-xs font-bold text-[#0066ff] hover:text-[#0052cc] transition-colors flex items-center gap-1 cursor-pointer group-hover:translate-x-0.5"
+                    >
+                      <span>Request Architecture Brief</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </button>
 
-                  <span className="text-[11px] font-mono text-slate-500">
-                    Enterprise SLA
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+                    <span className="text-[11px] font-mono text-slate-500">
+                      Enterprise SLA
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         </div>
       </section>
 
       {/* WHY PARTNER WITH ASTHASOFT FOR CUSTOM SOFTWARE */}
       <section className="py-12 sm:py-16 border-t border-slate-200/80 bg-white">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-2xl mx-auto mb-10"
+          >
             <span className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-2 block">
               The Asthasoft Advantage
             </span>
@@ -678,47 +764,52 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             <p className="text-xs sm:text-sm text-slate-600 mt-2">
               We do not build disposable software. We architect hardened, production-ready enterprise platforms that streamline operations and maximize revenue.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 text-[#0066ff] flex items-center justify-center mb-4">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900 mb-2">
-                100% IP & Code Ownership
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                You own 100% of the intellectual property, git repositories, database schemas, and cloud deployment pipelines from Day 1. No vendor lock-in.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900 mb-2">
-                Real-Time Data & Business Logic
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                From live vehicle availability and telematics to multi-currency and GST invoice calculations, we turn complex business math into seamless user experiences.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
-                <Users className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900 mb-2">
-                Direct Engineering Accountability
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Work directly with dedicated senior architects and full-stack software engineers in India who understand your business model and deliver on time.
-              </p>
-            </div>
+            {[
+              {
+                icon: <ShieldCheck className="w-5 h-5" />,
+                iconBg: 'bg-blue-100 text-[#0066ff]',
+                title: '100% IP & Code Ownership',
+                desc: 'You own 100% of the intellectual property, git repositories, database schemas, and cloud deployment pipelines from Day 1. No vendor lock-in.',
+              },
+              {
+                icon: <Cpu className="w-5 h-5" />,
+                iconBg: 'bg-emerald-100 text-emerald-700',
+                title: 'Real-Time Data & Business Logic',
+                desc: 'From live vehicle availability and telematics to multi-currency and GST invoice calculations, we turn complex business math into seamless user experiences.',
+              },
+              {
+                icon: <Users className="w-5 h-5" />,
+                iconBg: 'bg-purple-100 text-purple-700',
+                title: 'Direct Engineering Accountability',
+                desc: 'Work directly with dedicated senior architects and full-stack software engineers in India who understand your business model and deliver on time.',
+              },
+            ].map((adv, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.45, delay: idx * 0.1 }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90 hover:border-blue-300 transition-colors"
+              >
+                <div className={`w-10 h-10 rounded-xl ${adv.iconBg} flex items-center justify-center mb-4`}>
+                  {adv.icon}
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-2">
+                  {adv.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  {adv.desc}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
