@@ -6,23 +6,13 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  Calendar,
-  Clock,
   Sparkles,
   Maximize2,
   X,
-  CreditCard,
-  MessageSquare,
-  Server,
   ChevronRight,
-  Building2,
-  TrendingUp,
   Cpu,
-  Smartphone,
-  ExternalLink,
   PhoneCall,
   Check,
-  FileText,
   Users,
 } from 'lucide-react';
 import { navigateTo } from '../utils/navigation';
@@ -54,7 +44,7 @@ const CAR_RENTAL_SCREENSHOTS: ScreenshotItem[] = [
     highlights: [
       'Live fleet status monitors: 3 total units, 2 running on road, 1 hold/service',
       'Branch-aware booking filters (Jalore Main Branch) with date & time precision',
-      'Quick action buttons: "Assign Car", "+ Add Car", "Add Customer", "Quick Return"',
+      'Quick action shortcuts: "Assign Car", "+ Add Car", "Add Customer", "Quick Return"',
       'Role-based left navigation with real-time notifications and payment audits',
     ],
   },
@@ -99,13 +89,11 @@ const ADDITIONAL_PROJECTS = [
     description:
       'Ultra-high throughput SMS & OTP dispatch engine built with DLT compliance, smart carrier fallback routing, and real-time delivery analytics handling millions of messages daily.',
     stats: [
-      { label: 'Carrier Delivery Rate', value: '99.98%' },
+      { label: 'Carrier Delivery', value: '99.98%' },
       { label: 'Throughput', value: '10k+ SMS/sec' },
-      { label: 'Latency', value: '< 1.8s OTP Delivery' },
+      { label: 'Latency', value: '< 1.8s OTP' },
     ],
     tech: ['Node.js', 'Redis Queue', 'SMPP Gateway', 'PostgreSQL', 'Docker'],
-    accent: 'from-blue-600/20 to-cyan-500/20',
-    borderColor: 'border-blue-500/30',
   },
   {
     title: 'AsthaPay Multi-Rail Payment Gateway',
@@ -115,13 +103,11 @@ const ADDITIONAL_PROJECTS = [
     description:
       'Seamless unified checkout supporting UPI intent, QR codes, cards, and net banking with sub-second webhook notifications, auto-reconciliation, and fraud protection heuristics.',
     stats: [
-      { label: 'Checkout Success', value: '98.6%' },
+      { label: 'Success Rate', value: '98.6%' },
       { label: 'Processed Volume', value: '₹100Cr+' },
       { label: 'API Uptime', value: '99.99%' },
     ],
-    tech: ['React', 'TypeScript', 'PCI-DSS Stack', 'FastAPI', 'AWS KMS'],
-    accent: 'from-emerald-600/20 to-teal-500/20',
-    borderColor: 'border-emerald-500/30',
+    tech: ['React', 'TypeScript', 'FastAPI', 'AWS KMS', 'PCI-DSS'],
   },
   {
     title: 'AsthaHost Cloud Server Management Cluster',
@@ -133,11 +119,9 @@ const ADDITIONAL_PROJECTS = [
     stats: [
       { label: 'Network Uptime', value: '99.99%' },
       { label: 'Active Domains', value: '5,000+' },
-      { label: 'Storage', value: 'Pure NVMe RAID' },
+      { label: 'Storage', value: 'NVMe RAID' },
     ],
-    tech: ['Linux Kernel Tuning', 'cPanel API', 'Ceph Storage', 'NGINX Reverse Proxy'],
-    accent: 'from-amber-600/20 to-orange-500/20',
-    borderColor: 'border-amber-500/30',
+    tech: ['Linux Kernel Tuning', 'cPanel API', 'Ceph Storage', 'NGINX'],
   },
   {
     title: 'CarePulse Telehealth & Clinic ERP',
@@ -149,11 +133,9 @@ const ADDITIONAL_PROJECTS = [
     stats: [
       { label: 'Consultations', value: '150k+' },
       { label: 'Patient Retention', value: '+42%' },
-      { label: 'Data Security', value: 'HIPAA Standard' },
+      { label: 'Security', value: 'HIPAA Standard' },
     ],
     tech: ['React Native', 'WebRTC', 'FastAPI', 'PostgreSQL', 'Tailwind CSS'],
-    accent: 'from-purple-600/20 to-indigo-500/20',
-    borderColor: 'border-purple-500/30',
   },
 ];
 
@@ -178,7 +160,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
   });
 
   return (
-    <div className="min-h-screen bg-[#0c1222] text-white selection:bg-[#0066ff] selection:text-white pb-16 font-body">
+    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-[#0066ff] selection:text-white pb-20 font-body">
       {/* Lightbox Modal */}
       <AnimatePresence>
         {lightboxImage && (
@@ -186,7 +168,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
+            className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
             onClick={() => setLightboxImage(null)}
           >
             <motion.div
@@ -195,35 +177,35 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#131d36] border border-white/10 rounded-2xl overflow-hidden max-w-5xl w-full shadow-2xl relative flex flex-col"
+              className="bg-white border border-slate-200 rounded-2xl overflow-hidden max-w-5xl w-full shadow-2xl relative flex flex-col"
             >
-              <div className="flex items-center justify-between px-5 py-3.5 bg-[#0e172a] border-b border-white/10">
+              <div className="flex items-center justify-between px-5 py-3.5 bg-slate-50 border-b border-slate-200">
                 <div className="flex items-center gap-2.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs sm:text-sm font-bold text-white tracking-wide">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-wide">
                     {lightboxImage.title}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setLightboxImage(null)}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                  className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
                   aria-label="Close Preview"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="p-3 sm:p-5 bg-[#0a0f1d] flex items-center justify-center overflow-auto max-h-[75vh]">
+              <div className="p-3 sm:p-5 bg-slate-100 flex items-center justify-center overflow-auto max-h-[75vh]">
                 <img
                   src={lightboxImage.src}
                   alt={lightboxImage.title}
-                  className="rounded-xl border border-white/10 max-h-[70vh] w-auto object-contain shadow-2xl"
+                  className="rounded-xl border border-slate-300 max-h-[70vh] w-auto object-contain shadow-xl"
                 />
               </div>
 
-              <div className="p-4 bg-[#131d36] border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <p className="text-xs text-slate-300 max-w-2xl">
+              <div className="p-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
                   {lightboxImage.description}
                 </p>
                 <button
@@ -232,7 +214,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     setLightboxImage(null);
                     onOpenScopingModal('Our Work Modal Lightbox');
                   }}
-                  className="px-4 py-2 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs font-semibold shrink-0 cursor-pointer shadow-md shadow-blue-500/20"
+                  className="px-4 py-2 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs font-semibold shrink-0 cursor-pointer shadow-sm"
                 >
                   Request Similar Software
                 </button>
@@ -242,14 +224,12 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Hero Header */}
-      <section className="relative pt-12 sm:pt-20 pb-12 sm:pb-16 overflow-hidden border-b border-white/10 bg-gradient-to-b from-[#0f172a] via-[#0c1222] to-[#0c1222]">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-blue-600/10 via-cyan-500/10 to-indigo-600/10 blur-3xl pointer-events-none" />
-
-        <div className="max-w-[1340px] mx-auto px-4 sm:px-6 relative z-10">
+      {/* Hero Header Area */}
+      <section className="relative pt-8 sm:pt-12 pb-10 bg-white border-b border-slate-200/80">
+        <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
           {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-xs text-slate-400">
+          <nav aria-label="Breadcrumb" className="mb-5">
+            <ol className="flex items-center gap-2 text-xs text-slate-500">
               <li>
                 <a
                   href="/"
@@ -257,29 +237,29 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     e.preventDefault();
                     navigateTo('/');
                   }}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-slate-900 transition-colors"
                 >
                   Home
                 </a>
               </li>
               <li>
-                <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+                <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
               </li>
               <li className="text-[#0066ff] font-semibold">Our Work & Case Studies</li>
             </ol>
           </nav>
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[#38bdf8] text-xs font-semibold uppercase tracking-wider mb-5">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-            <span>Asthasoft Engineering Portfolio & Case Studies</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/70 text-[#0066ff] text-xs font-semibold uppercase tracking-wider mb-5">
+            <Sparkles className="w-3.5 h-3.5 text-[#0066ff]" />
+            <span>Asthasoft Client Deliveries & Works</span>
           </div>
 
           {/* HIGH-IMPACT TOP CTA HERO BANNER */}
-          <div className="rounded-3xl bg-gradient-to-r from-blue-700 via-[#0052cc] to-indigo-800 p-8 sm:p-12 md:p-14 text-center text-white shadow-2xl relative overflow-hidden mb-10">
+          <div className="rounded-3xl bg-gradient-to-r from-[#0052cc] via-[#0066ff] to-[#0284c7] p-8 sm:p-12 md:p-14 text-center text-white shadow-xl shadow-blue-500/15 relative overflow-hidden mb-8">
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
-            <span className="inline-block px-3.5 py-1.5 rounded-full bg-white/20 text-white text-xs font-bold tracking-wider uppercase mb-4">
+            <span className="inline-block px-3.5 py-1 rounded-full bg-white/20 text-white text-[11px] font-bold tracking-wider uppercase mb-3">
               READY TO BUILD YOUR CUSTOM SYSTEM?
             </span>
 
@@ -291,11 +271,11 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
               Whether you need a car rental ERP, fintech gateway, SaaS application, or internal workflow system — Asthasoft delivers within budget and strict timelines.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <button
                 type="button"
                 onClick={() => onOpenScopingModal('Our Work Top CTA')}
-                className="px-6 sm:px-8 py-3.5 rounded-full bg-white text-[#0066ff] hover:bg-slate-100 font-heading font-bold text-xs sm:text-sm shadow-xl active:scale-95 transition-all cursor-pointer"
+                className="px-6 sm:px-8 py-3.5 rounded-full bg-white text-[#0066ff] hover:bg-slate-50 font-heading font-bold text-xs sm:text-sm shadow-md active:scale-95 transition-all cursor-pointer"
               >
                 Schedule Free Scoping Session
               </button>
@@ -304,58 +284,58 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 <button
                   type="button"
                   onClick={() => onOpenCallModal('Our Work Consultation')}
-                  className="px-6 sm:px-8 py-3.5 rounded-full bg-blue-900/40 hover:bg-blue-900/60 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-6 sm:px-8 py-3.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                 >
-                  <PhoneCall className="w-4 h-4 text-cyan-300" />
+                  <PhoneCall className="w-4 h-4 text-white" />
                   <span>Call in 30 Min</span>
                 </button>
               ) : (
                 <a
                   href="tel:+917023318111"
-                  className="px-6 sm:px-8 py-3.5 rounded-full bg-blue-900/40 hover:bg-blue-900/60 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-6 sm:px-8 py-3.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/30 text-white font-heading font-bold text-xs sm:text-sm active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                 >
-                  <PhoneCall className="w-4 h-4 text-cyan-300" />
+                  <PhoneCall className="w-4 h-4 text-white" />
                   <span>Call +91-7023318111</span>
                 </a>
               )}
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-blue-200">
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-6 text-xs text-blue-100 font-medium">
               <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-cyan-300" /> No Obligation Consultation
+                <Check className="w-4 h-4 text-white" /> No Obligation Consultation
               </span>
               <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-cyan-300" /> Strict NDA Signed First
+                <Check className="w-4 h-4 text-white" /> Strict NDA Signed First
               </span>
               <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-cyan-300" /> Transparent Milestone Pricing
+                <Check className="w-4 h-4 text-white" /> Transparent Milestone Pricing
               </span>
             </div>
           </div>
 
-          {/* Key Deliveries Summary Bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
-              <span className="block text-2xl sm:text-3xl font-black text-white">50+</span>
-              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+          {/* Simple Key Metrics Bar */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
+              <span className="block text-2xl sm:text-3xl font-black text-slate-900">50+</span>
+              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Deployed Systems
               </span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
-              <span className="block text-2xl sm:text-3xl font-black text-emerald-400">99.98%</span>
-              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
+              <span className="block text-2xl sm:text-3xl font-black text-emerald-600">99.98%</span>
+              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Proven Uptime
               </span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
-              <span className="block text-2xl sm:text-3xl font-black text-amber-300">₹100Cr+</span>
-              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
+              <span className="block text-2xl sm:text-3xl font-black text-amber-600">₹100Cr+</span>
+              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Annual Volume
               </span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
-              <span className="block text-2xl sm:text-3xl font-black text-purple-300">100%</span>
-              <span className="text-[11px] font-medium text-slate-300 uppercase tracking-wider">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center">
+              <span className="block text-2xl sm:text-3xl font-black text-purple-600">100%</span>
+              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 On-Time Delivery
               </span>
             </div>
@@ -364,40 +344,37 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       </section>
 
       {/* FLAGSHIP CASE STUDY: CAR RENTAL & FLEET ERP */}
-      <section className="py-14 sm:py-20 relative">
+      <section className="py-12 sm:py-16">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-white/10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[#38bdf8] text-xs font-bold uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[#0066ff] text-xs font-bold uppercase tracking-wider mb-2">
                 <Car className="w-3.5 h-3.5" />
-                <span>Featured Flagship Case Study</span>
+                <span>Featured Client Delivery</span>
               </div>
-              <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
+              <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">
                 JSD Car Rental & Fleet Operations ERP
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 max-w-2xl">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
                 A custom enterprise web application engineered for self-drive vehicle rentals, live fleet telemetry, automated 18% GST billing, and on-ground branch dispatching.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-slate-300">
-                Industry: <strong className="text-white">Automotive & Fleet ERP</strong>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono text-slate-600">
+                Industry: <strong className="text-slate-900">Automotive & Fleet ERP</strong>
               </span>
-              <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-slate-300">
-                Client Location: <strong className="text-white">Jalore, Rajasthan, India</strong>
+              <span className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono text-slate-600">
+                Client: <strong className="text-slate-900">Jalore, Rajasthan, India</strong>
               </span>
             </div>
           </div>
 
-          {/* Interactive Showcase Card */}
-          <div className="rounded-3xl bg-[#10192e] border border-white/10 p-4 sm:p-8 shadow-2xl relative overflow-hidden">
-            {/* Background Glow */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#0066ff]/10 blur-[100px] pointer-events-none" />
-
+          {/* Interactive Showcase Card in Light Theme */}
+          <div className="rounded-3xl bg-white border border-slate-200/90 p-5 sm:p-8 shadow-sm">
             {/* Tab Navigation */}
-            <div className="flex flex-wrap items-center gap-2 mb-6 p-1.5 bg-[#0a0f1d] rounded-2xl border border-white/5 max-w-fit">
+            <div className="flex flex-wrap items-center gap-2 mb-6 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/70 max-w-fit">
               {CAR_RENTAL_SCREENSHOTS.map((tab) => {
                 const isActive = activeScreenshotTab === tab.id;
                 return (
@@ -405,10 +382,10 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveScreenshotTab(tab.id)}
-                    className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                       isActive
-                        ? 'bg-[#0066ff] text-white shadow-lg shadow-blue-500/25 scale-[1.02]'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        ? 'bg-[#0066ff] text-white shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
                     }`}
                   >
                     <span>{tab.shortTitle}</span>
@@ -423,17 +400,17 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             {/* Main Interactive Screen Showcase */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Left: Screen Preview with Zoomable Lightbox */}
-              <div className="lg:col-span-8 flex flex-col gap-3">
+              <div className="lg:col-span-8 flex flex-col gap-2.5">
                 <div
-                  className="group relative rounded-2xl overflow-hidden border border-white/15 bg-[#090e1a] shadow-2xl cursor-pointer"
+                  className="group relative rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md cursor-pointer"
                   onClick={() => setLightboxImage(activeScreenshot)}
                   title="Click to view full screen"
                 >
                   <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
-                    <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-[11px] font-mono font-bold text-white border border-white/10">
+                    <span className="px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur-md text-[11px] font-mono font-bold text-white border border-white/20">
                       {activeScreenshot.badge}
                     </span>
-                    <div className="p-2 rounded-lg bg-black/60 backdrop-blur-md text-white group-hover:bg-[#0066ff] transition-colors shadow-md">
+                    <div className="p-2 rounded-lg bg-slate-900/70 backdrop-blur-md text-white group-hover:bg-[#0066ff] transition-colors shadow-sm">
                       <Maximize2 className="w-4 h-4" />
                     </div>
                   </div>
@@ -444,46 +421,46 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:scale-[1.01]"
                   />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                     <p className="text-xs font-semibold text-white flex items-center gap-1.5">
                       <Maximize2 className="w-3.5 h-3.5 text-[#38bdf8]" />
-                      Click image for full-screen high resolution zoom
+                      Click image for full-screen zoom preview
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-slate-400 px-1">
+                <div className="flex items-center justify-between text-xs text-slate-500 px-1">
                   <span>Module: {activeScreenshot.title}</span>
-                  <span className="text-[#38bdf8] font-mono text-[11px]">Production Build · Asthasoft Verified</span>
+                  <span className="text-[#0066ff] font-mono text-[11px] font-semibold">Production Build · Asthasoft Verified</span>
                 </div>
               </div>
 
               {/* Right: Technical Architecture & Feature Highlights */}
-              <div className="lg:col-span-4 flex flex-col gap-6">
+              <div className="lg:col-span-4 flex flex-col gap-5">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#38bdf8] mb-1">
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-1">
                     System Functionality
                   </div>
-                  <h3 className="font-heading text-lg sm:text-xl font-bold text-white leading-snug">
+                  <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug">
                     {activeScreenshot.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
                     {activeScreenshot.description}
                   </p>
                 </div>
 
                 {/* Specific Capabilities */}
-                <div className="space-y-2.5">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                     Key Engineered Capabilities:
                   </span>
                   {activeScreenshot.highlights.map((item, i) => (
                     <div
                       key={i}
-                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/5"
+                      className="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200/80"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <span className="text-xs text-slate-300 leading-snug">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <span className="text-xs text-slate-700 leading-snug">
                         {item}
                       </span>
                     </div>
@@ -491,8 +468,8 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 </div>
 
                 {/* Tech Badges */}
-                <div className="pt-2 border-t border-white/10">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                <div className="pt-2 border-t border-slate-200">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
                     Core Technologies:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -500,7 +477,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                       (tech) => (
                         <span
                           key={tech}
-                          className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] text-slate-300 font-mono"
+                          className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-[11px] text-slate-700 font-mono"
                         >
                           {tech}
                         </span>
@@ -514,7 +491,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                   <button
                     type="button"
                     onClick={() => onOpenScopingModal('Car Rental Case Study CTA')}
-                    className="w-full py-3 px-4 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs sm:text-sm font-bold shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3 px-4 rounded-xl bg-[#0066ff] hover:bg-[#0052cc] text-white text-xs sm:text-sm font-bold shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Request Similar Custom ERP</span>
                     <ArrowRight className="w-4 h-4" />
@@ -524,51 +501,51 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             </div>
 
             {/* Business Impact Metrics */}
-            <div className="mt-10 pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                <span className="text-xs text-slate-400 font-medium block">
+            <div className="mt-8 pt-6 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                <span className="text-xs text-slate-500 font-medium block">
                   Check-in / Out Time
                 </span>
-                <span className="text-2xl font-extrabold text-white mt-1 block">
+                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
                   &lt; 4 Minutes
                 </span>
-                <span className="text-[11px] text-emerald-400 mt-1 block">
+                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
                   ↓ Down from 25 min manual paper check
                 </span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                <span className="text-xs text-slate-400 font-medium block">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                <span className="text-xs text-slate-500 font-medium block">
                   Booking Conflict Rate
                 </span>
-                <span className="text-2xl font-extrabold text-white mt-1 block">
+                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
                   0.0% Conflicts
                 </span>
-                <span className="text-[11px] text-emerald-400 mt-1 block">
+                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
                   100% automated time-slot lock
                 </span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                <span className="text-xs text-slate-400 font-medium block">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                <span className="text-xs text-slate-500 font-medium block">
                   Deposit & Invoicing Accuracy
                 </span>
-                <span className="text-2xl font-extrabold text-white mt-1 block">
+                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
                   100% Automated
                 </span>
-                <span className="text-[11px] text-emerald-400 mt-1 block">
+                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
                   Instant GST 18% & security deposit tally
                 </span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                <span className="text-xs text-slate-400 font-medium block">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                <span className="text-xs text-slate-500 font-medium block">
                   Fleet Visibility
                 </span>
-                <span className="text-2xl font-extrabold text-white mt-1 block">
+                <span className="text-xl font-extrabold text-slate-900 mt-1 block">
                   Real-Time Live
                 </span>
-                <span className="text-[11px] text-emerald-400 mt-1 block">
+                <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
                   Across Jalore & Rajasthan branches
                 </span>
               </div>
@@ -578,21 +555,21 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       </section>
 
       {/* Client Feedback Quote */}
-      <section className="py-8">
+      <section className="py-4">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-900/20 via-slate-900/40 to-cyan-900/20 border border-blue-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="p-6 sm:p-7 rounded-2xl bg-gradient-to-r from-blue-50/80 via-white to-sky-50/60 border border-blue-200/80 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xs">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#0066ff]/20 text-[#38bdf8] flex items-center justify-center shrink-0 border border-blue-500/30">
-                <Car className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-xl bg-[#0066ff]/10 text-[#0066ff] flex items-center justify-center shrink-0 border border-blue-200">
+                <Car className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-sm sm:text-base text-slate-200 italic leading-relaxed">
+                <p className="text-sm text-slate-700 italic leading-relaxed">
                   "Asthasoft built our car rental software exactly to our workflow. From live odometer tracking to the automated 18% GST and ₹10,000 security deposit calculations, our branch operations run seamlessly without a single booking dispute."
                 </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="text-xs font-bold text-white">Operations Director</span>
-                  <span className="text-slate-500">•</span>
-                  <span className="text-xs text-[#38bdf8]">JSD Premium Self-Drive Car Rental, Jalore</span>
+                <div className="mt-2.5 flex items-center gap-2">
+                  <span className="text-xs font-bold text-slate-900">Operations Director</span>
+                  <span className="text-slate-400">•</span>
+                  <span className="text-xs text-[#0066ff] font-medium">JSD Premium Self-Drive Car Rental, Jalore</span>
                 </div>
               </div>
             </div>
@@ -600,7 +577,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             <button
               type="button"
               onClick={() => onOpenScopingModal('Client Quote CTA')}
-              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold shrink-0 transition-colors cursor-pointer border border-white/10 whitespace-nowrap"
+              className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold shrink-0 transition-colors cursor-pointer border border-slate-300 shadow-xs whitespace-nowrap"
             >
               Consult On Fleet Tech
             </button>
@@ -609,24 +586,24 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       </section>
 
       {/* MORE ASTHASOFT ENTERPRISE WORKS & PLATFORMS */}
-      <section className="py-14 sm:py-20 relative">
+      <section className="py-12 sm:py-16">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-2">
                 <Layers className="w-3.5 h-3.5" />
                 <span>Diverse Engineering Portfolio</span>
               </div>
-              <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
+              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900">
                 More Software & Cloud Platforms By Asthasoft
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 max-w-xl">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
                 Explore our proprietary sub-brands and enterprise client systems deployed across telecom, payments, and infrastructure.
               </p>
             </div>
 
             {/* Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
               {(['All', 'ERP & Logistics', 'Fintech & Telecom', 'Cloud Infrastructure'] as const).map(
                 (filter) => (
                   <button
@@ -635,8 +612,8 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     onClick={() => setCategoryFilter(filter)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       categoryFilter === filter
-                        ? 'bg-[#0066ff] text-white shadow-md'
-                        : 'bg-white/5 hover:bg-white/10 text-slate-300'
+                        ? 'bg-[#0066ff] text-white shadow-xs'
+                        : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-200'
                     }`}
                   >
                     {filter}
@@ -647,43 +624,40 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
           </div>
 
           {/* Grid of Projects */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {filteredProjects.map((project, idx) => (
               <div
                 key={idx}
-                className={`rounded-2xl bg-[#10192e] border ${project.borderColor} p-6 sm:p-7 flex flex-col justify-between hover:border-[#0066ff]/60 transition-all duration-300 relative overflow-hidden group`}
+                className="rounded-2xl bg-white border border-slate-200/90 p-6 flex flex-col justify-between hover:border-blue-400 hover:shadow-md transition-all duration-200 relative group"
               >
-                <div
-                  className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl ${project.accent} blur-2xl pointer-events-none group-hover:scale-110 transition-transform`}
-                />
-
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono text-[#38bdf8]">
-                      {project.category}
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="px-2.5 py-0.5 rounded-md bg-blue-50 border border-blue-200/60 text-[#0066ff] text-[11px] font-semibold">
+                      {project.tag}
                     </span>
-                    <span className="text-[11px] font-semibold text-slate-400">
-                      {project.client}
+                    <span className="text-[11px] font-medium text-slate-500">
+                      {project.category}
                     </span>
                   </div>
 
-                  <h3 className="font-heading text-lg sm:text-xl font-bold text-white group-hover:text-[#38bdf8] transition-colors">
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#0066ff] transition-colors mb-1.5">
                     {project.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 mt-2.5 leading-relaxed">
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
                     {project.description}
                   </p>
 
-                  {/* Metrics */}
-                  <div className="grid grid-cols-3 gap-3 my-5 py-3 border-y border-white/5 bg-white/[0.01] rounded-xl px-2">
-                    {project.stats.map((stat, sIdx) => (
-                      <div key={sIdx} className="text-center">
-                        <span className="text-xs sm:text-sm font-extrabold text-white block">
-                          {stat.value}
-                        </span>
-                        <span className="text-[10px] text-slate-400 block mt-0.5">
-                          {stat.label}
-                        </span>
+                  {/* Stats Pill */}
+                  <div className="grid grid-cols-3 gap-2 mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+                    {project.stats.map((s, sIdx) => (
+                      <div key={sIdx}>
+                        <div className="text-xs sm:text-sm font-extrabold text-slate-900">
+                          {s.value}
+                        </div>
+                        <div className="text-[10px] text-slate-500 uppercase font-medium mt-0.5">
+                          {s.label}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -693,7 +667,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     {project.tech.map((t, tIdx) => (
                       <span
                         key={tIdx}
-                        className="px-2 py-0.5 rounded-md bg-white/5 text-[10px] font-mono text-slate-300 border border-white/5"
+                        className="px-2 py-0.5 rounded-md bg-slate-100 text-[10px] font-mono text-slate-700 border border-slate-200"
                       >
                         {t}
                       </span>
@@ -701,11 +675,11 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-white/5 flex items-center justify-between relative z-10">
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => onOpenScopingModal(`Project: ${project.title}`)}
-                    className="text-xs font-bold text-[#0066ff] hover:text-[#38bdf8] transition-colors flex items-center gap-1 cursor-pointer"
+                    className="text-xs font-bold text-[#0066ff] hover:text-[#0052cc] transition-colors flex items-center gap-1 cursor-pointer"
                   >
                     <span>Request Architecture Brief</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -722,53 +696,53 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       </section>
 
       {/* WHY PARTNER WITH ASTHASOFT FOR CUSTOM SOFTWARE */}
-      <section className="py-14 sm:py-20 border-t border-white/10 bg-[#09101d]">
+      <section className="py-12 sm:py-16 border-t border-slate-200/80 bg-white">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#38bdf8] mb-2 block">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-2 block">
               The Asthasoft Advantage
             </span>
-            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
+            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900">
               Why High-Growth Companies Trust Our Engineering
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-2">
+            <p className="text-xs sm:text-sm text-slate-600 mt-2">
               We do not build disposable software. We architect hardened, production-ready enterprise platforms that streamline operations and maximize revenue.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-[#10192e] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-[#0066ff] flex items-center justify-center mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90">
+              <div className="w-10 h-10 rounded-xl bg-blue-100 text-[#0066ff] flex items-center justify-center mb-4">
                 <ShieldCheck className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-white mb-2">
+              <h3 className="text-base font-bold text-slate-900 mb-2">
                 100% IP & Code Ownership
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 You own 100% of the intellectual property, git repositories, database schemas, and cloud deployment pipelines from Day 1. No vendor lock-in.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#10192e] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
                 <Cpu className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-white mb-2">
+              <h3 className="text-base font-bold text-slate-900 mb-2">
                 Real-Time Data & Business Logic
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 From live vehicle availability and telematics to multi-currency and GST invoice calculations, we turn complex business math into seamless user experiences.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#10192e] border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4">
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-4">
                 <Users className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-white mb-2">
+              <h3 className="text-base font-bold text-slate-900 mb-2">
                 Direct Engineering Accountability
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Work directly with dedicated senior architects and full-stack software engineers in India who understand your business model and deliver on time.
               </p>
             </div>
@@ -778,4 +752,3 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
     </div>
   );
 };
-
