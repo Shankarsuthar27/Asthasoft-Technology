@@ -186,7 +186,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
               exit={{ scale: 0.93, opacity: 0, y: 15 }}
               transition={{ type: 'spring', damping: 25, stiffness: 320 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white border border-slate-200 rounded-2xl overflow-hidden max-w-5xl w-full shadow-2xl relative flex flex-col"
+              className="bg-white border border-slate-200 rounded-2xl overflow-hidden max-w-6xl w-full shadow-2xl relative flex flex-col"
             >
               <div className="flex items-center justify-between px-5 py-3.5 bg-slate-50 border-b border-slate-200">
                 <div className="flex items-center gap-2.5">
@@ -205,11 +205,11 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 </button>
               </div>
 
-              <div className="p-3 sm:p-5 bg-slate-100 flex items-center justify-center overflow-auto max-h-[75vh]">
+              <div className="p-3 sm:p-5 bg-slate-100 flex items-center justify-center overflow-auto max-h-[82vh]">
                 <img
                   src={lightboxImage.src}
                   alt={lightboxImage.title}
-                  className="rounded-xl border border-slate-300 max-h-[70vh] w-auto object-contain shadow-xl"
+                  className="rounded-xl border border-slate-300 max-h-[78vh] w-auto object-contain shadow-xl"
                 />
               </div>
 
@@ -352,7 +352,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
 
       {/* FLAGSHIP CASE STUDY: CAR RENTAL & FLEET ERP */}
       <section className="py-12 sm:py-16">
-        <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -390,7 +390,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.55 }}
-            className="rounded-3xl bg-white border border-slate-200/90 p-5 sm:p-8 shadow-sm"
+            className="rounded-3xl bg-white border border-slate-200/90 p-5 sm:p-7 lg:p-8 shadow-sm"
           >
             {/* Tab Navigation with Animated Sliding Indicator */}
             <div className="flex flex-wrap items-center gap-1.5 mb-6 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/70 max-w-fit">
@@ -431,10 +431,10 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.28, ease: 'easeOut' }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+                className="flex flex-col lg:flex-row gap-7 lg:gap-8 items-start"
               >
                 {/* Left: Screen Preview with Zoomable Lightbox */}
-                <div className="lg:col-span-8 flex flex-col gap-2.5">
+                <div className="w-full lg:w-[68%] xl:w-[70%] flex flex-col gap-2.5 shrink-0">
                   <motion.div
                     whileHover={{ scale: 1.008 }}
                     transition={{ duration: 0.2 }}
@@ -472,7 +472,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 </div>
 
                 {/* Right: Technical Architecture & Feature Highlights */}
-                <div className="lg:col-span-4 flex flex-col gap-5">
+                <div className="w-full lg:w-[32%] xl:w-[30%] flex flex-col gap-5">
                   <div>
                     <div className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-1">
                       System Functionality
