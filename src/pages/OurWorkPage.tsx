@@ -6,16 +6,13 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  Sparkles,
   Maximize2,
   X,
-  ChevronRight,
   Cpu,
   PhoneCall,
   Check,
   Users,
 } from 'lucide-react';
-import { navigateTo } from '../utils/navigation';
 
 interface OurWorkPageProps {
   onOpenScopingModal: (source?: string) => void;
@@ -227,33 +224,6 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       {/* Hero Header Area */}
       <section className="relative pt-8 sm:pt-12 pb-10 bg-white border-b border-slate-200/80">
         <div className="max-w-[1340px] mx-auto px-4 sm:px-6">
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumb" className="mb-5">
-            <ol className="flex items-center gap-2 text-xs text-slate-500">
-              <li>
-                <a
-                  href="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigateTo('/');
-                  }}
-                  className="hover:text-slate-900 transition-colors"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-              </li>
-              <li className="text-[#0066ff] font-semibold">Our Work & Case Studies</li>
-            </ol>
-          </nav>
-
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/70 text-[#0066ff] text-xs font-semibold uppercase tracking-wider mb-5">
-            <Sparkles className="w-3.5 h-3.5 text-[#0066ff]" />
-            <span>Asthasoft Client Deliveries & Works</span>
-          </div>
 
           {/* HIGH-IMPACT TOP CTA HERO BANNER */}
           <div className="rounded-3xl bg-gradient-to-r from-[#0052cc] via-[#0066ff] to-[#0284c7] p-8 sm:p-12 md:p-14 text-center text-white shadow-xl shadow-blue-500/15 relative overflow-hidden mb-8">
