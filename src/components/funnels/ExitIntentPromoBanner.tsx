@@ -103,7 +103,6 @@ export const ExitIntentPromoBanner: React.FC<ExitIntentPromoBannerProps> = ({
             onClick={handleDismiss}
             className="fixed inset-0 bg-black/80 backdrop-blur-md"
           />
-
           {/* Banner Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
