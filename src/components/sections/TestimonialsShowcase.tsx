@@ -113,7 +113,7 @@ export const TestimonialsShowcase: React.FC<TestimonialsShowcaseProps> = ({
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
           <div className="max-w-2xl space-y-2.5">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[#0066ff] text-xs font-heading font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
+              
               <span>Verified Client Success</span>
             </div>
 
