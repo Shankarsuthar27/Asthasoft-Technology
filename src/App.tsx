@@ -10,7 +10,7 @@ import { CapabilitiesGrid } from './components/sections/CapabilitiesGrid';
 import { EngineeringProcessSection } from './components/sections/EngineeringProcessSection';
 import { IndustriesAppSolutionsSection } from './components/sections/IndustriesAppSolutionsSection';
 import { TechStackSection } from './components/sections/TechStackSection';
-import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
+import { TestimonialsShowcase } from './components/sections/TestimonialsShowcase';
 import { SubBrandsShowcase } from './components/sections/SubBrandsShowcase';
 import { ServicesDirectorySection } from './components/sections/ServicesDirectorySection';
 import { Footer } from './components/sections/Footer';
@@ -187,8 +187,8 @@ export function App() {
                 onOpenCallModal={handleOpenCallModal}
               />
 
-              {/* Section 5: Featured Case Study Card matching Latest Reference Images */}
-              <CaseStudyShowcase onOpenScopingModal={handleOpenScopingModal} />
+              {/* Section 5: Verified Client Testimonials & Reviews Showcase */}
+              <TestimonialsShowcase onOpenScopingModal={handleOpenScopingModal} />
 
               {/* SEO & Geo-Targeted Services Directory */}
               <ServicesDirectorySection onOpenScopingModal={handleOpenScopingModal} />

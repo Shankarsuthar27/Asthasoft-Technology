@@ -98,7 +98,7 @@ export const EngineeringProcessSection: React.FC<EngineeringProcessSectionProps>
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-2.5">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[#0066ff] text-xs font-heading font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5" />
+           
             <span>How We Work</span>
           </div>
 
