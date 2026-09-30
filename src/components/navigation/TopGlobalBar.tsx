@@ -101,7 +101,7 @@ export const TopGlobalBar: React.FC = () => {
               <IconBrandLinkedin size={12} stroke={2} />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/asthasoft/?hl=en"
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
@@ -119,7 +119,7 @@ export const TopGlobalBar: React.FC = () => {
               <IconBrandFacebook size={12} stroke={2} />
             </a>
             <a
-              href="https://youtube.com"
+              href="https://www.youtube.com/@asthasoft"
               target="_blank"
               rel="noreferrer"
               aria-label="YouTube"
