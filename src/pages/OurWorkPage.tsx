@@ -133,13 +133,6 @@ const ADDITIONAL_PROJECTS = [
   },
 ];
 
-const METRICS_DATA = [
-  { value: '50+', label: 'Deployed Systems', color: 'text-slate-900' },
-  { value: '99.98%', label: 'Proven Uptime', color: 'text-emerald-600' },
-  { value: '₹100Cr+', label: 'Annual Volume', color: 'text-amber-600' },
-  { value: '100%', label: 'On-Time Delivery', color: 'text-purple-600' },
-];
-
 export const OurWorkPage: React.FC<OurWorkPageProps> = ({
   onOpenScopingModal,
   onOpenCallModal,
@@ -240,7 +233,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-3xl bg-gradient-to-r from-[#0052cc] via-[#0066ff] to-[#0284c7] p-8 sm:p-12 md:p-14 text-center text-white shadow-xl shadow-blue-500/15 relative overflow-hidden mb-8"
+            className="rounded-3xl bg-gradient-to-r from-[#0052cc] via-[#0066ff] to-[#0284c7] p-8 sm:p-12 md:p-14 text-center text-white shadow-xl shadow-blue-500/15 relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -323,27 +316,6 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
               </span>
             </div>
           </motion.div>
-
-          {/* Simple Key Metrics Bar with Stagger Animation */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-            {METRICS_DATA.map((metric, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: 0.15 + i * 0.08 }}
-                whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 text-center hover:border-blue-400/80 hover:shadow-sm transition-all cursor-default"
-              >
-                <span className={`block text-2xl sm:text-3xl font-black ${metric.color}`}>
-                  {metric.value}
-                </span>
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                  {metric.label}
-                </span>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
