@@ -12,12 +12,13 @@ import { IndustriesAppSolutionsSection } from './components/sections/IndustriesA
 import { TechStackSection } from './components/sections/TechStackSection';
 import { TestimonialsShowcase } from './components/sections/TestimonialsShowcase';
 import { SubBrandsShowcase } from './components/sections/SubBrandsShowcase';
-import { OurWorkShowcase } from './components/sections/OurWorkShowcase';
 import { ServicesDirectorySection } from './components/sections/ServicesDirectorySection';
 import { Footer } from './components/sections/Footer';
 import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopmentPage';
 import { MobileAppDevelopmentPage } from './pages/MobileAppDevelopmentPage';
 import { ContactPage } from './pages/ContactPage';
+import { OurWorkPage } from './pages/OurWorkPage';
+import { OurWorkShowcase } from './components/sections/OurWorkShowcase';
 // import { PageEntranceAnimation } from './components/ui/PageEntranceAnimation';
 
 // Conversion Funnels
@@ -82,6 +83,7 @@ export function App() {
   const isCustomSoftwarePage = currentPath === '/custom-software-development';
   const isMobileAppPage = currentPath === '/mobile-app-development-company';
   const isContactPage = currentPath === '/contact';
+  const isOurWorkPage = currentPath === '/our-work';
 
   // Dynamic document title and meta description for BoFu SEO
   React.useEffect(() => {
@@ -91,6 +93,9 @@ export function App() {
     if (currentPath === '/contact') {
       title = 'Hire Dedicated Custom Software & Mobile App Developers | Asthasoft Technologies';
       desc = 'Schedule an enterprise scoping session with Asthasoft Technologies. Hire dedicated custom software developers, fintech specialists, and offshore mobile app engineering pods.';
+    } else if (currentPath === '/our-work') {
+      title = 'Our Work & Enterprise Case Studies | Car Rental ERP & Custom Software | Asthasoft';
+      desc = 'Explore real-world software systems engineered by Asthasoft Technologies, featuring JSD Car Rental & Fleet Operations ERP, fintech platforms, and scalable web apps.';
     } else if (currentPath === '/mobile-app-development-company') {
       title = 'Cross Platform Mobile App Development Company | React Native & Flutter | Asthasoft';
       desc = 'Enterprise cross-platform mobile app development company. We engineer iOS, Android, React Native, and Flutter mobile applications with MVP builds and transparent cost breakdowns.';
@@ -149,6 +154,11 @@ export function App() {
               onOpenScopingModal={handleOpenScopingModal}
               onOpenCallModal={handleOpenCallModal}
             />
+          ) : isOurWorkPage ? (
+            <OurWorkPage
+              onOpenScopingModal={handleOpenScopingModal}
+              onOpenCallModal={handleOpenCallModal}
+            />
           ) : isMobileAppPage ? (
             <MobileAppDevelopmentPage
               onOpenScopingModal={handleOpenScopingModal}
@@ -173,14 +183,11 @@ export function App() {
               {/* Sub-Brand Products: AsthaSMS | AsthaHost | AsthaPay */}
               <SubBrandsShowcase onOpenScopingModal={handleOpenScopingModal} />
 
+              {/* Asthasoft Client Works & Car Rental ERP Showcase */}
+              <OurWorkShowcase onOpenScopingModal={handleOpenScopingModal} />
+
               {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
               <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
-
-              {/* Our Work: Real Production Deployments & JSD Car Rental ERP Showcase */}
-              <OurWorkShowcase
-                onOpenScopingModal={handleOpenScopingModal}
-                onRequestCall={handleOpenCallModal}
-              />
 
               {/* Section 3: Proven 5-Step Engineering & Delivery Lifecycle */}
               <EngineeringProcessSection onOpenScopingModal={handleOpenScopingModal} />

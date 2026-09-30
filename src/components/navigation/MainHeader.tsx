@@ -558,12 +558,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
               </AnimatePresence>
             </div>
 
-            {/* Direct Links matching screenshot */}
+            {/* Direct Links */}
             <a
-              href="#our-work"
+              href="/our-work"
               onClick={(e) => {
                 e.preventDefault();
-                navigateTo('#our-work');
+                navigateTo('/our-work');
               }}
               className="px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#0066ff] transition-colors cursor-pointer"
             >

@@ -141,10 +141,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenScopingModal }) => {
               </li>
               <li>
                 <a
-                  href="#our-work"
+                  href="/our-work"
                   onClick={(e) => {
                     e.preventDefault();
-                    navigateTo('#our-work');
+                    navigateTo('/our-work');
                   }}
                   className="hover:text-[#0066ff] transition-colors cursor-pointer"
                 >
