@@ -70,82 +70,30 @@ export async function sendLeadEmailNotification(payload: ScopingLeadEmailPayload
         timeStyle: 'medium',
       });
 
-    const emailHtml = `
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f5; color: #333333; padding: 20px; margin: 0;">
-  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e4e4e7; border-radius: 8px; overflow: hidden;">
-    
-    <!-- Header -->
-    <div style="background-color: #0066ff; padding: 20px;">
-      <h1 style="margin: 0; color: #ffffff; font-size: 18px;">ASTHASOFT TECHNOLOGIES</h1>
-      <p style="margin: 5px 0 0; color: #e0e7ff; font-size: 14px;">New Scoping Session Request</p>
-    </div>
+      const plainText = `ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
 
-    <!-- Content -->
-    <div style="padding: 20px;">
-      <p style="margin: 0 0 20px; font-size: 14px; color: #666666;">
-        <strong>Ticket ID:</strong> ${ticketId} <br>
-        <strong>Time (IST):</strong> ${formattedDate}
-      </p>
+TICKET & INTAKE DETAILS
+Ticket ID       : ${ticketId}
+Date & Time     : ${formattedDate}
+Source Channel  : ${source}
 
-      <table width="100%" cellpadding="10" cellspacing="0" border="0" style="font-size: 14px; border-collapse: collapse; margin-bottom: 20px;">
-        <tr style="border-bottom: 1px solid #eeeeee;">
-          <td width="35%" style="color: #666666;"><strong>Full Name:</strong></td>
-          <td>${fullName}</td>
-        </tr>
-        <tr style="border-bottom: 1px solid #eeeeee;">
-          <td style="color: #666666;"><strong>Email:</strong></td>
-          <td><a href="mailto:${email}" style="color: #0066ff; text-decoration: none;">${email}</a></td>
-        </tr>
-        <tr style="border-bottom: 1px solid #eeeeee;">
-          <td style="color: #666666;"><strong>Phone:</strong></td>
-          <td><a href="tel:${countryCode}${phone}" style="color: #0066ff; text-decoration: none;">${countryCode} ${phone}</a></td>
-        </tr>
-        <tr style="border-bottom: 1px solid #eeeeee;">
-          <td style="color: #666666;"><strong>Service:</strong></td>
-          <td>${service}</td>
-        </tr>
-        ${payload.budget ? `<tr style="border-bottom: 1px solid #eeeeee;"><td style="color: #666666;"><strong>Budget:</strong></td><td>${payload.budget}</td></tr>` : ''}
-        ${payload.timeline ? `<tr style="border-bottom: 1px solid #eeeeee;"><td style="color: #666666;"><strong>Timeline:</strong></td><td>${payload.timeline}</td></tr>` : ''}
-        ${payload.preferredTime ? `<tr style="border-bottom: 1px solid #eeeeee;"><td style="color: #666666;"><strong>Preferred Time:</strong></td><td>${payload.preferredTime}</td></tr>` : ''}
-        <tr style="border-bottom: 1px solid #eeeeee;">
-          <td style="color: #666666;"><strong>NDA Requested:</strong></td>
-          <td>${ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}</td>
-        </tr>
-        <tr>
-          <td style="color: #666666;"><strong>Source:</strong></td>
-          <td>${source}</td>
-        </tr>
-      </table>
+CLIENT INFORMATION
+Full Name       : ${fullName}
+Email Address   : ${email}
+Phone Number    : ${countryCode} ${phone}
 
-      <h3 style="font-size: 14px; margin: 0 0 10px; color: #333333;">Project Scope / Description:</h3>
-      <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px; font-size: 14px; line-height: 1.5; white-space: pre-wrap; margin-bottom: 20px; color: #444444;">${projectDescription}</div>
+PROJECT SPECIFICATIONS
+Service Needed  : ${service}
+${payload.budget ? `Estimated Budget: ${payload.budget}\n` : ''}${payload.timeline ? `Delivery Target : ${payload.timeline}\n` : ''}${payload.preferredTime ? `Preferred Time  : ${payload.preferredTime}\n` : ''}NDA Status      : ${ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
 
-      <!-- Action Buttons -->
-      <div>
-        <a href="mailto:${email}?subject=Re:%20Asthasoft%20Project%20Scoping%20Session%20[Ticket%20${ticketId}]" style="display: inline-block; background-color: #0066ff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: bold; margin-right: 10px;">Reply to Client</a>
-        <a href="tel:${countryCode}${phone}" style="display: inline-block; background-color: #ffffff; color: #333333; border: 1px solid #cccccc; text-decoration: none; padding: 9px 20px; border-radius: 6px; font-size: 14px; font-weight: bold;">Call Client</a>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-`;
-
-      const plainText = `ASTHASOFT TECHNOLOGIES - NEW SCOPING REQUEST
-Ticket ID: ${ticketId}
-Time: ${formattedDate}
-Full Name: ${fullName}
-Email: ${email}
-Phone: ${countryCode} ${phone}
-Service: ${service}
-${payload.budget ? `Budget: ${payload.budget}\n` : ''}${payload.timeline ? `Timeline: ${payload.timeline}\n` : ''}${payload.preferredTime ? `Preferred Call Time: ${payload.preferredTime}\n` : ''}NDA Requested: ${ndaRequested ? 'YES' : 'Standard'}
-Source: ${source}
-
-Project Description:
+PROJECT SCOPE & REQUIREMENTS
 ${projectDescription}
+
+DIRECT ACTIONS
+- Reply Email : ${email}
+- Direct Call : ${countryCode} ${phone}
+
+Sent automatically by Asthasoft Technologies Lead Intake System.
 `;
 
       const directRes = await fetch('https://api.resend.com/emails', {
@@ -158,7 +106,6 @@ ${projectDescription}
           from: 'Asthasoft Scoping <onboarding@resend.dev>',
           to: [adminEmail],
           subject: `🚀 [New Scoping Request] ${fullName} - ${service}`,
-          html: emailHtml,
           text: plainText,
           reply_to: email && email.includes('@') ? email : undefined,
         }),
