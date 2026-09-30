@@ -18,7 +18,6 @@ import { CustomSoftwareDevelopmentPage } from './pages/CustomSoftwareDevelopment
 import { MobileAppDevelopmentPage } from './pages/MobileAppDevelopmentPage';
 import { ContactPage } from './pages/ContactPage';
 import { OurWorkPage } from './pages/OurWorkPage';
-import { OurWorkShowcase } from './components/sections/OurWorkShowcase';
 // import { PageEntranceAnimation } from './components/ui/PageEntranceAnimation';
 
 // Conversion Funnels
@@ -182,9 +181,6 @@ export function App() {
 
               {/* Sub-Brand Products: AsthaSMS | AsthaHost | AsthaPay */}
               <SubBrandsShowcase onOpenScopingModal={handleOpenScopingModal} />
-
-              {/* Asthasoft Client Works & Car Rental ERP Showcase */}
-              <OurWorkShowcase onOpenScopingModal={handleOpenScopingModal} />
 
               {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
               <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
