@@ -32,47 +32,44 @@ interface ScreenshotItem {
 const CAR_RENTAL_SCREENSHOTS: ScreenshotItem[] = [
   {
     id: 'dashboard',
-    title: 'Fleet Operations & Live Dispatch Control Hub',
+    title: 'Fleet Operations & Dispatch Hub',
     shortTitle: 'Fleet Dashboard',
-    badge: 'Operations Command Center',
+    badge: 'Operations Hub',
     src: '/works/car-rental-dashboard.png',
     description:
-      'Real-time operational dashboard featuring immediate fleet health indicators (Total, Available, Running, Unavailable), quick car dispatch shortcuts, Jalore branch selector, and intuitive booking search engine.',
+      'Real-time operations center with live fleet availability, quick dispatch actions, branch selector, and instant booking search.',
     highlights: [
-      'Live fleet status monitors: 3 total units, 2 running on road, 1 hold/service',
-      'Branch-aware booking filters (Jalore Main Branch) with date & time precision',
-      'Quick action shortcuts: "Assign Car", "+ Add Car", "Add Customer", "Quick Return"',
-      'Role-based left navigation with real-time notifications and payment audits',
+      'Live fleet status monitors (Available, Running, Hold)',
+      'Branch-aware scheduling with date & time precision',
+      'One-click shortcuts: Assign Car, Add Vehicle, Quick Return',
     ],
   },
   {
     id: 'fleet',
-    title: 'Vehicle Fleet Inventory & Lifecycle Management',
+    title: 'Vehicle Fleet & Inventory Management',
     shortTitle: 'Fleet Inventory',
-    badge: 'Asset & Status Engine',
+    badge: 'Fleet Inventory',
     src: '/works/car-rental-fleet.png',
     description:
-      'Granular vehicle inventory tracking system managing registration numbers (RJ16, RJ18, RJ12), rental specifications, model years, and instant status updates (Rented, Available, Inactive).',
+      'Vehicle inventory tracking system managing registration numbers, rental specs, model years, and real-time status updates.',
     highlights: [
-      'Dynamic inventory cards with photos, registration numbers, and manufacture year',
-      'Instant status tags: "RENTED", "AVAILABLE", "INACTIVE" with visual color coding',
-      'Multi-filter search by make, model, registration #, vehicle category, and branch',
-      'Supports single-click vehicle registration and detailed rate card adjustments',
+      'Visual vehicle cards with photos and model specifications',
+      'Instant color-coded status tags (Rented, Available, Inactive)',
+      'Multi-filter search by make, model, category, and branch',
     ],
   },
   {
     id: 'booking',
-    title: 'Smart Rental Terms, Dispatch & Automated GST Billing',
+    title: 'Booking Dispatch & Automated GST Billing',
     shortTitle: 'Booking & Dispatch',
-    badge: 'Automated Billing & Invoicing',
+    badge: 'Billing & Invoicing',
     src: '/works/car-rental-booking.png',
     description:
-      'Intelligent 3-step rental dispatch workflow with starting odometer verification, refundable security deposit accounting (₹10,000), Zero-Dep insurance addons, and automated 18% GST tax calculation.',
+      'Streamlined 3-step rental dispatch workflow with starting odometer verification, deposit tracking, and automated 18% GST tax calculation.',
     highlights: [
-      'Accurate schedule & starting KM odometer logging to prevent mileage disputes',
-      'Custom add-ons: Zero-Dep Insurance Cover (₹499) & Chauffeur / Driver service (₹1,000/day)',
-      'Automated real-time invoice breakdown: Base Rental + Insurance + 18% GST + Refundable Deposit',
-      'Instant digital agreement confirmation linking vehicle directly to customer KYC profile',
+      'Starting odometer logging to eliminate mileage disputes',
+      'Instant invoice breakdown with 18% GST and security deposits',
+      'One-click add-ons for Zero-Dep insurance & chauffeur service',
     ],
   },
 ];
@@ -351,7 +348,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
       </section>
 
       {/* FLAGSHIP CASE STUDY: CAR RENTAL & FLEET ERP */}
-      <section className="py-12 sm:py-16">
+      <section className="py-10 sm:py-14">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
           {/* Section Header */}
           <motion.div
@@ -359,27 +356,23 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6"
           >
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[#0066ff] text-xs font-bold uppercase tracking-wider mb-2">
-                <Car className="w-3.5 h-3.5" />
-                <span>Featured Client Delivery</span>
-              </div>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-1 block">
+                Featured Case Study
+              </span>
               <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">
                 JSD Car Rental & Fleet Operations ERP
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
-                A custom enterprise web application engineered for self-drive vehicle rentals, live fleet telemetry, automated 18% GST billing, and on-ground branch dispatching.
+                A custom enterprise web application engineered for self-drive vehicle rentals, live fleet telemetry, automated 18% GST billing, and branch dispatching.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono text-slate-600">
-                Industry: <strong className="text-slate-900">Automotive & Fleet ERP</strong>
-              </span>
-              <span className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-mono text-slate-600">
-                Client: <strong className="text-slate-900">Jalore, Rajasthan, India</strong>
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium text-slate-600">
+                Automotive & Fleet ERP · Jalore, Rajasthan
               </span>
             </div>
           </motion.div>
@@ -415,9 +408,6 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                       />
                     )}
                     <span className="relative z-10">{tab.shortTitle}</span>
-                    {isActive && (
-                      <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                    )}
                   </button>
                 );
               })}
@@ -434,18 +424,15 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                 className="flex flex-col lg:flex-row gap-7 lg:gap-8 items-start"
               >
                 {/* Left: Screen Preview with Zoomable Lightbox */}
-                <div className="w-full lg:w-[68%] xl:w-[70%] flex flex-col gap-2.5 shrink-0">
+                <div className="w-full lg:w-[68%] xl:w-[70%] flex flex-col gap-2 shrink-0">
                   <motion.div
-                    whileHover={{ scale: 1.008 }}
+                    whileHover={{ scale: 1.006 }}
                     transition={{ duration: 0.2 }}
                     className="group relative rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-900 shadow-md cursor-pointer"
                     onClick={() => setLightboxImage(activeScreenshot)}
                     title="Click to view full screen"
                   >
-                    <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
-                      <span className="px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur-md text-[11px] font-mono font-bold text-white border border-white/20">
-                        {activeScreenshot.badge}
-                      </span>
+                    <div className="absolute top-3 right-3 z-20">
                       <div className="p-2 rounded-lg bg-slate-900/70 backdrop-blur-md text-white group-hover:bg-[#0066ff] transition-colors shadow-sm">
                         <Maximize2 className="w-4 h-4" />
                       </div>
@@ -456,27 +443,12 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                       alt={activeScreenshot.title}
                       className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:scale-[1.01]"
                     />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <p className="text-xs font-semibold text-white flex items-center gap-1.5">
-                        <Maximize2 className="w-3.5 h-3.5 text-[#38bdf8]" />
-                        Click image for full-screen zoom preview
-                      </p>
-                    </div>
                   </motion.div>
-
-                  <div className="flex items-center justify-between text-xs text-slate-500 px-1">
-                    <span>Module: {activeScreenshot.title}</span>
-                    <span className="text-[#0066ff] font-mono text-[11px] font-semibold">Production Build · Asthasoft Verified</span>
-                  </div>
                 </div>
 
                 {/* Right: Technical Architecture & Feature Highlights */}
                 <div className="w-full lg:w-[32%] xl:w-[30%] flex flex-col gap-5">
                   <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-[#0066ff] mb-1">
-                      System Functionality
-                    </div>
                     <h3 className="font-heading text-lg sm:text-xl font-bold text-slate-900 leading-snug">
                       {activeScreenshot.title}
                     </h3>
@@ -485,11 +457,8 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     </p>
                   </div>
 
-                  {/* Specific Capabilities */}
+                  {/* Highlights */}
                   <div className="space-y-2">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                      Key Engineered Capabilities:
-                    </span>
                     {activeScreenshot.highlights.map((item, i) => (
                       <motion.div
                         key={i}
@@ -506,17 +475,17 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                     ))}
                   </div>
 
-                  {/* Tech Badges */}
+                  {/* Tech stack */}
                   <div className="pt-2 border-t border-slate-200">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                    <div className="text-[11px] font-semibold text-slate-500 mb-2">
                       Core Technologies:
-                    </span>
+                    </div>
                     <div className="flex flex-wrap gap-1.5">
-                      {['React 18', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Telematics Sync'].map(
+                      {['React 18', 'TypeScript', 'Node.js', 'PostgreSQL', 'Telematics Sync'].map(
                         (tech) => (
                           <span
                             key={tech}
-                            className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-[11px] text-slate-700 font-mono"
+                            className="px-2.5 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-[11px] text-slate-700 font-mono"
                           >
                             {tech}
                           </span>
@@ -526,7 +495,7 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
                   </div>
 
                   {/* Call to Action */}
-                  <div className="pt-2">
+                  <div className="pt-1">
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -542,27 +511,24 @@ export const OurWorkPage: React.FC<OurWorkPageProps> = ({
               </motion.div>
             </AnimatePresence>
 
-            {/* Business Impact Metrics */}
-            <div className="mt-8 pt-6 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {/* Simplified Business Impact Metrics */}
+            <div className="mt-8 pt-6 border-t border-slate-200 grid grid-cols-2 lg:grid-cols-4 gap-3.5">
               {[
-                { title: 'Check-in / Out Time', val: '< 4 Minutes', sub: '↓ Down from 25 min manual paper check' },
-                { title: 'Booking Conflict Rate', val: '0.0% Conflicts', sub: '100% automated time-slot lock' },
-                { title: 'Deposit & Invoicing Accuracy', val: '100% Automated', sub: 'Instant GST 18% & security deposit tally' },
-                { title: 'Fleet Visibility', val: 'Real-Time Live', sub: 'Across Jalore & Rajasthan branches' },
+                { title: 'Check-in / Out Time', val: '< 4 Minutes' },
+                { title: 'Booking Conflict Rate', val: '0.0%' },
+                { title: 'Deposit & Invoicing', val: '100% Automated' },
+                { title: 'Fleet Visibility', val: 'Real-Time Live' },
               ].map((m, idx) => (
                 <motion.div
                   key={idx}
                   whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                  className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-blue-300 transition-colors"
+                  className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 text-center hover:border-blue-300 transition-colors"
                 >
-                  <span className="text-xs text-slate-500 font-medium block">
-                    {m.title}
-                  </span>
-                  <span className="text-xl font-extrabold text-slate-900 mt-1 block">
+                  <span className="text-xl font-extrabold text-slate-900 block">
                     {m.val}
                   </span>
-                  <span className="text-[11px] text-emerald-600 font-medium mt-0.5 block">
-                    {m.sub}
+                  <span className="text-xs text-slate-500 font-medium mt-1 block">
+                    {m.title}
                   </span>
                 </motion.div>
               ))}
