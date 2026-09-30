@@ -7,7 +7,7 @@ import { MobileDrawer } from './components/navigation/MobileDrawer';
 import { Hero } from './components/sections/Hero';
 import { SocialProofBar } from './components/sections/SocialProofBar';
 import { CapabilitiesGrid } from './components/sections/CapabilitiesGrid';
-import { WhatWeDoShowcase } from './components/sections/WhatWeDoShowcase';
+import { EngineeringProcessSection } from './components/sections/EngineeringProcessSection';
 import { IndustriesAppSolutionsSection } from './components/sections/IndustriesAppSolutionsSection';
 import { TechStackSection } from './components/sections/TechStackSection';
 import { CaseStudyShowcase } from './components/sections/CaseStudyShowcase';
@@ -175,8 +175,8 @@ export function App() {
               {/* Section 2: 6-Card Capabilities Grid matching Image 2 */}
               <CapabilitiesGrid onOpenScopingModal={handleOpenScopingModal} />
 
-              {/* Section 3: What We Do & Legacy Modernization matching Image 3 */}
-              <WhatWeDoShowcase onOpenScopingModal={handleOpenScopingModal} />
+              {/* Section 3: Proven 5-Step Engineering & Delivery Lifecycle */}
+              <EngineeringProcessSection onOpenScopingModal={handleOpenScopingModal} />
 
               {/* Industries We Serve with App Solutions matching user reference image */}
               <IndustriesAppSolutionsSection onOpenScopingModal={handleOpenScopingModal} />
