@@ -33,7 +33,7 @@ export interface ScopingLeadEmailPayload {
 export async function sendLeadEmailNotification(
   payload: ScopingLeadEmailPayload
 ): Promise<{ success: boolean; data?: any; error?: any }> {
-  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'sales@asthasoftindia.com';
+  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'hostelsuthar@gmail.com';
   const resendApiKey = import.meta.env.VITE_RESEND_API_KEY || '';
 
   const contactNumber =
@@ -44,6 +44,8 @@ export async function sendLeadEmailNotification(
     ...payload,
     name: payload.name || payload.fullName,
     fullName: payload.fullName || payload.name || 'Prospective Client',
+    adminEmail,
+    resendApiKey: resendApiKey || undefined,
     contactNumber,
     phone: payload.phone || contactNumber,
     countryCode: payload.countryCode || '+91',

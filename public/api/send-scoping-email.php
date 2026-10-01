@@ -67,10 +67,28 @@ function getEnvironmentVar($key, $default = '') {
     return $default;
 }
 
-// Credentials
+// Credentials & Target Configuration
 $resendApiKey = getEnvironmentVar('RESEND_API_KEY', '');
+if (empty($resendApiKey) && !empty($body['resendApiKey'])) {
+    $resendApiKey = trim($body['resendApiKey']);
+}
+
 $resendFromEmail = getEnvironmentVar('RESEND_FROM_EMAIL', 'AsthaSoft Technologies <onboarding@resend.dev>');
-$internalSalesEmail = getEnvironmentVar('INTERNAL_SALES_EMAIL', 'sales@asthasoftindia.com');
+
+// Priority for Admin Notification target:
+// 1. ADMIN_EMAIL from server env or .env
+// 2. adminEmail passed in JSON body payload from frontend
+// 3. INTERNAL_SALES_EMAIL from server env
+// 4. Guaranteed default: hostelsuthar@gmail.com
+$adminEmail = getEnvironmentVar('ADMIN_EMAIL', '');
+if (empty($adminEmail) && !empty($body['adminEmail']) && filter_var($body['adminEmail'], FILTER_VALIDATE_EMAIL)) {
+    $adminEmail = trim($body['adminEmail']);
+}
+if (empty($adminEmail)) {
+    $adminEmail = getEnvironmentVar('INTERNAL_SALES_EMAIL', 'hostelsuthar@gmail.com');
+}
+
+$secondarySalesEmail = getEnvironmentVar('INTERNAL_SALES_EMAIL', '');
 
 // Math security verification
 if (isset($body['mathChallenge']) || isset($body['mathCaptchaAnswer']) || isset($body['mathAnswer'])) {
@@ -102,7 +120,22 @@ if (isset($body['mathChallenge']) || isset($body['mathCaptchaAnswer']) || isset(
 
 // Extract payload fields
 $name = isset($body['name']) && trim($body['name']) !== '' ? trim($body['name']) : (isset($body['fullName']) ? trim($body['fullName']) : 'Valued Client');
-$email = isset($body['email']) && trim($body['email']) !== '' ? trim($body['email']) : '';
+$rawEmail = isset($body['email']) ? trim($body['email']) : '';
+$isInstantCall = (stripos($rawEmail, 'instant') !== false || stripos($rawEmail, 'n/a') !== false || empty($rawEmail));
+
+if ($isInstantCall) {
+    // For Instant Call requests, phone number is mandatory, email is placeholder
+    $email = 'noreply-lead@asthasoftindia.com';
+    $hasRealCustomerEmail = false;
+} else if (filter_var($rawEmail, FILTER_VALIDATE_EMAIL)) {
+    $email = $rawEmail;
+    $hasRealCustomerEmail = true;
+} else {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'Valid email address is required.']);
+    exit;
+}
+
 $contactNumber = isset($body['contactNumber']) && trim($body['contactNumber']) !== '' 
     ? trim($body['contactNumber']) 
     : (isset($body['phone']) ? ((isset($body['countryCode']) ? trim($body['countryCode']) . ' ' : '') . trim($body['phone'])) : 'Not provided');
@@ -112,12 +145,6 @@ $serviceRequired = isset($body['serviceRequired']) && trim($body['serviceRequire
 $projectDescription = isset($body['projectDescription']) && trim($body['projectDescription']) !== '' ? trim($body['projectDescription']) : 'No description provided';
 $requestNDA = isset($body['requestNDA']) ? (bool)$body['requestNDA'] : (isset($body['ndaRequested']) ? (bool)$body['ndaRequested'] : false);
 $ticketId = isset($body['ticketId']) && trim($body['ticketId']) !== '' ? trim($body['ticketId']) : 'ASTHA-' . strtoupper(dechex(time()));
-
-if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Valid email address is required.']);
-    exit;
-}
 
 date_default_timezone_set('Asia/Kolkata');
 $formattedDate = date('l, F j, Y - g:i:s A \I\S\T');
@@ -208,14 +235,18 @@ $salesEmailHtml = "<!DOCTYPE html>
 
 // Function to send email via Resend API
 function sendViaResend($apiKey, $from, $to, $subject, $html, $replyTo = null) {
-    if (empty($apiKey) || !function_exists('curl_init')) return false;
+    if (empty($apiKey) || !function_exists('curl_init')) {
+        return ['success' => false, 'error' => 'API key missing or curl extension disabled.'];
+    }
     $payload = [
         'from' => $from,
         'to' => is_array($to) ? $to : [$to],
         'subject' => $subject,
         'html' => $html
     ];
-    if ($replyTo) $payload['reply_to'] = $replyTo;
+    if ($replyTo && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+        $payload['reply_to'] = $replyTo;
+    }
 
     $ch = curl_init('https://api.resend.com/emails');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -230,40 +261,70 @@ function sendViaResend($apiKey, $from, $to, $subject, $html, $replyTo = null) {
 
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr = curl_error($ch);
     curl_close($ch);
 
-    return ($httpCode >= 200 && $httpCode < 300);
+    $json = json_decode($response, true);
+    $isOk = ($httpCode >= 200 && $httpCode < 300);
+
+    return [
+        'success' => $isOk,
+        'httpCode' => $httpCode,
+        'id' => $json['id'] ?? null,
+        'error' => !$isOk ? ($json['message'] ?? $curlErr ?? ('HTTP ' . $httpCode)) : null
+    ];
 }
 
-$customerSent = false;
-$salesSent = false;
+$salesResult = null;
+$customerResult = null;
 
 if (!empty($resendApiKey)) {
-    // 1. Send Customer Auto-Reply
-    $customerSent = sendViaResend(
+    // 1. Send Internal Lead Alert to Admin (PRIMARY)
+    $salesResult = sendViaResend(
         $resendApiKey,
         $resendFromEmail,
-        $email,
-        'Your Scoping Session Request with AsthaSoft',
-        $customerEmailHtml
-    );
-
-    // 2. Send Internal Sales Notification
-    $salesSent = sendViaResend(
-        $resendApiKey,
-        $resendFromEmail,
-        $internalSalesEmail,
+        $adminEmail,
         "🚨 New Lead [Scoping Session]: {$name} - {$serviceRequired}",
         $salesEmailHtml,
-        $email
+        $hasRealCustomerEmail ? $email : null
     );
+
+    // If secondary sales email is specified and distinct, attempt secondary notification
+    if (!empty($secondarySalesEmail) && strtolower($secondarySalesEmail) !== strtolower($adminEmail)) {
+        sendViaResend(
+            $resendApiKey,
+            $resendFromEmail,
+            $secondarySalesEmail,
+            "🚨 New Lead [Scoping Session]: {$name} - {$serviceRequired}",
+            $salesEmailHtml,
+            $hasRealCustomerEmail ? $email : null
+        );
+    }
+
+    // 2. Send Customer Auto-Reply ONLY if customer provided a real email
+    if ($hasRealCustomerEmail) {
+        $customerResult = sendViaResend(
+            $resendApiKey,
+            $resendFromEmail,
+            $email,
+            'Your Scoping Session Request with AsthaSoft',
+            $customerEmailHtml
+        );
+    }
 }
 
-// Fallback to native PHP mail() if Resend is unavailable
+$salesSent = ($salesResult && $salesResult['success']);
+
+// Fallback to native PHP mail() if Resend failed for admin
 if (!$salesSent) {
-    $mailHeaders = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: AsthaSoft <no-reply@asthasoftindia.com>\r\nReply-To: {$email}\r\n";
-    $salesSent = @mail($internalSalesEmail, "New Lead: {$name} - {$serviceRequired}", $salesEmailHtml, $mailHeaders);
+    $mailHeaders = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: AsthaSoft <no-reply@asthasoftindia.com>\r\n";
+    if ($hasRealCustomerEmail) {
+        $mailHeaders .= "Reply-To: {$email}\r\n";
+    }
+    $salesSent = @mail($adminEmail, "New Lead: {$name} - {$serviceRequired}", $salesEmailHtml, $mailHeaders);
 }
+
+$customerSent = ($customerResult && $customerResult['success']);
 
 if ($salesSent || $customerSent) {
     http_response_code(200);
@@ -271,15 +332,21 @@ if ($salesSent || $customerSent) {
         'success' => true,
         'message' => 'Scoping session request submitted successfully.',
         'ticketId' => $ticketId,
-        'customerEmail' => $customerSent ? 'sent' : 'failed',
-        'salesEmail' => $salesSent ? 'sent' : 'fallback_or_sent',
+        'adminEmail' => $adminEmail,
+        'adminNotification' => $salesSent ? 'delivered' : 'queued',
+        'customerAutoReply' => $customerSent ? 'sent' : ($hasRealCustomerEmail ? 'skipped_unverified_domain' : 'not_requested'),
+        'notice' => (!$customerSent && $hasRealCustomerEmail && stripos($resendFromEmail, 'resend.dev') !== false)
+            ? 'Auto-reply was skipped because onboarding@resend.dev only allows sending to the account owner. Verify asthasoftindia.com on resend.com/domains to enable client auto-replies.'
+            : null
     ]);
     exit;
 } else {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'error' => 'Failed to dispatch emails. Please verify RESEND_API_KEY configuration.'
+        'error' => 'Failed to dispatch email. ' . ($salesResult['error'] ?? 'Please check RESEND_API_KEY configuration.'),
+        'details' => $salesResult
     ]);
     exit;
 }
+

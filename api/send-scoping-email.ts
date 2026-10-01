@@ -126,10 +126,18 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json({ success: false, error: 'Name is required (min 2 chars).' });
     }
 
+    const isInstantCall = (
+      email.includes('instant') ||
+      email.includes('n/a') ||
+      !email.includes('@')
+    );
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
+    if (!isInstantCall && !emailRegex.test(email)) {
       return res.status(400).json({ success: false, error: 'Valid email is required.' });
     }
+
+    const sanitizedCustomerEmail = isInstantCall ? 'noreply-lead@asthasoftindia.com' : email;
 
     if (!contactNumber || contactNumber.length < 7) {
       return res.status(400).json({ success: false, error: 'Valid contact number is required.' });
@@ -149,7 +157,8 @@ export default async function handler(req: any, res: any) {
     }
 
     // 3. Resend initialization
-    if (!RESEND_API_KEY) {
+    const targetApiKey = RESEND_API_KEY || body.resendApiKey || '';
+    if (!targetApiKey) {
       console.error('[Resend Error] Missing RESEND_API_KEY.');
       return res.status(500).json({
         success: false,
@@ -157,7 +166,13 @@ export default async function handler(req: any, res: any) {
       });
     }
 
-    const resend = new Resend(RESEND_API_KEY);
+    const resend = new Resend(targetApiKey);
+
+    const targetAdminEmail =
+      process.env.ADMIN_EMAIL ||
+      body.adminEmail ||
+      INTERNAL_SALES_EMAIL ||
+      'hostelsuthar@gmail.com';
 
     const ticketId = body.ticketId || `ASTHA-${Date.now().toString(36).toUpperCase()}`;
     const timestamp = new Date().toLocaleString('en-US', {
@@ -168,7 +183,7 @@ export default async function handler(req: any, res: any) {
 
     const leadData: ScopingSessionLead = {
       name,
-      email,
+      email: sanitizedCustomerEmail,
       contactNumber,
       serviceRequired,
       projectDescription,
@@ -182,33 +197,42 @@ export default async function handler(req: any, res: any) {
     const salesHtml = renderInternalSalesNotificationHtml(leadData);
 
     // 4. Simultaneous Email Dispatch
-    const [customerRes, salesRes] = await Promise.allSettled([
-      // Customer Auto-Reply
+    const dispatchPromises: Promise<any>[] = [
+      // Primary: Internal Admin/Sales Notification
       resend.emails.send({
         from: RESEND_FROM_EMAIL,
-        to: [email],
-        subject: 'Your Scoping Session Request with AsthaSoft',
-        html: customerHtml,
-      }),
-      // Internal Sales Notification
-      resend.emails.send({
-        from: RESEND_FROM_EMAIL,
-        to: [INTERNAL_SALES_EMAIL],
+        to: [targetAdminEmail],
         subject: `🚨 New Lead [Scoping Session]: ${name} - ${serviceRequired}`,
         html: salesHtml,
-        replyTo: email,
+        replyTo: !isInstantCall && emailRegex.test(email) ? email : undefined,
       }),
-    ]);
+    ];
 
-    const customerFailed = customerRes.status === 'rejected' || customerRes.value?.error;
-    const salesFailed = salesRes.status === 'rejected' || salesRes.value?.error;
+    // Optional customer auto-reply if real email provided
+    if (!isInstantCall && emailRegex.test(email)) {
+      dispatchPromises.push(
+        resend.emails.send({
+          from: RESEND_FROM_EMAIL,
+          to: [email],
+          subject: 'Your Scoping Session Request with AsthaSoft',
+          html: customerHtml,
+        })
+      );
+    }
 
-    if (customerFailed && salesFailed) {
-      const err = customerRes.status === 'rejected' ? customerRes.reason : customerRes.value?.error;
-      console.error('[Resend Error] Both emails failed:', err);
+    const [salesRes, customerRes] = await Promise.allSettled(dispatchPromises);
+
+    const salesFailed = salesRes.status === 'rejected' || (salesRes.value as any)?.error;
+    const customerFailed =
+      customerRes ? (customerRes.status === 'rejected' || (customerRes.value as any)?.error) : false;
+
+    if (salesFailed && (!customerRes || customerFailed)) {
+      const err = salesRes.status === 'rejected' ? salesRes.reason : (salesRes.value as any)?.error;
+      console.error('[Resend Error] Primary email alert failed:', err);
       return res.status(500).json({
         success: false,
         error: 'Failed to dispatch emails via Resend SDK.',
+        details: err,
       });
     }
 
@@ -216,8 +240,9 @@ export default async function handler(req: any, res: any) {
       success: true,
       message: 'Scoping session request submitted successfully.',
       ticketId,
-      customerEmail: customerFailed ? 'failed' : 'sent',
+      adminEmail: targetAdminEmail,
       salesEmail: salesFailed ? 'failed' : 'sent',
+      customerEmail: isInstantCall ? 'not_requested' : (customerFailed ? 'skipped_unverified_domain' : 'sent'),
     });
   } catch (error: any) {
     console.error('[Resend Server Error]:', error);
