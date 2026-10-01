@@ -115,18 +115,18 @@ export async function sendLeadEmailNotification(
       const plainText = `ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
 
 TICKET & INTAKE DETAILS
-Ticket ID       : ${ticketId}
-Date & Time     : ${formattedDate}
-Source Channel  : ${source}
+Ticket ID      : ${ticketId}
+Date & Time    : ${formattedDate}
+Source Channel : ${source}
 
 CLIENT INFORMATION
-Full Name       : ${fullName}
-Email Address   : ${email}
-Phone Number    : ${countryCode} ${phone}
+Full Name      : ${fullName}
+Email Address  : ${email}
+Phone Number   : ${countryCode} ${phone}
 
 PROJECT SPECIFICATIONS
-Service Needed  : ${service}
-${payload.budget ? `Estimated Budget: ${payload.budget}\n` : ''}${payload.timeline ? `Delivery Target : ${payload.timeline}\n` : ''}${payload.preferredTime ? `Preferred Time  : ${payload.preferredTime}\n` : ''}NDA Status      : ${ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
+Service Needed : ${service}
+${payload.budget ? `Estimated Budget: ${payload.budget}\n` : ''}${payload.timeline ? `Delivery Target : ${payload.timeline}\n` : ''}${payload.preferredTime ? `Preferred Time  : ${payload.preferredTime}\n` : ''}NDA Status     : ${ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
 
 PROJECT SCOPE & REQUIREMENTS
 ${projectDescription}
@@ -137,6 +137,42 @@ DIRECT ACTIONS
 
 Sent automatically by Asthasoft Technologies Lead Intake System.
 `;
+
+      const safePhoneClean = `${countryCode}${phone}`.replace(/[^0-9+]/g, '');
+      const htmlVersion = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Client Inquiry: ${fullName} - ${service}</title>
+</head>
+<body style="margin: 0; padding: 24px 20px; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;">
+  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827; white-space: pre-wrap; word-break: break-word;">ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
+
+TICKET &amp; INTAKE DETAILS
+Ticket ID      : ${ticketId}
+Date &amp; Time    : ${formattedDate}
+Source Channel : ${source}
+
+CLIENT INFORMATION
+Full Name      : ${fullName}
+Email Address  : <a href="mailto:${email}" style="color: #2563eb; text-decoration: underline;">${email}</a>
+Phone Number   : <a href="tel:${safePhoneClean}" style="color: #2563eb; text-decoration: underline;">${countryCode} ${phone}</a>
+
+PROJECT SPECIFICATIONS
+Service Needed : ${service}
+${payload.budget ? `Estimated Budget: ${payload.budget}\n` : ''}${payload.timeline ? `Delivery Target : ${payload.timeline}\n` : ''}${payload.preferredTime ? `Preferred Time  : ${payload.preferredTime}\n` : ''}NDA Status     : ${ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
+
+PROJECT SCOPE &amp; REQUIREMENTS
+${projectDescription}
+
+DIRECT ACTIONS
+- Reply Email : <a href="mailto:${email}" style="color: #2563eb; text-decoration: underline;">${email}</a>
+- Direct Call : <a href="tel:${safePhoneClean}" style="color: #2563eb; text-decoration: underline;">${countryCode} ${phone}</a>
+
+Sent automatically by Asthasoft Technologies Lead Intake System.</div>
+</body>
+</html>`;
 
       const directRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -149,6 +185,7 @@ Sent automatically by Asthasoft Technologies Lead Intake System.
           to: [adminEmail],
           subject: `New Client Inquiry: ${fullName} - ${service}`,
           text: plainText,
+          html: htmlVersion,
           reply_to: email && email.includes('@') && !email.includes('N/A') ? email : undefined,
         }),
       });

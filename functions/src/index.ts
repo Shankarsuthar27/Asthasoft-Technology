@@ -101,18 +101,18 @@ async function sendResendAdminAlert(enquiryData: Record<string, any>) {
     const plainText = `ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
 
 TICKET & INTAKE DETAILS
-Ticket ID       : ${enquiryData.id}
-Date & Time     : ${formattedDate}
-Source Channel  : ${enquiryData.source}
+Ticket ID      : ${enquiryData.id}
+Date & Time    : ${formattedDate}
+Source Channel : ${enquiryData.source}
 
 CLIENT INFORMATION
-Full Name       : ${enquiryData.fullName}
-Email Address   : ${enquiryData.email}
-Phone Number    : ${enquiryData.countryCode} ${enquiryData.phoneNormalized}
+Full Name      : ${enquiryData.fullName}
+Email Address  : ${enquiryData.email}
+Phone Number   : ${enquiryData.countryCode} ${enquiryData.phoneNormalized}
 
 PROJECT SPECIFICATIONS
-Service Needed  : ${enquiryData.serviceCategory || 'Custom AI & Engineering'}
-NDA Status      : ${enquiryData.ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
+Service Needed : ${enquiryData.serviceCategory || 'Custom AI & Engineering'}
+NDA Status     : ${enquiryData.ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
 
 PROJECT SCOPE & REQUIREMENTS
 ${enquiryData.projectDescription}
@@ -124,6 +124,42 @@ DIRECT ACTIONS
 Sent automatically by Asthasoft Technologies Lead Intake System.
 `;
 
+    const safePhoneClean = `${enquiryData.countryCode}${enquiryData.phoneNormalized}`.replace(/[^0-9+]/g, '');
+    const htmlVersion = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Client Inquiry: ${enquiryData.fullName} - ${enquiryData.serviceCategory || 'Custom AI & Engineering'}</title>
+</head>
+<body style="margin: 0; padding: 24px 20px; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;">
+  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827; white-space: pre-wrap; word-break: break-word;">ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
+
+TICKET &amp; INTAKE DETAILS
+Ticket ID      : ${enquiryData.id}
+Date &amp; Time    : ${formattedDate}
+Source Channel : ${enquiryData.source}
+
+CLIENT INFORMATION
+Full Name      : ${enquiryData.fullName}
+Email Address  : <a href="mailto:${enquiryData.email}" style="color: #2563eb; text-decoration: underline;">${enquiryData.email}</a>
+Phone Number   : <a href="tel:${safePhoneClean}" style="color: #2563eb; text-decoration: underline;">${enquiryData.countryCode} ${enquiryData.phoneNormalized}</a>
+
+PROJECT SPECIFICATIONS
+Service Needed : ${enquiryData.serviceCategory || 'Custom AI & Engineering'}
+NDA Status     : ${enquiryData.ndaRequested ? 'YES · Formal NDA Requested' : 'Standard Confidentiality'}
+
+PROJECT SCOPE &amp; REQUIREMENTS
+${enquiryData.projectDescription}
+
+DIRECT ACTIONS
+- Reply Email : <a href="mailto:${enquiryData.email}" style="color: #2563eb; text-decoration: underline;">${enquiryData.email}</a>
+- Direct Call : <a href="tel:${safePhoneClean}" style="color: #2563eb; text-decoration: underline;">${enquiryData.countryCode} ${enquiryData.phoneNormalized}</a>
+
+Sent automatically by Asthasoft Technologies Lead Intake System.</div>
+</body>
+</html>`;
+
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -133,8 +169,9 @@ Sent automatically by Asthasoft Technologies Lead Intake System.
       body: JSON.stringify({
         from: "Asthasoft Technologies <onboarding@resend.dev>",
         to: [adminEmail],
-        subject: `New Client Inquiry: ${enquiryData.fullName} - ${enquiryData.serviceCategory}`,
+        subject: `New Client Inquiry: ${enquiryData.fullName} - ${enquiryData.serviceCategory || 'Custom AI & Engineering'}`,
         text: plainText,
+        html: htmlVersion,
         reply_to: enquiryData.email,
       }),
     });

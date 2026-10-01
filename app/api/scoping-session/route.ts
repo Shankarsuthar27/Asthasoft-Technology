@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 import {
   renderCustomerAutoReplyHtml,
   renderInternalSalesNotificationHtml,
+  renderInternalLeadPlainText,
   type ScopingSessionLead,
 } from '@/emails/templates';
 
@@ -183,10 +184,15 @@ export async function POST(req: NextRequest) {
       requestNDA,
       ticketId,
       timestamp,
+      source: body.source || 'Header CTA',
+      budget: body.budget,
+      timeline: body.timeline,
+      preferredTime: body.preferredTime,
     };
 
-    // Render HTML templates
+    // Render Plain Text and HTML templates
     const customerHtml = renderCustomerAutoReplyHtml(leadData);
+    const salesPlainText = renderInternalLeadPlainText(leadData);
     const salesHtml = renderInternalSalesNotificationHtml(leadData);
 
     // 5. Simultaneous Email Dispatch via Resend SDK
@@ -202,7 +208,8 @@ export async function POST(req: NextRequest) {
       resend.emails.send({
         from: RESEND_FROM_EMAIL,
         to: [INTERNAL_SALES_EMAIL],
-        subject: `🚨 New Lead [Scoping Session]: ${name} - ${serviceRequired}`,
+        subject: `New Client Inquiry: ${name} - ${serviceRequired}`,
+        text: salesPlainText,
         html: salesHtml,
         replyTo: email,
       }),

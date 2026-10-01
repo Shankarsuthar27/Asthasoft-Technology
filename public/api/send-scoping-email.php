@@ -136,25 +136,115 @@ if ($isInstantCall) {
     exit;
 }
 
-$contactNumber = isset($body['contactNumber']) && trim($body['contactNumber']) !== '' 
-    ? trim($body['contactNumber']) 
-    : (isset($body['phone']) ? ((isset($body['countryCode']) ? trim($body['countryCode']) . ' ' : '') . trim($body['phone'])) : 'Not provided');
+$rawPhone = isset($body['phone']) ? trim($body['phone']) : '';
+$countryCode = isset($body['countryCode']) ? trim($body['countryCode']) : '+91';
+
+if (isset($body['contactNumber']) && trim($body['contactNumber']) !== '') {
+    $contactNumber = trim($body['contactNumber']);
+} else if ($rawPhone !== '') {
+    if (strpos($rawPhone, '+') === 0 || ($countryCode && strpos($rawPhone, $countryCode) === 0)) {
+        $contactNumber = $rawPhone;
+    } else {
+        $contactNumber = ($countryCode ? $countryCode . ' ' : '') . $rawPhone;
+    }
+} else {
+    $contactNumber = 'Not provided';
+}
+
 $serviceRequired = isset($body['serviceRequired']) && trim($body['serviceRequired']) !== '' 
     ? trim($body['serviceRequired']) 
     : (isset($body['service']) ? trim($body['service']) : 'Custom Enterprise Software');
 $projectDescription = isset($body['projectDescription']) && trim($body['projectDescription']) !== '' ? trim($body['projectDescription']) : 'No description provided';
 $requestNDA = isset($body['requestNDA']) ? (bool)$body['requestNDA'] : (isset($body['ndaRequested']) ? (bool)$body['ndaRequested'] : false);
 $ticketId = isset($body['ticketId']) && trim($body['ticketId']) !== '' ? trim($body['ticketId']) : 'ASTHA-' . strtoupper(dechex(time()));
+$sourceChannel = isset($body['source']) && trim($body['source']) !== '' ? trim($body['source']) : 'Header CTA';
+
+$budget = isset($body['budget']) && trim($body['budget']) !== '' ? trim($body['budget']) : null;
+$timeline = isset($body['timeline']) && trim($body['timeline']) !== '' ? trim($body['timeline']) : null;
+$preferredTime = isset($body['preferredTime']) && trim($body['preferredTime']) !== '' ? trim($body['preferredTime']) : null;
 
 date_default_timezone_set('Asia/Kolkata');
-$formattedDate = date('l, F j, Y - g:i:s A \I\S\T');
+$formattedDate = date('l, F j, Y \a\t g:i:s A');
 
-// 1. Render Customer Auto-Reply Email HTML
+$ndaStatusText = $requestNDA ? 'YES · Formal NDA Requested' : 'Standard Confidentiality';
+
+$extraSpecsText = '';
+if ($budget) $extraSpecsText .= "Estimated Budget: {$budget}\n";
+if ($timeline) $extraSpecsText .= "Delivery Target : {$timeline}\n";
+if ($preferredTime) $extraSpecsText .= "Preferred Time  : {$preferredTime}\n";
+
+// Plain Text Lead Alert matching the user's exact specification
+$plainText = "ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD\n\n"
+    . "TICKET & INTAKE DETAILS\n"
+    . "Ticket ID      : {$ticketId}\n"
+    . "Date & Time    : {$formattedDate}\n"
+    . "Source Channel : {$sourceChannel}\n\n"
+    . "CLIENT INFORMATION\n"
+    . "Full Name      : {$name}\n"
+    . "Email Address  : {$email}\n"
+    . "Phone Number   : {$contactNumber}\n\n"
+    . "PROJECT SPECIFICATIONS\n"
+    . "Service Needed : {$serviceRequired}\n"
+    . $extraSpecsText
+    . "NDA Status     : {$ndaStatusText}\n\n"
+    . "PROJECT SCOPE & REQUIREMENTS\n"
+    . "{$projectDescription}\n\n"
+    . "DIRECT ACTIONS\n"
+    . "- Reply Email : {$email}\n"
+    . "- Direct Call : {$contactNumber}\n\n"
+    . "Sent automatically by Asthasoft Technologies Lead Intake System.\n";
+
+// Matching clean HTML representation
 $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-$safeService = htmlspecialchars($serviceRequired, ENT_QUOTES, 'UTF-8');
+$safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 $safePhone = htmlspecialchars($contactNumber, ENT_QUOTES, 'UTF-8');
-$safeDescription = nl2br(htmlspecialchars($projectDescription, ENT_QUOTES, 'UTF-8'));
+$safePhoneClean = preg_replace('/[^0-9+]/', '', $contactNumber);
+$safeService = htmlspecialchars($serviceRequired, ENT_QUOTES, 'UTF-8');
+$safeDescription = htmlspecialchars($projectDescription, ENT_QUOTES, 'UTF-8');
+$safeSource = htmlspecialchars($sourceChannel, ENT_QUOTES, 'UTF-8');
+$safeTicketId = htmlspecialchars($ticketId, ENT_QUOTES, 'UTF-8');
 
+$extraSpecsHtml = '';
+if ($budget) $extraSpecsHtml .= "Estimated Budget: " . htmlspecialchars($budget, ENT_QUOTES, 'UTF-8') . "\n";
+if ($timeline) $extraSpecsHtml .= "Delivery Target : " . htmlspecialchars($timeline, ENT_QUOTES, 'UTF-8') . "\n";
+if ($preferredTime) $extraSpecsHtml .= "Preferred Time  : " . htmlspecialchars($preferredTime, ENT_QUOTES, 'UTF-8') . "\n";
+
+$salesEmailHtml = "<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>New Client Inquiry: {$safeName} - {$safeService}</title>
+</head>
+<body style='margin: 0; padding: 24px 20px; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;'>
+  <div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827; white-space: pre-wrap; word-break: break-word;'>ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
+
+TICKET &amp; INTAKE DETAILS
+Ticket ID      : {$safeTicketId}
+Date &amp; Time    : {$formattedDate}
+Source Channel : {$safeSource}
+
+CLIENT INFORMATION
+Full Name      : {$safeName}
+Email Address  : <a href='mailto:{$safeEmail}' style='color: #2563eb; text-decoration: underline;'>{$safeEmail}</a>
+Phone Number   : <a href='tel:{$safePhoneClean}' style='color: #2563eb; text-decoration: underline;'>{$safePhone}</a>
+
+PROJECT SPECIFICATIONS
+Service Needed : {$safeService}
+{$extraSpecsHtml}NDA Status     : {$ndaStatusText}
+
+PROJECT SCOPE &amp; REQUIREMENTS
+{$safeDescription}
+
+DIRECT ACTIONS
+- Reply Email : <a href='mailto:{$safeEmail}' style='color: #2563eb; text-decoration: underline;'>{$safeEmail}</a>
+- Direct Call : <a href='tel:{$safePhoneClean}' style='color: #2563eb; text-decoration: underline;'>{$safePhone}</a>
+
+Sent automatically by Asthasoft Technologies Lead Intake System.</div>
+</body>
+</html>";
+
+// Optional Customer Auto-Reply Email
 $ndaHtmlCustomer = $requestNDA ? '
 <div style="margin: 24px 0; padding: 18px 20px; background-color: #f0fdf4; border-left: 4px solid #16a34a; border-radius: 6px;">
   <div style="font-weight: 700; color: #166534; font-size: 14px; margin-bottom: 6px;">✓ Non-Disclosure Agreement (NDA) Requested</div>
@@ -200,41 +290,8 @@ $customerEmailHtml = "<!DOCTYPE html>
 </body>
 </html>";
 
-// 2. Render Internal Sales Email HTML
-$ndaSalesBadge = $requestNDA 
-    ? "<span style='background:#fef2f2;color:#b91c1c;padding:4px 8px;border-radius:4px;font-weight:700;'>YES — Provide Mutual NDA</span>"
-    : "<span style='background:#f1f5f9;color:#475569;padding:4px 8px;border-radius:4px;'>No NDA Requested</span>";
-
-$salesEmailHtml = "<!DOCTYPE html>
-<html>
-<body style='margin:0;padding:0;background-color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;'>
-<table role='presentation' width='100%' style='padding:30px 15px;'><tr><td align='center'>
-<table role='presentation' width='100%' style='max-width:640px;background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;'>
-  <tr><td style='background:#0f172a;padding:24px 30px;color:#fff;'>
-    <div style='color:#38bdf8;font-size:11px;font-weight:700;text-transform:uppercase;'>Internal Sales Alert</div>
-    <div style='font-size:20px;font-weight:700;margin-top:4px;'>New Scoping Session Submission</div>
-  </td></tr>
-  <tr><td style='padding:30px;'>
-    <table style='width:100%;border-collapse:collapse;margin-bottom:24px;border:1px solid #e2e8f0;'>
-      <tr style='background:#f8fafc;'><td style='padding:10px;border-bottom:1px solid #e2e8f0;font-weight:700;'>FIELD</td><td style='padding:10px;border-bottom:1px solid #e2e8f0;font-weight:700;'>VALUE</td></tr>
-      <tr><td style='padding:10px;border-bottom:1px solid #f1f5f9;color:#64748b;'>Name</td><td style='padding:10px;border-bottom:1px solid #f1f5f9;font-weight:700;'>{$safeName}</td></tr>
-      <tr><td style='padding:10px;border-bottom:1px solid #f1f5f9;color:#64748b;'>Email</td><td style='padding:10px;border-bottom:1px solid #f1f5f9;'><a href='mailto:{$email}'>{$email}</a></td></tr>
-      <tr><td style='padding:10px;border-bottom:1px solid #f1f5f9;color:#64748b;'>Contact Number</td><td style='padding:10px;border-bottom:1px solid #f1f5f9;font-weight:600;'>{$safePhone}</td></tr>
-      <tr><td style='padding:10px;border-bottom:1px solid #f1f5f9;color:#64748b;'>Service Required</td><td style='padding:10px;border-bottom:1px solid #f1f5f9;font-weight:700;'>{$safeService}</td></tr>
-      <tr><td style='padding:10px;border-bottom:1px solid #f1f5f9;color:#64748b;'>NDA Status</td><td style='padding:10px;border-bottom:1px solid #f1f5f9;'>{$ndaSalesBadge}</td></tr>
-      <tr><td style='padding:10px;color:#64748b;'>Timestamp</td><td style='padding:10px;font-size:13px;'>{$formattedDate}</td></tr>
-    </table>
-    <div style='background:#f8fafc;border:1px solid #e2e8f0;padding:14px;border-radius:6px;margin-bottom:20px;'>
-      <strong>Project Scope:</strong><br>{$safeDescription}
-    </div>
-  </td></tr>
-</table>
-</td></tr></table>
-</body>
-</html>";
-
-// Function to send email via Resend API
-function sendViaResend($apiKey, $from, $to, $subject, $html, $replyTo = null) {
+// Function to send email via Resend API supporting both text and html
+function sendViaResend($apiKey, $from, $to, $subject, $text, $html = null, $replyTo = null) {
     if (empty($apiKey) || !function_exists('curl_init')) {
         return ['success' => false, 'error' => 'API key missing or curl extension disabled.'];
     }
@@ -242,8 +299,11 @@ function sendViaResend($apiKey, $from, $to, $subject, $html, $replyTo = null) {
         'from' => $from,
         'to' => is_array($to) ? $to : [$to],
         'subject' => $subject,
-        'html' => $html
+        'text' => $text
     ];
+    if (!empty($html)) {
+        $payload['html'] = $html;
+    }
     if ($replyTo && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
         $payload['reply_to'] = $replyTo;
     }
@@ -277,6 +337,7 @@ function sendViaResend($apiKey, $from, $to, $subject, $html, $replyTo = null) {
 
 $salesResult = null;
 $customerResult = null;
+$leadSubject = "New Client Inquiry: {$name} - {$serviceRequired}";
 
 if (!empty($resendApiKey)) {
     // 1. Send Internal Lead Alert to Admin (PRIMARY)
@@ -284,7 +345,8 @@ if (!empty($resendApiKey)) {
         $resendApiKey,
         $resendFromEmail,
         $adminEmail,
-        "🚨 New Lead [Scoping Session]: {$name} - {$serviceRequired}",
+        $leadSubject,
+        $plainText,
         $salesEmailHtml,
         $hasRealCustomerEmail ? $email : null
     );
@@ -295,7 +357,8 @@ if (!empty($resendApiKey)) {
             $resendApiKey,
             $resendFromEmail,
             $secondarySalesEmail,
-            "🚨 New Lead [Scoping Session]: {$name} - {$serviceRequired}",
+            $leadSubject,
+            $plainText,
             $salesEmailHtml,
             $hasRealCustomerEmail ? $email : null
         );
@@ -308,6 +371,7 @@ if (!empty($resendApiKey)) {
             $resendFromEmail,
             $email,
             'Your Scoping Session Request with AsthaSoft',
+            "Thank you for contacting AsthaSoft. We have received your request for {$serviceRequired}.",
             $customerEmailHtml
         );
     }
@@ -317,11 +381,11 @@ $salesSent = ($salesResult && $salesResult['success']);
 
 // Fallback to native PHP mail() if Resend failed for admin
 if (!$salesSent) {
-    $mailHeaders = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: AsthaSoft <no-reply@asthasoftindia.com>\r\n";
+    $mailHeaders = "MIME-Version: 1.0\r\nContent-type: text/plain; charset=UTF-8\r\nFrom: AsthaSoft <no-reply@asthasoftindia.com>\r\n";
     if ($hasRealCustomerEmail) {
         $mailHeaders .= "Reply-To: {$email}\r\n";
     }
-    $salesSent = @mail($adminEmail, "New Lead: {$name} - {$serviceRequired}", $salesEmailHtml, $mailHeaders);
+    $salesSent = @mail($adminEmail, $leadSubject, $plainText, $mailHeaders);
 }
 
 $customerSent = ($customerResult && $customerResult['success']);

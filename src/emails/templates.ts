@@ -7,6 +7,10 @@ export interface ScopingSessionLead {
   requestNDA: boolean;
   timestamp?: string;
   ticketId?: string;
+  source?: string;
+  budget?: string;
+  timeline?: string;
+  preferredTime?: string;
 }
 
 /**
@@ -175,150 +179,114 @@ export function renderCustomerAutoReplyHtml(data: ScopingSessionLead): string {
 }
 
 /**
- * Internal Sales Notification Email (HTML Template)
- * Sent to: sales@asthasoftindia.com
- * Subject: 🚨 New Lead [Scoping Session]: ${name} - ${serviceRequired}
+ * Generates the clean Plain Text representation of the lead alert email
+ * matching the user's expected deployment template.
  */
-export function renderInternalSalesNotificationHtml(data: ScopingSessionLead): string {
-  const safeName = escapeHtml(data.name || 'Not Provided');
-  const safeEmail = escapeHtml(data.email || 'Not Provided');
-  const safePhone = escapeHtml(data.contactNumber || 'Not Provided');
-  const safeService = escapeHtml(data.serviceRequired || 'Custom Enterprise Software');
-  const safeDescription = escapeHtml(data.projectDescription || 'No description provided');
+export function renderInternalLeadPlainText(data: ScopingSessionLead): string {
+  const name = data.name || 'Not provided';
+  const email = data.email || 'Not provided';
+  const phone = data.contactNumber || 'Not provided';
+  const service = data.serviceRequired || 'Custom Enterprise Software';
+  const description = data.projectDescription || 'No description provided';
   const ticketId = data.ticketId || `ASTHA-${Date.now().toString(36).toUpperCase()}`;
   const timestamp = data.timestamp || new Date().toLocaleString('en-US', {
     timeZone: 'Asia/Kolkata',
     dateStyle: 'full',
     timeStyle: 'medium',
   });
+  const source = data.source || 'Header CTA';
+  const ndaText = data.requestNDA ? 'YES · Formal NDA Requested' : 'Standard Confidentiality';
 
-  const ndaBadge = data.requestNDA
-    ? `<span style="background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px;">YES — Send Mutual NDA First</span>`
-    : `<span style="background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 4px; font-weight: 500; font-size: 12px;">No NDA Requested (Standard)</span>`;
+  let extraSpecs = '';
+  if (data.budget) extraSpecs += `Estimated Budget: ${data.budget}\n`;
+  if (data.timeline) extraSpecs += `Delivery Target : ${data.timeline}\n`;
+  if (data.preferredTime) extraSpecs += `Preferred Time  : ${data.preferredTime}\n`;
+
+  return `ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
+
+TICKET & INTAKE DETAILS
+Ticket ID      : ${ticketId}
+Date & Time    : ${timestamp}
+Source Channel : ${source}
+
+CLIENT INFORMATION
+Full Name      : ${name}
+Email Address  : ${email}
+Phone Number   : ${phone}
+
+PROJECT SPECIFICATIONS
+Service Needed : ${service}
+${extraSpecs}NDA Status     : ${ndaText}
+
+PROJECT SCOPE & REQUIREMENTS
+${description}
+
+DIRECT ACTIONS
+- Reply Email : ${email}
+- Direct Call : ${phone}
+
+Sent automatically by Asthasoft Technologies Lead Intake System.
+`;
+}
+
+/**
+ * Internal Lead Alert Email (HTML Template)
+ * Styled with exact spacing and font matching the user's plain-text reference image.
+ */
+export function renderInternalSalesNotificationHtml(data: ScopingSessionLead): string {
+  const safeName = escapeHtml(data.name || 'Not provided');
+  const safeEmail = escapeHtml(data.email || 'Not provided');
+  const safePhone = escapeHtml(data.contactNumber || 'Not provided');
+  const safePhoneClean = (data.contactNumber || '').replace(/[^0-9+]/g, '');
+  const safeService = escapeHtml(data.serviceRequired || 'Custom Enterprise Software');
+  const safeDescription = escapeHtml(data.projectDescription || 'No description provided');
+  const ticketId = escapeHtml(data.ticketId || `ASTHA-${Date.now().toString(36).toUpperCase()}`);
+  const timestamp = escapeHtml(data.timestamp || new Date().toLocaleString('en-US', {
+    timeZone: 'Asia/Kolkata',
+    dateStyle: 'full',
+    timeStyle: 'medium',
+  }));
+  const safeSource = escapeHtml(data.source || 'Header CTA');
+  const ndaText = data.requestNDA ? 'YES · Formal NDA Requested' : 'Standard Confidentiality';
+
+  let extraSpecs = '';
+  if (data.budget) extraSpecs += `Estimated Budget: ${escapeHtml(data.budget)}\n`;
+  if (data.timeline) extraSpecs += `Delivery Target : ${escapeHtml(data.timeline)}\n`;
+  if (data.preferredTime) extraSpecs += `Preferred Time  : ${escapeHtml(data.preferredTime)}\n`;
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Scoping Session Lead</title>
+  <title>New Client Inquiry: ${safeName} - ${safeService}</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0f172a;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding: 30px 15px;">
-    <tr>
-      <td align="center">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 640px; background-color: #ffffff; border-radius: 10px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-          
-          <!-- Header Bar -->
-          <tr>
-            <td style="background-color: #0f172a; padding: 24px 30px; border-bottom: 4px solid #2563eb;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td>
-                    <div style="color: #38bdf8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
-                      Internal Sales Alert
-                    </div>
-                    <div style="color: #ffffff; font-size: 20px; font-weight: 700; margin-top: 4px;">
-                      New Scoping Session Submission
-                    </div>
-                  </td>
-                  <td align="right">
-                    <span style="background-color: #1e293b; color: #94a3b8; font-size: 11px; padding: 4px 8px; border-radius: 4px;">
-                      ${ticketId}
-                    </span>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+<body style="margin: 0; padding: 24px 20px; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;">
+  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827; white-space: pre-wrap; word-break: break-word;">ASTHASOFT TECHNOLOGIES - NEW CLIENT LEAD
 
-          <!-- Body -->
-          <tr>
-            <td style="padding: 30px;">
-              
-              <!-- Quick Action Bar -->
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
-                <tr>
-                  <td>
-                    <a href="mailto:${safeEmail}?subject=Re:%20AsthaSoft%20Scoping%20Session%20-%20${encodeURIComponent(safeService)}" 
-                       style="display: inline-block; background-color: #2563eb; color: #ffffff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; margin-right: 10px;">
-                      ✉️ Reply to ${safeName}
-                    </a>
-                    <a href="tel:${safePhone.replace(/\s+/g, '')}" 
-                       style="display: inline-block; background-color: #0f172a; color: #ffffff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">
-                      📞 Call ${safePhone}
-                    </a>
-                  </td>
-                </tr>
-              </table>
+TICKET &amp; INTAKE DETAILS
+Ticket ID      : ${ticketId}
+Date &amp; Time    : ${timestamp}
+Source Channel : ${safeSource}
 
-              <!-- Lead Info Table -->
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e2e8f0; border-radius: 8px; border-collapse: separate; margin-bottom: 24px;">
-                <tr style="background-color: #f8fafc;">
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-size: 12px; font-weight: 700; color: #64748b; width: 35%;">FIELD</td>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-size: 12px; font-weight: 700; color: #64748b;">SUBMITTED VALUE</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #64748b;">Client Name</td>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 700; color: #0f172a;">${safeName}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #64748b;">Email Address</td>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 600; color: #0284c7;">
-                    <a href="mailto:${safeEmail}" style="color: #0284c7; text-decoration: none;">${safeEmail}</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #64748b;">Contact Number</td>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 600; color: #0f172a;">${safePhone}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #64748b;">Service Required</td>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; font-weight: 700; color: #0f172a;">${safeService}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #64748b;">NDA Status</td>
-                  <td style="padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px;">${ndaBadge}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 16px; font-size: 14px; color: #64748b;">Timestamp (IST)</td>
-                  <td style="padding: 12px 16px; font-size: 13px; color: #475569;">${timestamp}</td>
-                </tr>
-              </table>
+CLIENT INFORMATION
+Full Name      : ${safeName}
+Email Address  : <a href="mailto:${safeEmail}" style="color: #2563eb; text-decoration: underline;">${safeEmail}</a>
+Phone Number   : <a href="tel:${safePhoneClean}" style="color: #2563eb; text-decoration: underline;">${safePhone}</a>
 
-              <!-- Project Description Panel -->
-              <div style="margin-bottom: 24px;">
-                <div style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">
-                  Project Description &amp; Scope:
-                </div>
-                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; font-size: 14px; color: #1e293b; line-height: 1.6; white-space: pre-wrap;">${safeDescription}</div>
-              </div>
+PROJECT SPECIFICATIONS
+Service Needed : ${safeService}
+${extraSpecs}NDA Status     : ${ndaText}
 
-              <!-- Internal Checklist -->
-              <div style="background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 14px 18px;">
-                <div style="font-size: 12px; font-weight: 700; color: #1e40af; text-transform: uppercase; margin-bottom: 6px;">
-                  Next Sales Steps:
-                </div>
-                <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #1e3a8a; line-height: 1.6;">
-                  <li>Assign dedicated Solution Architect based on service (${safeService}).</li>
-                  ${data.requestNDA ? '<li><strong>Generate & attach standard Mutual NDA before technical call.</strong></li>' : ''}
-                  <li>Contact lead within 24 hours via phone or priority email.</li>
-                </ul>
-              </div>
+PROJECT SCOPE &amp; REQUIREMENTS
+${safeDescription}
 
-            </td>
-          </tr>
+DIRECT ACTIONS
+- Reply Email : <a href="mailto:${safeEmail}" style="color: #2563eb; text-decoration: underline;">${safeEmail}</a>
+- Direct Call : <a href="tel:${safePhoneClean}" style="color: #2563eb; text-decoration: underline;">${safePhone}</a>
 
-          <!-- Footer -->
-          <tr>
-            <td style="background-color: #f8fafc; padding: 16px 30px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center;">
-              AsthaSoft Lead Ingestion Engine · Internal Notification · sales@asthasoftindia.com
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+Sent automatically by Asthasoft Technologies Lead Intake System.</div>
 </body>
 </html>`;
 }
+
