@@ -1,11 +1,13 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import {
   renderCustomerAutoReplyHtml,
   renderInternalSalesNotificationHtml,
   type ScopingSessionLead,
-} from '../src/emails/templates';
+} from '@/emails/templates';
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
+// Verify environment configuration
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_FROM_EMAIL =
   process.env.RESEND_FROM_EMAIL || 'AsthaSoft Technologies <onboarding@resend.dev>';
 const INTERNAL_SALES_EMAIL =
@@ -15,6 +17,7 @@ const INTERNAL_SALES_EMAIL =
  * Validates the arithmetic security challenge to block automated bots
  */
 function verifyMathSecurity(body: any): { isValid: boolean; reason?: string } {
+  // Check for explicit math challenge payload: { num1, num2, operator, answer }
   const challenge = body.mathChallenge || body;
   const num1 = challenge.num1 ?? body.mathNum1;
   const num2 = challenge.num2 ?? body.mathNum2;
@@ -25,6 +28,7 @@ function verifyMathSecurity(body: any): { isValid: boolean; reason?: string } {
     body.mathCaptchaAnswer ??
     body.securityAnswer;
 
+  // If no math answer was supplied at all
   if (rawAnswer === undefined || rawAnswer === null || rawAnswer === '') {
     return { isValid: false, reason: 'Math security verification is required.' };
   }
@@ -34,6 +38,7 @@ function verifyMathSecurity(body: any): { isValid: boolean; reason?: string } {
     return { isValid: false, reason: 'Math security answer must be a valid number.' };
   }
 
+  // If operation details are provided, perform strict server-side calculation
   if (num1 !== undefined && num2 !== undefined && op) {
     const n1 = Number(num1);
     const n2 = Number(num2);
@@ -63,6 +68,7 @@ function verifyMathSecurity(body: any): { isValid: boolean; reason?: string } {
     return { isValid: true };
   }
 
+  // If direct expected answer is provided (e.g. from signed token or validation state)
   if (body.mathExpectedAnswer !== undefined || body.expectedAnswer !== undefined) {
     const expected = Number(body.mathExpectedAnswer ?? body.expectedAnswer);
     if (userAnswer !== expected) {
@@ -71,39 +77,25 @@ function verifyMathSecurity(body: any): { isValid: boolean; reason?: string } {
     return { isValid: true };
   }
 
+  // Fallback: If numeric solution submitted
   return { isValid: Number.isFinite(userAnswer) };
 }
 
 /**
- * Serverless / Pages API Handler
+ * Next.js App Router POST Endpoint (/api/scoping-session)
  */
-export default async function handler(req: any, res: any) {
-  // CORS Configuration
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
-
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, error: 'Method not allowed. Use POST.' });
-  }
-
+export async function POST(req: NextRequest) {
   try {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const body = await req.json().catch(() => null);
 
     if (!body || typeof body !== 'object') {
-      return res.status(400).json({ success: false, error: 'Invalid JSON payload.' });
+      return NextResponse.json(
+        { success: false, error: 'Invalid or missing JSON payload.' },
+        { status: 400 }
+      );
     }
 
-    // Map payload fields
+    // Support canonical fields with graceful fallbacks
     const name = String(body.name || body.fullName || '').trim();
     const email = String(body.email || '').trim().toLowerCase();
     const contactNumber = String(
@@ -121,45 +113,61 @@ export default async function handler(req: any, res: any) {
       body.requestNDA !== undefined ? body.requestNDA : body.ndaRequested
     );
 
-    // 1. Validation
+    // 1. Payload validation
     if (!name || name.length < 2) {
-      return res.status(400).json({ success: false, error: 'Name is required (min 2 chars).' });
+      return NextResponse.json(
+        { success: false, error: 'Full name is required (minimum 2 characters).' },
+        { status: 400 }
+      );
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-      return res.status(400).json({ success: false, error: 'Valid email is required.' });
+      return NextResponse.json(
+        { success: false, error: 'A valid email address is required.' },
+        { status: 400 }
+      );
     }
 
     if (!contactNumber || contactNumber.length < 7) {
-      return res.status(400).json({ success: false, error: 'Valid contact number is required.' });
+      return NextResponse.json(
+        { success: false, error: 'A valid contact number is required.' },
+        { status: 400 }
+      );
     }
 
-    if (!projectDescription) {
-      return res.status(400).json({ success: false, error: 'Project description is required.' });
+    if (!projectDescription || projectDescription.length < 2) {
+      return NextResponse.json(
+        { success: false, error: 'Please provide a project description.' },
+        { status: 400 }
+      );
     }
 
     // 2. Math security check
     const mathCheck = verifyMathSecurity(body);
     if (!mathCheck.isValid) {
-      return res.status(400).json({
-        success: false,
-        error: mathCheck.reason || 'Math security verification failed.',
-      });
+      return NextResponse.json(
+        { success: false, error: mathCheck.reason || 'Security verification failed.' },
+        { status: 400 }
+      );
     }
 
-    // 3. Resend initialization
+    // 3. Verify Resend Configuration
     if (!RESEND_API_KEY) {
-      console.error('[Resend Error] Missing RESEND_API_KEY.');
-      return res.status(500).json({
-        success: false,
-        error: 'RESEND_API_KEY is not configured on the server environment.',
-      });
+      console.error('[AsthaSoft Resend API] Missing RESEND_API_KEY environment variable.');
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Email service configuration error (missing RESEND_API_KEY).',
+        },
+        { status: 500 }
+      );
     }
 
+    // 4. Instantiate Resend Client
     const resend = new Resend(RESEND_API_KEY);
 
-    const ticketId = body.ticketId || `ASTHA-${Date.now().toString(36).toUpperCase()}`;
+    const ticketId = `ASTHA-${Date.now().toString(36).toUpperCase()}`;
     const timestamp = new Date().toLocaleString('en-US', {
       timeZone: 'Asia/Kolkata',
       dateStyle: 'full',
@@ -181,16 +189,16 @@ export default async function handler(req: any, res: any) {
     const customerHtml = renderCustomerAutoReplyHtml(leadData);
     const salesHtml = renderInternalSalesNotificationHtml(leadData);
 
-    // 4. Simultaneous Email Dispatch
-    const [customerRes, salesRes] = await Promise.allSettled([
-      // Customer Auto-Reply
+    // 5. Simultaneous Email Dispatch via Resend SDK
+    const [customerEmailResult, internalSalesResult] = await Promise.allSettled([
+      // A. Customer Auto-Reply Email
       resend.emails.send({
         from: RESEND_FROM_EMAIL,
         to: [email],
         subject: 'Your Scoping Session Request with AsthaSoft',
         html: customerHtml,
       }),
-      // Internal Sales Notification
+      // B. Internal Sales Notification Email
       resend.emails.send({
         from: RESEND_FROM_EMAIL,
         to: [INTERNAL_SALES_EMAIL],
@@ -200,30 +208,46 @@ export default async function handler(req: any, res: any) {
       }),
     ]);
 
-    const customerFailed = customerRes.status === 'rejected' || customerRes.value?.error;
-    const salesFailed = salesRes.status === 'rejected' || salesRes.value?.error;
+    // Check if both or any failed
+    const customerFailed = customerEmailResult.status === 'rejected' || customerEmailResult.value.error;
+    const salesFailed = internalSalesResult.status === 'rejected' || internalSalesResult.value.error;
 
     if (customerFailed && salesFailed) {
-      const err = customerRes.status === 'rejected' ? customerRes.reason : customerRes.value?.error;
-      console.error('[Resend Error] Both emails failed:', err);
-      return res.status(500).json({
-        success: false,
-        error: 'Failed to dispatch emails via Resend SDK.',
-      });
+      const err = customerEmailResult.status === 'rejected' 
+        ? customerEmailResult.reason 
+        : customerEmailResult.value.error;
+      console.error('[AsthaSoft Resend API] Both email dispatches failed:', err);
+      return NextResponse.json(
+        { success: false, error: 'Failed to deliver emails via Resend SDK.' },
+        { status: 500 }
+      );
     }
 
-    return res.status(200).json({
-      success: true,
-      message: 'Scoping session request submitted successfully.',
-      ticketId,
-      customerEmail: customerFailed ? 'failed' : 'sent',
-      salesEmail: salesFailed ? 'failed' : 'sent',
-    });
+    // Success response (200)
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Scoping session request processed successfully.',
+        ticketId,
+        customerEmailStatus: customerFailed ? 'failed' : 'sent',
+        salesNotificationStatus: salesFailed ? 'failed' : 'sent',
+        data: {
+          name,
+          email,
+          serviceRequired,
+          requestNDA,
+        },
+      },
+      { status: 200 }
+    );
   } catch (error: any) {
-    console.error('[Resend Server Error]:', error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || 'Internal server error',
-    });
+    console.error('[AsthaSoft Resend API] Unhandled server error:', error);
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message || 'An unexpected server error occurred.',
+      },
+      { status: 500 }
+    );
   }
 }

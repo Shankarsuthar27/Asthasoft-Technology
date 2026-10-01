@@ -147,15 +147,26 @@ export const GlobalScopingModal: React.FC<GlobalScopingModalProps> = ({
         source: initialSource || data.source,
       });
 
-      // Dispatch real-time email notification to admin via Resend API
+      // Dispatch real-time email notification to customer & admin via Resend API
       const emailResult = await sendLeadEmailNotification({
+        name: data.fullName,
         fullName: data.fullName,
         email: data.email,
+        contactNumber: `${selectedCountry.code} ${data.phone}`,
         countryCode: selectedCountry.code,
         phone: data.phone,
+        serviceRequired: data.service || 'Custom Enterprise Software',
         service: data.service || 'Custom Enterprise Software',
         projectDescription: data.projectDescription,
+        requestNDA: Boolean(data.ndaRequested),
         ndaRequested: Boolean(data.ndaRequested),
+        mathCaptchaAnswer: Number(data.mathCaptchaAnswer),
+        mathChallenge: {
+          num1: mathProblem.num1,
+          num2: mathProblem.num2,
+          operator: mathProblem.operator,
+          answer: Number(data.mathCaptchaAnswer),
+        },
         source: initialSource || 'Request a Scoping Session Modal',
         ticketId: response.enquiryId,
       });

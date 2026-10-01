@@ -1,16 +1,27 @@
 export interface ScopingLeadEmailPayload {
+  name?: string;
   fullName: string;
   email: string;
   countryCode?: string;
   phone: string;
+  contactNumber?: string;
   service?: string;
+  serviceRequired?: string;
   projectDescription?: string;
   ndaRequested?: boolean;
+  requestNDA?: boolean;
   source?: string;
   ticketId?: string;
   budget?: string;
   timeline?: string;
   preferredTime?: string;
+  mathCaptchaAnswer?: number;
+  mathChallenge?: {
+    num1: number;
+    num2: number;
+    operator: string;
+    answer: number;
+  };
 }
 
 /**
@@ -22,15 +33,25 @@ export interface ScopingLeadEmailPayload {
 export async function sendLeadEmailNotification(
   payload: ScopingLeadEmailPayload
 ): Promise<{ success: boolean; data?: any; error?: any }> {
-  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'hostelsuthar@gmail.com';
+  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'sales@asthasoftindia.com';
   const resendApiKey = import.meta.env.VITE_RESEND_API_KEY || '';
+
+  const contactNumber =
+    payload.contactNumber ||
+    (payload.countryCode ? `${payload.countryCode} ${payload.phone}` : payload.phone);
 
   const normalizedPayload = {
     ...payload,
+    name: payload.name || payload.fullName,
+    fullName: payload.fullName || payload.name || 'Prospective Client',
+    contactNumber,
+    phone: payload.phone || contactNumber,
     countryCode: payload.countryCode || '+91',
-    service: payload.service || 'Custom Enterprise Software',
+    serviceRequired: payload.serviceRequired || payload.service || 'Custom Enterprise Software',
+    service: payload.service || payload.serviceRequired || 'Custom Enterprise Software',
     projectDescription: payload.projectDescription || 'No description provided.',
-    ndaRequested: payload.ndaRequested !== undefined ? payload.ndaRequested : true,
+    requestNDA: payload.requestNDA !== undefined ? payload.requestNDA : (payload.ndaRequested ?? true),
+    ndaRequested: payload.ndaRequested !== undefined ? payload.ndaRequested : (payload.requestNDA ?? true),
     source: payload.source || 'Asthasoft Web Portal',
     ticketId: payload.ticketId || `ASTHA-${Date.now().toString(36).toUpperCase()}`,
   };
