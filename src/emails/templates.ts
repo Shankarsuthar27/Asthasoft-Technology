@@ -250,7 +250,9 @@ export function getServiceDetails(rawService: string = ''): ServiceDetails {
  * for the exact service the customer requested.
  */
 /**
- * Customer Auto-Reply Email (HTML Template - Clean Plain Text Simple Styling)
+ * Customer Auto-Reply Email (HTML Template)
+ * Delivers an executive-grade, beautifully structured briefing
+ * with high-contrast typography, clear deliverable cards, and response commitments.
  */
 export function renderCustomerAutoReplyHtml(data: ScopingSessionLead): string {
   const safeName = escapeHtml(data.name || 'Valued Partner');
@@ -258,85 +260,242 @@ export function renderCustomerAutoReplyHtml(data: ScopingSessionLead): string {
   const safeDescription = escapeHtml(data.projectDescription || 'No description provided');
   const safePhone = escapeHtml(data.contactNumber || 'Not provided');
   const safePhoneClean = (data.contactNumber || '').replace(/[^0-9+]/g, '');
-  const ticketId = data.ticketId || `ASTHA-${Date.now().toString(36).toUpperCase()}`;
+  const ticketId = escapeHtml(data.ticketId || `ASTHA-${Date.now().toString(36).toUpperCase()}`);
 
   const serviceInfo = getServiceDetails(data.serviceRequired);
   const safeTitle = escapeHtml(serviceInfo.title);
   const safeHeadline = escapeHtml(serviceInfo.headline);
   const safeOverview = escapeHtml(serviceInfo.overview);
-  const deliverablesText = serviceInfo.deliverables.map((item) => `✓\n${escapeHtml(item)}`).join('\n');
-  const techStackText = serviceInfo.techStack.map(escapeHtml).join(' ');
-  const pillarsText = serviceInfo.architecturePillars.map(escapeHtml).join(' ');
+  const safeTimeline = escapeHtml(serviceInfo.timeline);
 
-  const ndaSection = data.requestNDA
-    ? `✓ Non-Disclosure Agreement (NDA) Requested\nWe have logged your request for a formal Non-Disclosure Agreement. Prior to scheduling technical architecture reviews or sharing technical schemas, our legal team will provide a countersigned Mutual NDA to safeguard your proprietary intellectual property.`
-    : `Confidentiality Notice:\nAll project specifications and ideas shared with AsthaSoft are treated with strict professional confidentiality under our standard bilateral policy.`;
+  const deliverablesHtmlRows = serviceInfo.deliverables
+    .map(
+      (item) => `<tr>
+      <td style="padding: 6px 12px 6px 0; vertical-align: top; color: #0284c7; font-weight: 700; font-size: 15px; line-height: 1.4; width: 22px;">✓</td>
+      <td style="padding: 6px 0; vertical-align: top; color: #334155; font-size: 13.5px; line-height: 1.5;">${escapeHtml(item)}</td>
+    </tr>`
+    )
+    .join('');
 
-  let specsHtml = `Service Requested:\n${safeService}\nContact Number:\n<a href="tel:${safePhoneClean}" style="color: #2563eb; text-decoration: underline;">${safePhone}</a>\n`;
-  if (data.budget) specsHtml += `Estimated Budget:\n${escapeHtml(data.budget)}\n`;
-  if (data.timeline) specsHtml += `Delivery Target:\n${escapeHtml(data.timeline)}\n`;
-  if (data.preferredTime) specsHtml += `Preferred Time:\n${escapeHtml(data.preferredTime)}\n`;
-  specsHtml += `Project Brief:\n${safeDescription}`;
+  const techStackBadges = serviceInfo.techStack
+    .map(
+      (tech) => `<span style="display: inline-block; padding: 4px 10px; margin: 3px 6px 3px 0; background-color: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-weight: 600; color: #334155;">${escapeHtml(tech)}</span>`
+    )
+    .join('');
+
+  const pillarsFormatted = escapeHtml(serviceInfo.architecturePillars.join(' · '));
+
+  let extraSpecsRows = '';
+  if (data.budget) {
+    extraSpecsRows += `<tr>
+      <td style="padding: 10px 16px; color: #64748b; font-weight: 600; border-bottom: 1px solid #f1f5f9; width: 150px;">Estimated Budget:</td>
+      <td style="padding: 10px 16px; color: #0f172a; border-bottom: 1px solid #f1f5f9;">${escapeHtml(data.budget)}</td>
+    </tr>`;
+  }
+  if (data.timeline) {
+    extraSpecsRows += `<tr>
+      <td style="padding: 10px 16px; color: #64748b; font-weight: 600; border-bottom: 1px solid #f1f5f9;">Delivery Target:</td>
+      <td style="padding: 10px 16px; color: #0f172a; border-bottom: 1px solid #f1f5f9;">${escapeHtml(data.timeline)}</td>
+    </tr>`;
+  }
+  if (data.preferredTime) {
+    extraSpecsRows += `<tr>
+      <td style="padding: 10px 16px; color: #64748b; font-weight: 600; border-bottom: 1px solid #f1f5f9;">Preferred Time:</td>
+      <td style="padding: 10px 16px; color: #0f172a; border-bottom: 1px solid #f1f5f9;">${escapeHtml(data.preferredTime)}</td>
+    </tr>`;
+  }
 
   return `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Scoping Request Has Been Received - AsthaSoft</title>
 </head>
-<body style="margin: 0; padding: 24px 20px; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;">
-  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827; white-space: pre-wrap; word-break: break-word;">AsthaSoft
-Enterprise Software &amp; Cloud Engineering
-Ticket #${ticketId}
+<body style="margin: 0; padding: 32px 16px; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #1e293b; line-height: 1.6;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 640px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);">
+    <!-- Brand Header -->
+    <tr>
+      <td style="padding: 26px 32px; background-color: #0f172a; background-image: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td>
+              <div style="font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em;">AsthaSoft</div>
+              <div style="font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px;">Enterprise Software &amp; Cloud Engineering</div>
+            </td>
+            <td align="right" style="vertical-align: top;">
+              <span style="display: inline-block; padding: 6px 12px; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; font-size: 12px; font-weight: 600; color: #38bdf8; font-family: monospace;">#${ticketId}</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
 
-Your Scoping Request Has Been Received
+    <!-- Body Content -->
+    <tr>
+      <td style="padding: 32px;">
+        <h1 style="margin: 0 0 14px; font-size: 21px; font-weight: 700; color: #0f172a; line-height: 1.3;">Your Scoping Request Has Been Received</h1>
+        <p style="margin: 0 0 14px; font-size: 15px; color: #334155;">
+          Dear <strong>${safeName}</strong>,
+        </p>
+        <p style="margin: 0 0 20px; font-size: 14px; color: #475569; line-height: 1.6;">
+          Thank you for contacting <strong>AsthaSoft Technologies</strong>. We have registered your project details regarding <strong>${safeTitle}</strong> and initiated preliminary technical review.
+        </p>
 
-Dear ${safeName},
+        <!-- Response Commitment Callout Box -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 28px; background-color: #f0f9ff; border: 1px solid #bae6fd; border-left: 4px solid #0284c7; border-radius: 8px;">
+          <tr>
+            <td style="padding: 16px 20px;">
+              <div style="font-size: 12px; font-weight: 700; color: #0369a1; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">⚡ 24-Hour Response Commitment</div>
+              <div style="font-size: 13.5px; color: #0c4a6e; line-height: 1.5;">
+                A Senior Solution Architect is currently reviewing your project requirements and will connect with you within <strong>24 hours</strong> with technical insights and recommended architecture.
+              </div>
+            </td>
+          </tr>
+        </table>
 
-Thank you for contacting AsthaSoft Technologies. We have received your project details regarding ${safeTitle}.
+        <!-- Service Specification Section -->
+        <div style="margin-bottom: 28px;">
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #0284c7; margin-bottom: 6px;">Service Specification &amp; Capabilities</div>
+          <div style="font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">${safeTitle}</div>
+          <div style="font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 12px;">${safeHeadline}</div>
+          <p style="margin: 0 0 16px; font-size: 14px; color: #334155; line-height: 1.6;">
+            ${safeOverview}
+          </p>
 
-Response Commitment: A Senior Solution Architect is currently reviewing your project requirements and will connect with you within 24 hours with technical insights and recommended architecture.
+          <!-- Key Deliverables Table -->
+          <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px 20px; margin-bottom: 20px;">
+            <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Key Deliverables &amp; Engineering Scope:</div>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              ${deliverablesHtmlRows}
+            </table>
+          </div>
 
-Service Specification &amp; Capabilities
-${safeTitle}
-${safeHeadline}
+          <!-- Recommended Tech Stack -->
+          <div style="margin-bottom: 18px;">
+            <div style="font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Recommended Technology Stack:</div>
+            <div style="font-size: 13px; color: #1e293b; line-height: 1.8;">
+              ${techStackBadges}
+            </div>
+          </div>
 
-${safeOverview}
+          <!-- Execution Standards Table -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px;">
+            <tr>
+              <td style="padding: 10px 0; font-size: 13px; color: #64748b; font-weight: 600; width: 140px; vertical-align: top;">Typical Timeline:</td>
+              <td style="padding: 10px 0; font-size: 13px; color: #0f172a;">${safeTimeline}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; font-size: 13px; color: #64748b; font-weight: 600; vertical-align: top;">Methodology:</td>
+              <td style="padding: 10px 0; font-size: 13px; color: #0f172a;">Agile 2-Week Sprints · Continuous Staging Deployments · Daily Standup Visibility</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; font-size: 13px; color: #64748b; font-weight: 600; vertical-align: top;">Core Guarantees:</td>
+              <td style="padding: 10px 0; font-size: 13px; color: #0f172a;">${pillarsFormatted}</td>
+            </tr>
+          </table>
+        </div>
 
-Key Deliverables &amp; Engineering Scope:
-${deliverablesText}
+        <!-- NDA Section -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 28px; background-color: ${data.requestNDA ? '#f0fdf4' : '#f8fafc'}; border: 1px solid ${data.requestNDA ? '#bbf7d0' : '#e2e8f0'}; border-radius: 8px;">
+          <tr>
+            <td style="padding: 14px 18px;">
+              <div style="font-size: 13px; font-weight: 700; color: ${data.requestNDA ? '#166534' : '#0f172a'}; margin-bottom: 4px;">
+                ${data.requestNDA ? '✓ Non-Disclosure Agreement (NDA) Requested' : 'Confidentiality Notice'}
+              </div>
+              <div style="font-size: 13px; color: ${data.requestNDA ? '#15803d' : '#475569'}; line-height: 1.5;">
+                ${data.requestNDA
+                  ? 'We have logged your request for a formal Non-Disclosure Agreement. Prior to scheduling technical architecture reviews or sharing technical schemas, our legal team will provide a countersigned Mutual NDA to safeguard your proprietary intellectual property.'
+                  : 'All project specifications and ideas shared with AsthaSoft are treated with strict professional confidentiality under our standard bilateral policy.'}
+              </div>
+            </td>
+          </tr>
+        </table>
 
-Recommended Technology Stack:
-${techStackText}
+        <!-- Summary of Submitted Scope -->
+        <div style="margin-bottom: 28px;">
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #0284c7; margin-bottom: 8px;">Summary of Submitted Scope</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px;">
+            <tr>
+              <td style="padding: 10px 16px; color: #64748b; font-weight: 600; width: 150px; border-bottom: 1px solid #f1f5f9;">Service Requested:</td>
+              <td style="padding: 10px 16px; color: #0f172a; font-weight: 600; border-bottom: 1px solid #f1f5f9;">${safeService}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 16px; color: #64748b; font-weight: 600; border-bottom: 1px solid #f1f5f9;">Contact Number:</td>
+              <td style="padding: 10px 16px; color: #0f172a; border-bottom: 1px solid #f1f5f9;"><a href="tel:${safePhoneClean}" style="color: #0284c7; text-decoration: underline; font-weight: 600;">${safePhone}</a></td>
+            </tr>
+            ${extraSpecsRows}
+            <tr>
+              <td style="padding: 10px 16px; color: #64748b; font-weight: 600; vertical-align: top;">Project Brief:</td>
+              <td style="padding: 10px 16px; color: #334155; line-height: 1.5;">${safeDescription}</td>
+            </tr>
+          </table>
+        </div>
 
-Typical Delivery Timeline: ${escapeHtml(serviceInfo.timeline)}
-Methodology: Agile 2-Week Sprints · Continuous Staging Deployments · Daily Standup Visibility
-${pillarsText}
+        <!-- What Happens Next -->
+        <div style="margin-bottom: 28px;">
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #0284c7; margin-bottom: 12px;">What Happens Next</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="vertical-align: top; width: 32px; padding-bottom: 12px;">
+                <div style="width: 24px; height: 24px; border-radius: 50%; background-color: #0284c7; color: #ffffff; text-align: center; line-height: 24px; font-size: 12px; font-weight: 700;">1</div>
+              </td>
+              <td style="padding-bottom: 12px; font-size: 13px; line-height: 1.5; color: #334155;">
+                <strong style="color: #0f172a;">Scope Review:</strong> A dedicated Solution Architect reviews your specifications within 24 hours.
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: top; width: 32px; padding-bottom: 12px;">
+                <div style="width: 24px; height: 24px; border-radius: 50%; background-color: #0284c7; color: #ffffff; text-align: center; line-height: 24px; font-size: 12px; font-weight: 700;">2</div>
+              </td>
+              <td style="padding-bottom: 12px; font-size: 13px; line-height: 1.5; color: #334155;">
+                <strong style="color: #0f172a;">Discovery Call:</strong> We align on technical architecture, sprint breakdown, and security requirements.
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: top; width: 32px; padding-bottom: 12px;">
+                <div style="width: 24px; height: 24px; border-radius: 50%; background-color: #0284c7; color: #ffffff; text-align: center; line-height: 24px; font-size: 12px; font-weight: 700;">3</div>
+              </td>
+              <td style="padding-bottom: 12px; font-size: 13px; line-height: 1.5; color: #334155;">
+                <strong style="color: #0f172a;">Fixed-Scope Proposal:</strong> You receive an architecture document, sprint plan, and transparent milestone quote.
+              </td>
+            </tr>
+          </table>
 
-${ndaSection}
+          <div style="margin-top: 10px; padding: 14px 16px; background-color: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; font-size: 13px; color: #475569; line-height: 1.5;">
+            📎 <strong>Have existing architecture diagrams, wireframes, or RFP documents to share?</strong><br>
+            Simply reply directly to this email and our technical team will review them ahead of our call.
+          </div>
+        </div>
 
-Summary of Submitted Scope
-${specsHtml}
+        <!-- Team Signoff -->
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 20px;">
+          <div style="font-size: 14px; font-weight: 700; color: #0f172a;">Strategic Consulting &amp; Engineering Team</div>
+          <div style="font-size: 13px; color: #64748b; margin-top: 2px;">
+            AsthaSoft Technologies · Enterprise Solutions · <a href="mailto:sales@asthasoftindia.com" style="color: #0284c7; text-decoration: underline;">sales@asthasoftindia.com</a>
+          </div>
+        </div>
+      </td>
+    </tr>
 
-What Happens Next:
-Scope Review: A dedicated Solution Architect reviews your specifications within 24 hours.
-Discovery Call: We align on technical architecture, sprint breakdown, and security requirements.
-Fixed-Scope Proposal: You receive an architecture document, sprint plan, and transparent milestone quote.
-
-Have existing architecture diagrams, wireframes, or RFP documents to share? Simply reply directly to this email and our technical team will review them ahead of our call.
-
-Strategic Consulting &amp; Engineering Team
-AsthaSoft Technologies · Enterprise Solutions · <a href="mailto:sales@asthasoftindia.com" style="color: #2563eb; text-decoration: underline;">sales@asthasoftindia.com</a>
-
-© ${new Date().getFullYear()} AsthaSoft Technologies. All rights reserved.
-ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer</div>
+    <!-- Footer -->
+    <tr>
+      <td style="padding: 20px 32px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">
+        <div style="font-size: 12px; color: #64748b; line-height: 1.6;">
+          © ${new Date().getFullYear()} AsthaSoft Technologies. All rights reserved.<br>
+          <span style="color: #94a3b8; font-size: 11px;">ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer</span>
+        </div>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>`;
 }
 
 /**
- * Customer Auto-Reply Email (Clean Plain Text Simple Template)
+ * Customer Auto-Reply Email (Clean, Executive Plain Text Template)
+ * Delivers an easy-to-read, structured briefing with clear section dividers,
+ * inline bullet points, and aligned fields.
  */
 export function renderCustomerAutoReplyPlainText(data: ScopingSessionLead): string {
   const name = data.name || 'Valued Partner';
@@ -347,65 +506,90 @@ export function renderCustomerAutoReplyPlainText(data: ScopingSessionLead): stri
 
   const serviceInfo = getServiceDetails(data.serviceRequired);
 
-  const deliverablesText = serviceInfo.deliverables.map((item) => `✓\n${item}`).join('\n');
-  const techStackText = serviceInfo.techStack.join(' ');
-  const pillarsText = serviceInfo.architecturePillars.join(' ');
+  const deliverablesFormatted = serviceInfo.deliverables
+    .map((item) => `  [✓] ${item}`)
+    .join('\n');
+
+  const techStackFormatted = serviceInfo.techStack.join('  ·  ');
+  const pillarsFormatted = serviceInfo.architecturePillars.join('  ·  ');
 
   const ndaSection = data.requestNDA
-    ? `✓ Non-Disclosure Agreement (NDA) Requested\nWe have logged your request for a formal Non-Disclosure Agreement. Prior to scheduling technical architecture reviews or sharing technical schemas, our legal team will provide a countersigned Mutual NDA to safeguard your proprietary intellectual property.`
-    : `Confidentiality Notice:\nAll project specifications and ideas shared with AsthaSoft are treated with strict professional confidentiality under our standard bilateral policy.`;
+    ? `Status: [✓] Formal Mutual NDA Requested\nWe have logged your request for a formal Non-Disclosure Agreement. Prior to scheduling technical architecture reviews or sharing technical schemas, our legal team will provide a countersigned Mutual NDA to safeguard your proprietary intellectual property.`
+    : `Status: Standard Bilateral Confidentiality\nAll project specifications and ideas shared with AsthaSoft are treated with strict professional confidentiality under our standard bilateral policy.`;
 
-  let specsText = `Service Requested:\n${service}\nContact Number:\n${phone}\n`;
-  if (data.budget) specsText += `Estimated Budget:\n${data.budget}\n`;
-  if (data.timeline) specsText += `Delivery Target:\n${data.timeline}\n`;
-  if (data.preferredTime) specsText += `Preferred Time:\n${data.preferredTime}\n`;
-  specsText += `Project Brief:\n${description}`;
+  let specsText = `Service Requested : ${service}\nContact Number    : ${phone}\n`;
+  if (data.budget) specsText += `Estimated Budget  : ${data.budget}\n`;
+  if (data.timeline) specsText += `Delivery Target   : ${data.timeline}\n`;
+  if (data.preferredTime) specsText += `Preferred Time    : ${data.preferredTime}\n`;
+  specsText += `Project Brief     : ${description}`;
 
-  return `AsthaSoft
-Enterprise Software & Cloud Engineering
-Ticket #${ticketId}
+  return `================================================================================
+ASTHASOFT TECHNOLOGIES | ENTERPRISE SOFTWARE & CLOUD ENGINEERING
+TICKET: #${ticketId}
+================================================================================
 
-Your Scoping Request Has Been Received
+YOUR SCOPING REQUEST HAS BEEN RECEIVED
 
 Dear ${name},
 
-Thank you for contacting AsthaSoft Technologies. We have received your project details regarding ${serviceInfo.title}.
+Thank you for contacting AsthaSoft Technologies. We have received your project 
+details regarding ${serviceInfo.title}.
 
-Response Commitment: A Senior Solution Architect is currently reviewing your project requirements and will connect with you within 24 hours with technical insights and recommended architecture.
+--------------------------------------------------------------------------------
+RESPONSE COMMITMENT (24 HOURS)
+--------------------------------------------------------------------------------
+A Senior Solution Architect is currently reviewing your project requirements
+and will connect with you within 24 hours with technical insights, architecture
+recommendations, and next steps.
 
-Service Specification & Capabilities
-${serviceInfo.title}
-${serviceInfo.headline}
+--------------------------------------------------------------------------------
+1. SERVICE SPECIFICATION & CAPABILITIES
+--------------------------------------------------------------------------------
+Service  : ${serviceInfo.title}
+Headline : ${serviceInfo.headline}
 
+Overview:
 ${serviceInfo.overview}
 
 Key Deliverables & Engineering Scope:
-${deliverablesText}
+${deliverablesFormatted}
 
 Recommended Technology Stack:
-${techStackText}
+  • ${techStackFormatted}
 
-Typical Delivery Timeline: ${serviceInfo.timeline}
-Methodology: Agile 2-Week Sprints · Continuous Staging Deployments · Daily Standup Visibility
-${pillarsText}
+Execution Standards:
+  • Typical Timeline : ${serviceInfo.timeline}
+  • Methodology      : Agile 2-Week Sprints · Continuous Staging Deployments · Daily Standup Visibility
+  • Core Guarantees  : ${pillarsFormatted}
 
+--------------------------------------------------------------------------------
+2. CONFIDENTIALITY & NDA STATUS
+--------------------------------------------------------------------------------
 ${ndaSection}
 
-Summary of Submitted Scope
+--------------------------------------------------------------------------------
+3. SUMMARY OF SUBMITTED SCOPE
+--------------------------------------------------------------------------------
 ${specsText}
 
-What Happens Next:
-Scope Review: A dedicated Solution Architect reviews your specifications within 24 hours.
-Discovery Call: We align on technical architecture, sprint breakdown, and security requirements.
-Fixed-Scope Proposal: You receive an architecture document, sprint plan, and transparent milestone quote.
+--------------------------------------------------------------------------------
+4. WHAT HAPPENS NEXT
+--------------------------------------------------------------------------------
+1. Scope Review      : A dedicated Solution Architect reviews your specifications within 24 hours.
+2. Discovery Call    : We align on technical architecture, sprint breakdown, and security requirements.
+3. Fixed-Scope Quote : You receive an architecture document, sprint plan, and transparent milestone quote.
 
-Have existing architecture diagrams, wireframes, or RFP documents to share? Simply reply directly to this email and our technical team will review them ahead of our call.
+Have existing architecture diagrams, wireframes, or RFP documents to share?
+Simply reply directly to this email and our technical team will review them ahead of our call.
 
+================================================================================
 Strategic Consulting & Engineering Team
-AsthaSoft Technologies · Enterprise Solutions · sales@asthasoftindia.com
+AsthaSoft Technologies · Enterprise Solutions
+Direct Email: sales@asthasoftindia.com
 
 © ${new Date().getFullYear()} AsthaSoft Technologies. All rights reserved.
 ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer
+================================================================================
 `;
 }
 
