@@ -7,7 +7,7 @@ import {
   type ScopingSessionLead,
 } from './src/emails/templates.ts'
 
-function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
+function resendDevApiPlugin(apiKey?: string, adminEmail?: string, fromEmail?: string): Plugin {
   return {
     name: 'resend-dev-api-middleware',
     configureServer(server) {
@@ -53,6 +53,7 @@ function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
 
             const targetAdminEmail = process.env.ADMIN_EMAIL || adminEmail || 'hostelsuthar@gmail.com';
             const targetApiKey = process.env.RESEND_API_KEY || apiKey || '';
+            const targetFromEmail = process.env.RESEND_FROM_EMAIL || fromEmail || 'AsthaSoft Technologies <sales@asthapay.in>';
 
             const formattedDate = new Date().toLocaleString('en-US', {
               timeZone: 'Asia/Kolkata',
@@ -153,7 +154,7 @@ Sent automatically by Asthasoft Technologies Lead Intake System.</div>
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                from: 'Asthasoft Technologies <onboarding@resend.dev>',
+                from: targetFromEmail,
                 to: [targetAdminEmail],
                 subject: `New Client Inquiry: ${fullName} - ${service}`,
                 text: plainText,
@@ -181,7 +182,7 @@ Sent automatically by Asthasoft Technologies Lead Intake System.</div>
                     'Content-Type': 'application/json',
                   },
                   body: JSON.stringify({
-                    from: 'Asthasoft Technologies <onboarding@resend.dev>',
+                    from: targetFromEmail,
                     to: [email],
                     subject: customerSubject,
                     text: customerPlainText,
@@ -232,9 +233,10 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const apiKey = env.RESEND_API_KEY || process.env.RESEND_API_KEY || '';
   const adminEmail = env.ADMIN_EMAIL || process.env.ADMIN_EMAIL || 'hostelsuthar@gmail.com';
+  const fromEmail = env.RESEND_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || 'AsthaSoft Technologies <sales@asthapay.in>';
 
   return {
-    plugins: [react(), resendDevApiPlugin(apiKey, adminEmail)],
+    plugins: [react(), resendDevApiPlugin(apiKey, adminEmail, fromEmail)],
     base: '/',
   };
 });

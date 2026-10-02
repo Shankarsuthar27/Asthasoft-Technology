@@ -73,7 +73,7 @@ if (empty($resendApiKey) && !empty($body['resendApiKey'])) {
     $resendApiKey = trim($body['resendApiKey']);
 }
 
-$resendFromEmail = getEnvironmentVar('RESEND_FROM_EMAIL', 'AsthaSoft Technologies <onboarding@resend.dev>');
+$resendFromEmail = getEnvironmentVar('RESEND_FROM_EMAIL', 'AsthaSoft Technologies <sales@asthapay.in>');
 
 // Priority for Admin Notification target:
 // 1. ADMIN_EMAIL from server env or .env
@@ -760,17 +760,17 @@ $salesSent = ($salesResult && $salesResult['success']);
 
 // Fallback to native PHP mail() if Resend failed for admin
 if (!$salesSent) {
-    $mailHeaders = "MIME-Version: 1.0\r\nContent-type: text/plain; charset=UTF-8\r\nFrom: AsthaSoft <no-reply@asthasoftindia.com>\r\n";
+    $mailHeaders = "MIME-Version: 1.0\r\nContent-type: text/plain; charset=UTF-8\r\nFrom: AsthaSoft Technologies <sales@asthapay.in>\r\n";
     if ($hasRealCustomerEmail) {
         $mailHeaders .= "Reply-To: {$email}\r\n";
     }
     $salesSent = @mail($adminEmail, $leadSubject, $plainText, $mailHeaders);
 }
 
-// Fallback to native PHP mail() if Resend failed for customer (e.g. sandbox restriction on onboarding@resend.dev)
+// Fallback to native PHP mail() if Resend failed for customer
 $customerSent = ($customerResult && $customerResult['success']);
 if (!$customerSent && $hasRealCustomerEmail) {
-    $custMailHeaders = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: AsthaSoft Technologies <no-reply@asthasoftindia.com>\r\nReply-To: {$adminEmail}\r\n";
+    $custMailHeaders = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: AsthaSoft Technologies <sales@asthapay.in>\r\nReply-To: {$adminEmail}\r\n";
     $mailSent = @mail($email, $customerSubject, $customerEmailHtml, $custMailHeaders);
     if ($mailSent) {
         $customerSent = true;
@@ -785,10 +785,8 @@ if ($salesSent || $customerSent) {
         'ticketId' => $ticketId,
         'adminEmail' => $adminEmail,
         'adminNotification' => $salesSent ? 'delivered' : 'queued',
-        'customerAutoReply' => $customerSent ? 'sent' : ($hasRealCustomerEmail ? 'skipped_unverified_domain' : 'not_requested'),
-        'notice' => (!$customerSent && $hasRealCustomerEmail && stripos($resendFromEmail, 'resend.dev') !== false)
-            ? 'Auto-reply was skipped because onboarding@resend.dev only allows sending to the account owner. Verify asthasoftindia.com on resend.com/domains to enable client auto-replies.'
-            : null
+        'customerAutoReply' => $customerSent ? 'sent' : ($hasRealCustomerEmail ? 'skipped' : 'not_requested'),
+        'fromEmail' => $resendFromEmail,
     ]);
     exit;
 } else {

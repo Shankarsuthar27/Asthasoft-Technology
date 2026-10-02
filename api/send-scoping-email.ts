@@ -10,7 +10,7 @@ import {
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const RESEND_FROM_EMAIL =
-  process.env.RESEND_FROM_EMAIL || 'AsthaSoft Technologies <onboarding@resend.dev>';
+  process.env.RESEND_FROM_EMAIL || 'AsthaSoft Technologies <sales@asthapay.in>';
 const INTERNAL_SALES_EMAIL =
   process.env.INTERNAL_SALES_EMAIL || 'sales@asthasoftindia.com';
 

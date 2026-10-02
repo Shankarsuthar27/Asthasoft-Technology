@@ -167,7 +167,7 @@ Sent automatically by Asthasoft Technologies Lead Intake System.</div>
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Asthasoft Technologies <onboarding@resend.dev>",
+        from: process.env.RESEND_FROM_EMAIL || "AsthaSoft Technologies <sales@asthapay.in>",
         to: [adminEmail],
         subject: `New Client Inquiry: ${enquiryData.fullName} - ${enquiryData.serviceCategory || 'Custom AI & Engineering'}`,
         text: plainText,
