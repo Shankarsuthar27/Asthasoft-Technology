@@ -1,4 +1,5 @@
 import React from 'react';
+import { getServiceDetails } from './templates';
 
 export interface CustomerAutoReplyProps {
   name: string;
@@ -8,6 +9,8 @@ export interface CustomerAutoReplyProps {
   projectDescription: string;
   requestNDA: boolean;
   ticketId?: string;
+  budget?: string;
+  timeline?: string;
 }
 
 export const CustomerAutoReplyEmail: React.FC<CustomerAutoReplyProps> = ({
@@ -17,8 +20,11 @@ export const CustomerAutoReplyEmail: React.FC<CustomerAutoReplyProps> = ({
   projectDescription = '',
   requestNDA = false,
   ticketId,
+  budget,
+  timeline,
 }) => {
   const displayTicketId = ticketId || 'ASTHA-INQUIRY';
+  const serviceInfo = getServiceDetails(serviceRequired);
   return (
     <div
       style={{
@@ -155,6 +161,164 @@ export const CustomerAutoReplyEmail: React.FC<CustomerAutoReplyProps> = ({
               consultant will review your project scope and respond with
               technical insights within <strong>24 hours</strong>.
             </p>
+          </div>
+
+          {/* Service Specifications & Deliverables */}
+          <div
+            style={{
+              margin: '26px 0',
+              border: '1px solid #bfdbfe',
+              backgroundColor: '#f8fafc',
+              borderRadius: '8px',
+              overflow: 'hidden',
+            }}
+          >
+            <div
+              style={{
+                background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)',
+                padding: '14px 20px',
+                color: '#ffffff',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  color: '#93c5fd',
+                }}
+              >
+                Service Specification &amp; Capabilities
+              </div>
+              <div
+                style={{
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  marginTop: '2px',
+                  color: '#ffffff',
+                }}
+              >
+                {serviceInfo.title}
+              </div>
+            </div>
+
+            <div style={{ padding: '20px' }}>
+              <div
+                style={{
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  color: '#1e3a8a',
+                  marginBottom: '8px',
+                }}
+              >
+                {serviceInfo.headline}
+              </div>
+
+              <p
+                style={{
+                  margin: '0 0 16px 0',
+                  fontSize: '13px',
+                  color: '#475569',
+                  lineHeight: '1.6',
+                }}
+              >
+                {serviceInfo.overview}
+              </p>
+
+              <div
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  marginBottom: '8px',
+                }}
+              >
+                Key Deliverables &amp; Engineering Scope:
+              </div>
+              <table role="presentation" width="100%" cellPadding="0" cellSpacing="0" style={{ marginBottom: '16px' }}>
+                <tbody>
+                  {serviceInfo.deliverables.map((item, idx) => (
+                    <tr key={idx} style={{ verticalAlign: 'top' }}>
+                      <td style={{ padding: '4px 8px 4px 0', color: '#0284c7', fontWeight: 700, fontSize: '15px' }}>✓</td>
+                      <td style={{ padding: '4px 0', color: '#334155', fontSize: '13px', lineHeight: '1.5' }}>{item}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  marginBottom: '6px',
+                }}
+              >
+                Recommended Technology Stack:
+              </div>
+              <div style={{ marginBottom: '16px' }}>
+                {serviceInfo.techStack.map((tech, idx) => (
+                  <span
+                    key={idx}
+                    style={{
+                      display: 'inline-block',
+                      backgroundColor: '#f1f5f9',
+                      color: '#0f172a',
+                      border: '1px solid #cbd5e1',
+                      borderRadius: '4px',
+                      padding: '4px 8px',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      margin: '3px 3px 3px 0',
+                    }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '6px',
+                  padding: '12px 14px',
+                  marginTop: '14px',
+                }}
+              >
+                <div style={{ fontSize: '12px', color: '#475569', marginBottom: '6px' }}>
+                  <strong>⏱ Typical Delivery Timeline:</strong> {serviceInfo.timeline}
+                </div>
+                <div style={{ fontSize: '12px', color: '#475569', marginBottom: '8px' }}>
+                  <strong>⚡ Methodology:</strong> Agile 2-Week Sprints · Continuous Staging Deployments · Daily Standup Visibility
+                </div>
+                <div>
+                  {serviceInfo.architecturePillars.map((pillar, idx) => (
+                    <span
+                      key={idx}
+                      style={{
+                        display: 'inline-block',
+                        backgroundColor: '#f0fdf4',
+                        color: '#166534',
+                        border: '1px solid #bbf7d0',
+                        borderRadius: '4px',
+                        padding: '4px 8px',
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        margin: '3px 3px 3px 0',
+                      }}
+                    >
+                      🛡 {pillar}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Conditional NDA paragraph */}

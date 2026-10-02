@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import {
   renderCustomerAutoReplyHtml,
+  renderCustomerAutoReplyPlainText,
   renderInternalSalesNotificationHtml,
   renderInternalLeadPlainText,
+  getServiceDetails,
   type ScopingSessionLead,
 } from '@/emails/templates';
 
@@ -191,6 +193,8 @@ export async function POST(req: NextRequest) {
     };
 
     // Render Plain Text and HTML templates
+    const serviceInfo = getServiceDetails(serviceRequired);
+    const customerPlainText = renderCustomerAutoReplyPlainText(leadData);
     const customerHtml = renderCustomerAutoReplyHtml(leadData);
     const salesPlainText = renderInternalLeadPlainText(leadData);
     const salesHtml = renderInternalSalesNotificationHtml(leadData);
@@ -201,7 +205,8 @@ export async function POST(req: NextRequest) {
       resend.emails.send({
         from: RESEND_FROM_EMAIL,
         to: [email],
-        subject: 'Your Scoping Session Request with AsthaSoft',
+        subject: `Your Inquiry: ${serviceInfo.title} with AsthaSoft`,
+        text: customerPlainText,
         html: customerHtml,
       }),
       // B. Internal Sales Notification Email

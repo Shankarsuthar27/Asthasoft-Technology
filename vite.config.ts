@@ -1,5 +1,11 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
+import {
+  getServiceDetails,
+  renderCustomerAutoReplyHtml,
+  renderCustomerAutoReplyPlainText,
+  type ScopingSessionLead,
+} from './src/emails/templates.ts'
 
 function resendDevApiPlugin(apiKey?: string, adminEmail?: string): Plugin {
   return {
@@ -118,7 +124,29 @@ Sent automatically by Asthasoft Technologies Lead Intake System.</div>
 </body>
 </html>`;
 
-            const resendRes = await fetch('https://api.resend.com/emails', {
+            const isRealCustomerEmail = email && email.includes('@') && !email.includes('instant') && !email.includes('n/a');
+            const serviceInfo = getServiceDetails(service);
+            const leadData: ScopingSessionLead = {
+              name: fullName,
+              email: isRealCustomerEmail ? email : 'noreply-lead@asthasoftindia.com',
+              contactNumber: `${countryCode} ${phone}`,
+              serviceRequired: service,
+              projectDescription,
+              requestNDA: ndaRequested,
+              ticketId,
+              timestamp: formattedDate,
+              source,
+              budget,
+              timeline,
+              preferredTime,
+            };
+
+            const customerHtml = renderCustomerAutoReplyHtml(leadData);
+            const customerPlainText = renderCustomerAutoReplyPlainText(leadData);
+            const customerSubject = `Your Inquiry: ${serviceInfo.title} with AsthaSoft`;
+
+            // 1. Send Internal Lead Alert to Admin
+            const adminRes = await fetch('https://api.resend.com/emails', {
               method: 'POST',
               headers: {
                 Authorization: `Bearer ${targetApiKey}`,
@@ -130,20 +158,60 @@ Sent automatically by Asthasoft Technologies Lead Intake System.</div>
                 subject: `New Client Inquiry: ${fullName} - ${service}`,
                 text: plainText,
                 html: htmlVersion,
-                reply_to: email && email.includes('@') ? email : undefined,
+                reply_to: isRealCustomerEmail ? email : undefined,
               }),
             });
 
-            const resendData = (await resendRes.json()) as any;
-            if (resendRes.ok) {
-              console.log(`✅ [Scoping Email Dispatcher] Delivered to ${targetAdminEmail}! Resend ID: ${resendData.id}`);
+            const adminData = (await adminRes.json()) as any;
+            if (adminRes.ok) {
+              console.log(`✅ [Scoping Email Dispatcher] Admin alert delivered to ${targetAdminEmail}! Resend ID: ${adminData.id}`);
             } else {
-              console.error(`❌ [Scoping Email Dispatcher] Resend API Error:`, resendData);
+              console.error(`❌ [Scoping Email Dispatcher] Admin alert Resend API Error:`, adminData);
             }
 
-            res.statusCode = resendRes.status;
+            // 2. Dispatch Customer Auto-Reply Email with service info
+            let customerData: any = null;
+            let customerSuccess = false;
+            if (isRealCustomerEmail) {
+              try {
+                const customerRes = await fetch('https://api.resend.com/emails', {
+                  method: 'POST',
+                  headers: {
+                    Authorization: `Bearer ${targetApiKey}`,
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    from: 'Asthasoft Technologies <onboarding@resend.dev>',
+                    to: [email],
+                    subject: customerSubject,
+                    text: customerPlainText,
+                    html: customerHtml,
+                    reply_to: targetAdminEmail,
+                  }),
+                });
+                customerData = (await customerRes.json()) as any;
+                customerSuccess = customerRes.ok;
+                if (customerRes.ok) {
+                  console.log(`✅ [Scoping Email Dispatcher] Customer auto-reply delivered to ${email}! Resend ID: ${customerData.id}`);
+                } else {
+                  console.log(`ℹ️ [Scoping Email Dispatcher] Customer auto-reply notice (${email}): ${customerData.message || 'Resend sandbox restricted to account owner until custom domain verified.'}`);
+                }
+              } catch (custErr: any) {
+                console.error(`❌ [Scoping Email Dispatcher] Customer auto-reply failed:`, custErr);
+              }
+            }
+
+            res.statusCode = adminRes.status;
             res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify({ ...resendData, success: resendRes.ok, adminEmail: targetAdminEmail }));
+            res.end(
+              JSON.stringify({
+                ...adminData,
+                success: adminRes.ok,
+                adminEmail: targetAdminEmail,
+                customerEmail: isRealCustomerEmail ? (customerSuccess ? 'sent' : 'sandbox_skipped') : 'not_requested',
+                serviceTitle: serviceInfo.title,
+              })
+            );
           } catch (err: any) {
             console.error('❌ [Scoping Email Dispatcher] Internal error:', err);
             res.statusCode = 500;

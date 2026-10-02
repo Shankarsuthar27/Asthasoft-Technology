@@ -1,8 +1,10 @@
 import { Resend } from 'resend';
 import {
   renderCustomerAutoReplyHtml,
+  renderCustomerAutoReplyPlainText,
   renderInternalSalesNotificationHtml,
   renderInternalLeadPlainText,
+  getServiceDetails,
   type ScopingSessionLead,
 } from '../src/emails/templates';
 
@@ -198,6 +200,8 @@ export default async function handler(req: any, res: any) {
     };
 
     // Render Plain Text and HTML templates
+    const serviceInfo = getServiceDetails(serviceRequired);
+    const customerPlainText = renderCustomerAutoReplyPlainText(leadData);
     const customerHtml = renderCustomerAutoReplyHtml(leadData);
     const salesPlainText = renderInternalLeadPlainText(leadData);
     const salesHtml = renderInternalSalesNotificationHtml(leadData);
@@ -215,13 +219,14 @@ export default async function handler(req: any, res: any) {
       }),
     ];
 
-    // Optional customer auto-reply if real email provided
+    // Customer auto-reply with tailored service specifications
     if (!isInstantCall && emailRegex.test(email)) {
       dispatchPromises.push(
         resend.emails.send({
           from: RESEND_FROM_EMAIL,
           to: [email],
-          subject: 'Your Scoping Session Request with AsthaSoft',
+          subject: `Your Inquiry: ${serviceInfo.title} with AsthaSoft`,
+          text: customerPlainText,
           html: customerHtml,
         })
       );

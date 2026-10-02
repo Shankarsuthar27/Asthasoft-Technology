@@ -244,51 +244,428 @@ Sent automatically by Asthasoft Technologies Lead Intake System.</div>
 </body>
 </html>";
 
+// Function to resolve structured service intelligence matching customer requested service
+function getServiceDetailsPhp($rawService = '') {
+    $s = strtolower($rawService);
+
+    // 1. Mobile App Development
+    if (strpos($s, 'mobile') !== false || strpos($s, 'ios') !== false || strpos($s, 'android') !== false || strpos($s, 'flutter') !== false || strpos($s, 'react native') !== false || strpos($s, 'app') !== false) {
+        return [
+            'title' => 'Mobile Application Development (iOS & Android)',
+            'headline' => 'Native & Cross-Platform Apps Engineered for 60fps Performance & Global Scale',
+            'overview' => 'AsthaSoft engineers high-performance, intuitive mobile experiences from concept to App Store and Google Play launch. We specialize in fluid 60 FPS interfaces, offline-first data synchronization, biometric authentication, and enterprise-grade backend APIs.',
+            'deliverables' => [
+                'Native iOS (Swift) & Android (Kotlin) or Unified Cross-Platform (Flutter / React Native)',
+                'Pixel-perfect, accessible UI/UX with smooth micro-interactions and haptic feedback',
+                'Offline-first SQLite/Realm sync & background task scheduling',
+                'End-to-end App Store & Google Play Store submission & compliance guarantee',
+                'Real-time crash analytics, push notification engine, and performance monitoring'
+            ],
+            'techStack' => ['Flutter', 'React Native', 'Swift (iOS)', 'Kotlin (Android)', 'Firebase', 'GraphQL', 'WebSockets', 'AWS Mobile Hub'],
+            'timeline' => 'MVP in 4–6 weeks · Full Production Release in 8–12 weeks',
+            'architecturePillars' => ['60 FPS Fluid UI', 'Biometric Security (FaceID/Fingerprint)', '100% Native Hardware Access', 'Offline-First Sync']
+        ];
+    }
+
+    // 2. Enterprise AI & Agentic Systems / Machine Learning
+    if (strpos($s, 'ai') !== false || strpos($s, 'agent') !== false || strpos($s, 'llm') !== false || strpos($s, 'machine learning') !== false || strpos($s, 'rag') !== false || strpos($s, 'gpt') !== false) {
+        return [
+            'title' => 'Enterprise AI & Autonomous Agentic Systems',
+            'headline' => 'Private, Domain-Tuned Intelligence & Automated Agentic Workflows',
+            'overview' => 'We architect production-ready AI solutions that integrate directly into your operational pipelines. From custom Retrieval-Augmented Generation (RAG) over proprietary enterprise knowledge bases to autonomous multi-step reasoning agents, our solutions ensure strict private data sovereignty and measurable ROI.',
+            'deliverables' => [
+                'Autonomous Multi-Agent Task Orchestration & Tool Calling',
+                'Private Enterprise Knowledge Base (RAG with Vector Search & Hybrid Retrieval)',
+                'Domain-Specific LLM Fine-Tuning & Quantized On-Premise Inference',
+                'Automated Guardrails, Hallucination Prevention & Prompt Hardening',
+                'Enterprise RBAC & Private Data Sovereignty (Zero Third-Party Model Training)'
+            ],
+            'techStack' => ['Python', 'LangChain', 'LlamaIndex', 'OpenAI / Claude / Gemini', 'vLLM / Ollama', 'Pinecone / Qdrant / pgvector', 'FastAPI', 'Docker'],
+            'timeline' => 'Proof of Concept in 2–3 weeks · Production Deployment in 6–8 weeks',
+            'architecturePillars' => ['Zero Training on Customer Data', 'Sub-second Vector Search', 'Multi-Agent Autonomous Loops', 'Audit Trails & Explainability']
+        ];
+    }
+
+    // 3. Cloud Architecture & DevOps
+    if (strpos($s, 'cloud') !== false || strpos($s, 'devops') !== false || strpos($s, 'kubernetes') !== false || strpos($s, 'aws') !== false || strpos($s, 'azure') !== false || strpos($s, 'infra') !== false) {
+        return [
+            'title' => 'Cloud Architecture & DevOps Modernization',
+            'headline' => 'Resilient Multi-Cloud Foundations with 99.99% Availability & Automated CI/CD',
+            'overview' => 'Our certified cloud architects design, modernize, and automate enterprise infrastructure. We implement Infrastructure as Code (IaC), zero-downtime blue/green deployments, auto-scaling Kubernetes clusters, and rigorous cloud cost optimization audits that cut waste by up to 40%.',
+            'deliverables' => [
+                'Multi-Cloud Architecture Blueprint (AWS / Azure / Google Cloud)',
+                'Infrastructure as Code (IaC) via Terraform & OpenTofu',
+                'Container Orchestration with Kubernetes (EKS / GKE / AKS)',
+                'Automated GitOps CI/CD Pipelines (GitHub Actions / GitLab / ArgoCD)',
+                '24/7 Observability, Prometheus / Grafana Dashboards & Automated Alerting'
+            ],
+            'techStack' => ['AWS', 'Microsoft Azure', 'Google Cloud (GCP)', 'Terraform', 'Kubernetes (K8s)', 'Docker', 'ArgoCD', 'Prometheus & Grafana'],
+            'timeline' => 'Infrastructure Audit in 1 week · Complete Pipeline Migration in 4–6 weeks',
+            'architecturePillars' => ['99.99% SLA Uptime', 'Zero-Downtime Blue/Green Deployments', 'Disaster Recovery (RTO < 15m)', 'Up to 40% Cost Savings']
+        ];
+    }
+
+    // 4. FinTech & Payment Solutions
+    if (strpos($s, 'fintech') !== false || strpos($s, 'payment') !== false || strpos($s, 'upi') !== false || strpos($s, 'banking') !== false || strpos($s, 'wallet') !== false) {
+        return [
+            'title' => 'FinTech & Digital Payment Gateway Solutions',
+            'headline' => 'Bank-Grade Financial Infrastructures Aligned with Global Regulatory Standards',
+            'overview' => 'AsthaSoft builds mission-critical financial systems, automated reconciliation pipelines, custom digital payment gateways, and neo-banking backends. We enforce strict cryptographic data isolation, PCI-DSS compliance alignment, and sub-second idempotent transaction processing.',
+            'deliverables' => [
+                'Unified Payment Gateway Orchestration (Stripe, Razorpay, UPI, PayPal, Apple Pay)',
+                'Double-Entry Ledger Bookkeeping Engine with Mathematical Immutability',
+                'Real-time Fraud Detection, Velocity Checks & Risk Scoring',
+                'Automated Settlement, Split Payments & Dispute Management Workflows',
+                'PCI-DSS Compliant Tokenization & AES-256 Hardware Security Module (HSM) Encryption'
+            ],
+            'techStack' => ['Node.js', 'Go', 'PostgreSQL', 'Redis Cluster', 'Kafka', 'PCI-DSS Infrastructure', 'AES-256 / RSA Encryption', 'Docker'],
+            'timeline' => 'Core Engine in 6–8 weeks · Regulatory Validation in 10–14 weeks',
+            'architecturePillars' => ['Sub-second Transaction Latency', 'Bank-Grade Cryptographic Security', 'Idempotent Execution Engine', 'Zero Double-Spend Guarantee']
+        ];
+    }
+
+    // 5. Messaging & SMS/OTP/RCS Infrastructure
+    if (strpos($s, 'message') !== false || strpos($s, 'sms') !== false || strpos($s, 'otp') !== false || strpos($s, 'rcs') !== false || strpos($s, 'whatsapp') !== false || strpos($s, 'telecom') !== false) {
+        return [
+            'title' => 'Enterprise Messaging & SMS/OTP/RCS Infrastructure',
+            'headline' => 'Ultra-High-Throughput Telecom Gateways Delivering 99.9% Reliability',
+            'overview' => 'We engineer carrier-grade telecommunication pipelines capable of processing millions of transactional SMS, OTP verifications, RCS rich messages, and WhatsApp Business API interactions per hour with sub-5-second global delivery.',
+            'deliverables' => [
+                'SMPP v3.4/5.0 Gateway Integration with Direct Telecom Carrier Routing',
+                'Intelligent Multi-Route Dynamic Failover & Lowest-Latency Selection',
+                'Enterprise Global OTP Verification Engine with Rate Limiting & Fraud Throttling',
+                'RCS Business Messaging & Meta WhatsApp Cloud API Connectors',
+                'Regulatory DLT (Distributed Ledger Technology) Template & Header Automation'
+            ],
+            'techStack' => ['SMPP Protocol', 'Node.js', 'Go', 'Redis', 'Apache Kafka', 'PostgreSQL', 'RESTful Microservices', 'Docker'],
+            'timeline' => 'Integration in 2–3 weeks · Carrier Binding in 4 weeks',
+            'architecturePillars' => ['Sub-5-Second OTP Delivery', 'Dynamic Carrier Failover', 'DLT Compliance Aligned', '99.99% Routing Redundancy']
+        ];
+    }
+
+    // 6. Legacy Modernization & Refactoring
+    if (strpos($s, 'legacy') !== false || strpos($s, 'moderniz') !== false || strpos($s, 'refactor') !== false || strpos($s, 'migrat') !== false) {
+        return [
+            'title' => 'Legacy Codebase Modernization & Architecture Refactoring',
+            'headline' => 'Zero-Downtime Migration from Brittle Monoliths to Scalable Microservices',
+            'overview' => 'Transform aging legacy applications into high-velocity, cloud-native architectures without halting active business operations. Utilizing the Strangler-Fig pattern, automated regression test suites, and database refactoring, we de-risk your technology stack.',
+            'deliverables' => [
+                'Architectural Health & Technical Debt Assessment Report',
+                'Incremental Strangler-Fig Microservice Extraction Plan',
+                'Database Schema Decoupling & Automated Zero-Downtime Data Migration',
+                'Automated End-to-End Regression Test Harnesses & Contract Testing',
+                'Modern CI/CD Deployment Pipelines & Developer Productivity Tooling'
+            ],
+            'techStack' => ['TypeScript', 'Node.js', 'Go', 'Python', 'Docker', 'Kubernetes', 'PostgreSQL', 'Redis'],
+            'timeline' => 'Architecture Audit in 2 weeks · Phased Delivery in 6–12 weeks',
+            'architecturePillars' => ['Zero Business Disruption', 'Strict Backward Compatibility', 'Automated Regression Testing', 'Clean Hexagonal Architecture']
+        ];
+    }
+
+    // 7. Dedicated Engineering Pod
+    if (strpos($s, 'pod') !== false || strpos($s, 'dedicated') !== false || strpos($s, 'staff') !== false || strpos($s, 'team') !== false) {
+        return [
+            'title' => 'Dedicated Senior Engineering Pod',
+            'headline' => 'Full-Stack Agile Squads Integrated Directly into Your Product Roadmap',
+            'overview' => 'Scale your engineering output with autonomous, top 1% senior engineering teams. Every pod includes a Solution Architect, Senior Full-Stack Developers, QA Engineers, and a dedicated Technical Project Manager aligned to your timezone and tech stack.',
+            'deliverables' => [
+                'Full-Stack Dedicated Squad (Architect, Developers, DevOps, QA)',
+                'Daily Standups, 2-Week Agile Sprints & Transparent Jira/Slack Integration',
+                'Complete Source Code Handover & Rigorous Clean-Code Standards',
+                'Zero Overhead: Immediate Onboarding within 5–7 Business Days',
+                'Flexible Scaling: Seamlessly Ramp Up or Down Based on Roadmap Needs'
+            ],
+            'techStack' => ['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'Go', 'AWS / Azure', 'Docker'],
+            'timeline' => 'Squad Onboarding in 5–7 Days · First Sprint Deliverables in 2 Weeks',
+            'architecturePillars' => ['Top 1% Vetted Talent', 'Overlapping Timezone Alignment', 'Complete Code Ownership', 'Senior Technical Leadership']
+        ];
+    }
+
+    // 8. Default: Custom Enterprise Software
+    return [
+        'title' => 'Custom Enterprise Software Development',
+        'headline' => 'Tailored Digital Platforms Engineered for Scalability, Security & 100% IP Transfer',
+        'overview' => 'AsthaSoft designs and delivers custom enterprise software tailored specifically to your organization’s operational models. We eliminate off-the-shelf software limitations with modular microservices, enterprise database architectures, and intuitive web interfaces.',
+        'deliverables' => [
+            'Tailored Architecture Blueprint & System Design Document (SDD)',
+            'Enterprise Web Portals, Multi-Tenant SaaS & Workflow Automation Systems',
+            'Robust REST & GraphQL APIs with Comprehensive OpenAPI Documentation',
+            'Bank-Grade Security Architecture (Role-Based Access Control, OWASP Top 10 Protected)',
+            '100% Intellectual Property & Source Code Ownership Handover'
+        ],
+        'techStack' => ['React / Next.js', 'TypeScript', 'Node.js / Python / Go', 'PostgreSQL / MongoDB', 'Redis', 'Docker / Kubernetes', 'AWS / Azure'],
+        'timeline' => 'Architecture & Prototype in 2–3 weeks · MVP in 6–8 weeks · Production in 10–14 weeks',
+        'architecturePillars' => ['100% Source Code Ownership', 'Modular Microservices Design', 'Zero Vendor Lock-in', 'Enterprise Security & RBAC']
+    ];
+}
+
+$serviceInfo = getServiceDetailsPhp($serviceRequired);
+
+// Build Deliverables HTML items
+$deliverablesHtml = '';
+foreach ($serviceInfo['deliverables'] as $item) {
+    $deliverablesHtml .= "<tr style='vertical-align: top;'>
+        <td style='padding: 4px 8px 4px 0; color: #0284c7; font-weight: 700; font-size: 15px;'>✓</td>
+        <td style='padding: 4px 0; color: #334155; font-size: 13px; line-height: 1.5;'>" . htmlspecialchars($item, ENT_QUOTES, 'UTF-8') . "</td>
+    </tr>";
+}
+
+// Build Tech Stack badges
+$techBadgesHtml = '';
+foreach ($serviceInfo['techStack'] as $tech) {
+    $techBadgesHtml .= "<span style='display: inline-block; background-color: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 8px; font-size: 11px; font-weight: 600; margin: 3px 3px 3px 0;'>" . htmlspecialchars($tech, ENT_QUOTES, 'UTF-8') . "</span>";
+}
+
+// Build Pillars badges
+$pillarsHtml = '';
+foreach ($serviceInfo['architecturePillars'] as $pillar) {
+    $pillarsHtml .= "<span style='display: inline-block; background-color: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 4px; padding: 4px 8px; font-size: 11px; font-weight: 600; margin: 3px 3px 3px 0;'>🛡 " . htmlspecialchars($pillar, ENT_QUOTES, 'UTF-8') . "</span>";
+}
+
 // Optional Customer Auto-Reply Email
 $ndaHtmlCustomer = $requestNDA ? '
-<div style="margin: 24px 0; padding: 18px 20px; background-color: #f0fdf4; border-left: 4px solid #16a34a; border-radius: 6px;">
-  <div style="font-weight: 700; color: #166534; font-size: 14px; margin-bottom: 6px;">✓ Non-Disclosure Agreement (NDA) Requested</div>
-  <p style="margin: 0; color: #15803d; font-size: 14px; line-height: 1.6;">
-    We have noted your request for a Non-Disclosure Agreement. Prior to scheduling in-depth architectural reviews or discussing proprietary technical specifics, our compliance team will provide a countersigned Mutual NDA to ensure your intellectual property is completely safeguarded.
+<div style="margin: 20px 0; padding: 16px 20px; background-color: #f0fdf4; border-left: 4px solid #16a34a; border-radius: 6px;">
+  <div style="font-weight: 700; color: #166534; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">✓ Non-Disclosure Agreement (NDA) Requested</div>
+  <p style="margin: 0; color: #15803d; font-size: 13px; line-height: 1.5;">
+    We have noted your request for a formal Non-Disclosure Agreement. Prior to scheduling technical architecture reviews or sharing technical schemas, our legal team will provide a countersigned Mutual NDA to safeguard your proprietary intellectual property.
   </p>
 </div>
 ' : '
-<div style="margin: 20px 0; padding: 14px 18px; background-color: #f8fafc; border-left: 4px solid #94a3b8; border-radius: 6px;">
-  <p style="margin: 0; color: #475569; font-size: 13px; line-height: 1.5;">
+<div style="margin: 20px 0; padding: 12px 18px; background-color: #f8fafc; border-left: 4px solid #94a3b8; border-radius: 6px;">
+  <p style="margin: 0; color: #475569; font-size: 12px; line-height: 1.5;">
     <strong>Confidentiality Notice:</strong> All project specifications and ideas shared with AsthaSoft are treated with strict professional confidentiality under our standard bilateral policy.
   </p>
 </div>
 ';
 
+$safeServiceTitle = htmlspecialchars($serviceInfo['title'], ENT_QUOTES, 'UTF-8');
+$safeHeadline = htmlspecialchars($serviceInfo['headline'], ENT_QUOTES, 'UTF-8');
+$safeOverview = htmlspecialchars($serviceInfo['overview'], ENT_QUOTES, 'UTF-8');
+$safeTimeline = htmlspecialchars($serviceInfo['timeline'], ENT_QUOTES, 'UTF-8');
+
 $customerEmailHtml = "<!DOCTYPE html>
-<html>
-<body style='margin:0;padding:0;background-color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;'>
-<table role='presentation' width='100%' style='padding:40px 15px;'><tr><td align='center'>
-<table role='presentation' width='100%' style='max-width:620px;background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;'>
-  <tr><td style='background:#0A1128;padding:32px 36px;color:#fff;'>
-    <div style='font-size:24px;font-weight:800;'>Astha<span style='color:#38bdf8;'>Soft</span></div>
-    <div style='font-size:12px;color:#94a3b8;letter-spacing:1px;text-transform:uppercase;margin-top:4px;'>Enterprise Software &amp; Cloud Engineering</div>
-  </td></tr>
-  <tr><td style='padding:36px;'>
-    <h1 style='font-size:22px;color:#0f172a;margin:0 0 16px 0;'>Your Scoping Session Request Has Been Received</h1>
-    <p style='color:#334155;line-height:1.6;'>Dear <strong>{$safeName}</strong>,</p>
-    <p style='color:#334155;line-height:1.6;'>Thank you for contacting <strong>AsthaSoft</strong>. We have successfully received your request for a strategic scoping session regarding <strong style='color:#0284c7;'>{$safeService}</strong>.</p>
-    <div style='margin:20px 0;padding:16px 20px;background:#f0f9ff;border-left:4px solid #0284c7;border-radius:6px;'>
-      <p style='margin:0;color:#0369a1;font-size:14px;line-height:1.6;'>⏱ <strong>Response Commitment:</strong> A dedicated strategic consultant will review your project scope and respond with technical insights within <strong>24 hours</strong>.</p>
-    </div>
-    {$ndaHtmlCustomer}
-    <div style='margin:24px 0;border:1px solid #e2e8f0;border-radius:8px;padding:16px;'>
-      <div style='font-size:13px;font-weight:700;color:#475569;margin-bottom:8px;'>SUMMARY OF SUBMITTED REQUIREMENTS:</div>
-      <p style='margin:4px 0;font-size:14px;'><strong>Service:</strong> {$safeService}</p>
-      <p style='margin:4px 0;font-size:14px;'><strong>Contact:</strong> {$safePhone}</p>
-      <p style='margin:4px 0;font-size:14px;'><strong>Description:</strong> {$safeDescription}</p>
-    </div>
-    <p style='color:#64748b;font-size:13px;'>AsthaSoft Technologies · Enterprise Solutions</p>
-  </td></tr>
-</table>
-</td></tr></table>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Your Inquiry: {$safeServiceTitle} with AsthaSoft</title>
+</head>
+<body style='margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #1e293b;'>
+  <table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='background-color: #f1f5f9; padding: 35px 15px;'>
+    <tr>
+      <td align='center'>
+        <table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='max-width: 640px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); overflow: hidden; border: 1px solid #e2e8f0;'>
+          
+          <!-- Brand Header -->
+          <tr>
+            <td style='background: linear-gradient(135deg, #0A1128 0%, #101F42 100%); padding: 32px 36px 26px 36px; text-align: left;'>
+              <table role='presentation' width='100%' cellpadding='0' cellspacing='0'>
+                <tr>
+                  <td>
+                    <div style='font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; line-height: 1.2;'>
+                      Astha<span style='color: #38bdf8;'>Soft</span>
+                    </div>
+                    <div style='font-size: 11px; font-weight: 500; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px;'>
+                      Enterprise Software &amp; Cloud Engineering
+                    </div>
+                  </td>
+                  <td align='right'>
+                    <span style='display: inline-block; padding: 6px 12px; background-color: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 20px; font-size: 11px; font-weight: 600; color: #38bdf8;'>
+                      Ticket #{$safeTicketId}
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Content Body -->
+          <tr>
+            <td style='padding: 32px 36px;'>
+              <h1 style='margin: 0 0 12px 0; font-size: 20px; font-weight: 700; color: #0f172a; line-height: 1.3;'>
+                Your Scoping Request Has Been Received
+              </h1>
+
+              <p style='margin: 0 0 14px 0; font-size: 15px; color: #334155; line-height: 1.6;'>
+                Dear <strong>{$safeName}</strong>,
+              </p>
+
+              <p style='margin: 0 0 18px 0; font-size: 14px; color: #334155; line-height: 1.6;'>
+                Thank you for contacting <strong>AsthaSoft Technologies</strong>. We have received your project details regarding <strong style='color: #0284c7;'>{$safeServiceTitle}</strong>.
+              </p>
+
+              <!-- SLA Commitment Box -->
+              <div style='margin: 18px 0; padding: 14px 18px; background-color: #f0f9ff; border-left: 4px solid #0284c7; border-radius: 6px;'>
+                <p style='margin: 0; color: #0369a1; font-size: 13px; line-height: 1.5; font-weight: 500;'>
+                  ⏱ <strong>Response Commitment:</strong> A Senior Solution Architect is currently reviewing your project requirements and will connect with you within <strong>24 hours</strong> with technical insights and recommended architecture.
+                </p>
+              </div>
+
+              <!-- SERVICE SPECIFICATION & ARCHITECTURAL HIGHLIGHTS -->
+              <div style='margin: 26px 0; border: 1px solid #bfdbfe; background-color: #f8fafc; border-radius: 8px; overflow: hidden;'>
+                <div style='background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); padding: 14px 20px; color: #ffffff;'>
+                  <div style='font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #93c5fd;'>
+                    Service Specification &amp; Capabilities
+                  </div>
+                  <div style='font-size: 16px; font-weight: 700; margin-top: 2px; color: #ffffff;'>
+                    {$safeServiceTitle}
+                  </div>
+                </div>
+
+                <div style='padding: 20px;'>
+                  <div style='font-size: 13px; font-weight: 700; color: #1e3a8a; margin-bottom: 8px;'>
+                    {$safeHeadline}
+                  </div>
+
+                  <p style='margin: 0 0 16px 0; font-size: 13px; color: #475569; line-height: 1.6;'>
+                    {$safeOverview}
+                  </p>
+
+                  <div style='font-size: 12px; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;'>
+                    Key Deliverables &amp; Engineering Scope:
+                  </div>
+                  <table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='margin-bottom: 16px;'>
+                    {$deliverablesHtml}
+                  </table>
+
+                  <div style='font-size: 12px; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;'>
+                    Recommended Technology Stack:
+                  </div>
+                  <div style='margin-bottom: 16px;'>
+                    {$techBadgesHtml}
+                  </div>
+
+                  <div style='background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 14px; margin-top: 14px;'>
+                    <div style='font-size: 12px; color: #475569; margin-bottom: 6px;'>
+                      <strong>⏱ Typical Delivery Timeline:</strong> {$safeTimeline}
+                    </div>
+                    <div style='font-size: 12px; color: #475569; margin-bottom: 8px;'>
+                      <strong>⚡ Methodology:</strong> Agile 2-Week Sprints · Continuous Staging Deployments · Daily Standup Visibility
+                    </div>
+                    <div>
+                      {$pillarsHtml}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {$ndaHtmlCustomer}
+
+              <!-- Submission Summary Panel -->
+              <div style='margin: 24px 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;'>
+                <div style='background-color: #f8fafc; padding: 10px 18px; border-bottom: 1px solid #e2e8f0; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #475569;'>
+                  Summary of Submitted Scope
+                </div>
+                <table role='presentation' width='100%' cellpadding='0' cellspacing='0' style='padding: 14px 18px; font-size: 13px;'>
+                  <tr>
+                    <td style='padding: 5px 0; color: #64748b; width: 140px;'>Service Requested:</td>
+                    <td style='padding: 5px 0; color: #0f172a; font-weight: 600;'>{$safeService}</td>
+                  </tr>
+                  <tr>
+                    <td style='padding: 5px 0; color: #64748b;'>Contact Number:</td>
+                    <td style='padding: 5px 0; color: #0f172a; font-weight: 500;'>{$safePhone}</td>
+                  </tr>"
+                  . ($budget ? "<tr><td style='padding: 5px 0; color: #64748b;'>Budget Target:</td><td style='padding: 5px 0; color: #0f172a;'>" . htmlspecialchars($budget, ENT_QUOTES, 'UTF-8') . "</td></tr>" : "")
+                  . ($timeline ? "<tr><td style='padding: 5px 0; color: #64748b;'>Desired Timeline:</td><td style='padding: 5px 0; color: #0f172a;'>" . htmlspecialchars($timeline, ENT_QUOTES, 'UTF-8') . "</td></tr>" : "")
+                  . "<tr>
+                    <td style='padding: 5px 0; color: #64748b; vertical-align: top;'>Project Brief:</td>
+                    <td style='padding: 5px 0; color: #334155; line-height: 1.5; white-space: pre-wrap;'>{$safeDescription}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Next Steps Panel -->
+              <div style='margin: 20px 0; padding: 16px 20px; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;'>
+                <div style='font-size: 12px; font-weight: 700; color: #0f172a; text-transform: uppercase; margin-bottom: 8px;'>
+                  What Happens Next:
+                </div>
+                <ol style='margin: 0; padding-left: 20px; font-size: 13px; color: #475569; line-height: 1.6;'>
+                  <li><strong>Scope Review:</strong> A dedicated Solution Architect reviews your specifications within 24 hours.</li>
+                  <li><strong>Discovery Call:</strong> We align on technical architecture, sprint breakdown, and security requirements.</li>
+                  <li><strong>Fixed-Scope Proposal:</strong> You receive an architecture document, sprint plan, and transparent milestone quote.</li>
+                </ol>
+              </div>
+
+              <p style='margin: 0 0 20px 0; font-size: 13px; color: #475569; line-height: 1.6;'>
+                Have existing architecture diagrams, wireframes, or RFP documents to share? Simply reply directly to this email and our technical team will review them ahead of our call.
+              </p>
+
+              <!-- Sign-off -->
+              <div style='margin-top: 26px; padding-top: 20px; border-top: 1px solid #f1f5f9;'>
+                <p style='margin: 0; font-size: 14px; font-weight: 700; color: #0f172a;'>
+                  Strategic Consulting &amp; Engineering Team
+                </p>
+                <p style='margin: 3px 0 0 0; font-size: 12px; color: #64748b;'>
+                  AsthaSoft Technologies · Enterprise Solutions · sales@asthasoftindia.com
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style='background-color: #f8fafc; padding: 20px 36px; border-top: 1px solid #e2e8f0; text-align: center;'>
+              <p style='margin: 0 0 6px 0; font-size: 11px; color: #64748b;'>
+                © " . date('Y') . " AsthaSoft Technologies. All rights reserved.
+              </p>
+              <p style='margin: 0; font-size: 10px; color: #94a3b8;'>
+                ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>";
+
+// Plain text version for customer confirmation
+$deliverablesPlain = '';
+foreach ($serviceInfo['deliverables'] as $item) {
+    $deliverablesPlain .= "  - " . $item . "\n";
+}
+$techStackPlain = implode(', ', $serviceInfo['techStack']);
+$pillarsPlain = implode(' · ', $serviceInfo['architecturePillars']);
+
+$customerPlainText = "ASTHASOFT TECHNOLOGIES - SCOPING SESSION CONFIRMATION\n"
+    . "Ticket ID: #{$ticketId}\n\n"
+    . "Dear {$name},\n\n"
+    . "Thank you for contacting AsthaSoft Technologies. We have successfully received your project scoping request regarding:\n"
+    . "{$serviceInfo['title']}\n\n"
+    . "============================================================\n"
+    . "SERVICE SPECIFICATIONS & ARCHITECTURAL HIGHLIGHTS\n"
+    . "============================================================\n"
+    . "{$serviceInfo['headline']}\n\n"
+    . "{$serviceInfo['overview']}\n\n"
+    . "KEY DELIVERABLES & INCLUDED SCOPE:\n"
+    . $deliverablesPlain . "\n"
+    . "RECOMMENDED TECHNOLOGY STACK:\n"
+    . "{$techStackPlain}\n\n"
+    . "TYPICAL DELIVERY TIMELINE:\n"
+    . "{$serviceInfo['timeline']}\n"
+    . "Methodology: Agile 2-Week Sprints with live demo environments & continuous CI/CD delivery.\n\n"
+    . "ARCHITECTURAL PILLARS:\n"
+    . "{$pillarsPlain}\n\n"
+    . "============================================================\n"
+    . "SUMMARY OF SUBMITTED REQUIREMENTS\n"
+    . "============================================================\n"
+    . "Service Requested: {$serviceRequired}\n"
+    . "Contact Number   : {$contactNumber}\n"
+    . ($budget ? "Budget Target    : {$budget}\n" : "")
+    . ($timeline ? "Desired Timeline : {$timeline}\n" : "")
+    . "Project Brief    :\n{$projectDescription}\n\n"
+    . "NDA Status       : " . ($requestNDA ? "YES · Formal NDA Requested" : "Standard Confidentiality Policy") . "\n\n"
+    . "============================================================\n"
+    . "WHAT HAPPENS NEXT\n"
+    . "============================================================\n"
+    . "1. Scope Review   : A dedicated Solution Architect reviews your specifications within 24 hours.\n"
+    . "2. Discovery Call : We schedule a call to align on technical architecture and milestone breakdowns.\n"
+    . "3. Proposal Handover: You receive an architecture document, sprint plan, and transparent quote.\n\n"
+    . "Need immediate assistance or have existing RFP/architecture documents to share?\n"
+    . "Reply directly to this email or reach us at sales@asthasoftindia.com / +91 9664471637.\n\n"
+    . "AsthaSoft Strategic Consulting & Engineering Team\n"
+    . "AsthaSoft Technologies · Enterprise Solutions\n";
 
 // Function to send email via Resend API supporting both text and html
 function sendViaResend($apiKey, $from, $to, $subject, $text, $html = null, $replyTo = null) {
@@ -338,6 +715,7 @@ function sendViaResend($apiKey, $from, $to, $subject, $text, $html = null, $repl
 $salesResult = null;
 $customerResult = null;
 $leadSubject = "New Client Inquiry: {$name} - {$serviceRequired}";
+$customerSubject = "Your Inquiry: " . $serviceInfo['title'] . " with AsthaSoft";
 
 if (!empty($resendApiKey)) {
     // 1. Send Internal Lead Alert to Admin (PRIMARY)
@@ -364,15 +742,16 @@ if (!empty($resendApiKey)) {
         );
     }
 
-    // 2. Send Customer Auto-Reply ONLY if customer provided a real email
+    // 2. Send Customer Auto-Reply with detailed service intelligence
     if ($hasRealCustomerEmail) {
         $customerResult = sendViaResend(
             $resendApiKey,
             $resendFromEmail,
             $email,
-            'Your Scoping Session Request with AsthaSoft',
-            "Thank you for contacting AsthaSoft. We have received your request for {$serviceRequired}.",
-            $customerEmailHtml
+            $customerSubject,
+            $customerPlainText,
+            $customerEmailHtml,
+            $adminEmail
         );
     }
 }
@@ -388,7 +767,15 @@ if (!$salesSent) {
     $salesSent = @mail($adminEmail, $leadSubject, $plainText, $mailHeaders);
 }
 
+// Fallback to native PHP mail() if Resend failed for customer (e.g. sandbox restriction on onboarding@resend.dev)
 $customerSent = ($customerResult && $customerResult['success']);
+if (!$customerSent && $hasRealCustomerEmail) {
+    $custMailHeaders = "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\nFrom: AsthaSoft Technologies <no-reply@asthasoftindia.com>\r\nReply-To: {$adminEmail}\r\n";
+    $mailSent = @mail($email, $customerSubject, $customerEmailHtml, $custMailHeaders);
+    if ($mailSent) {
+        $customerSent = true;
+    }
+}
 
 if ($salesSent || $customerSent) {
     http_response_code(200);
