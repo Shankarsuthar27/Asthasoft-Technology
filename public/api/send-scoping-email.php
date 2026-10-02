@@ -440,10 +440,8 @@ $safeHeadline = htmlspecialchars($serviceInfo['headline'], ENT_QUOTES, 'UTF-8');
 $safeOverview = htmlspecialchars($serviceInfo['overview'], ENT_QUOTES, 'UTF-8');
 $safeTimeline = htmlspecialchars($serviceInfo['timeline'], ENT_QUOTES, 'UTF-8');
 
-$customerPlainText = "============================================================
-ASTHASOFT TECHNOLOGIES | SCOPING CONFIRMATION
+$customerPlainText = "ASTHASOFT TECHNOLOGIES | SCOPING CONFIRMATION
 Enterprise Software & Cloud Engineering
-============================================================
 
 Ticket ID : #{$ticketId}
 Status    : Received · Solution Architect Assigned
@@ -455,10 +453,7 @@ Thank you for contacting AsthaSoft Technologies. We have received your project d
 RESPONSE COMMITMENT:
 A Senior Solution Architect is currently reviewing your project requirements and will connect with you within 24 hours with technical insights and recommended architecture.
 
-============================================================
 SERVICE SPECIFICATIONS & ENGINEERING CAPABILITIES
-============================================================
-
 Service: {$serviceInfo['title']}
 \"{$serviceInfo['headline']}\"
 
@@ -477,14 +472,10 @@ TECHNOLOGY & TIMELINE:
 CONFIDENTIALITY & NDA:
 {$ndaTextPlain}
 
-============================================================
 SUMMARY OF SUBMITTED SCOPE
-============================================================
 {$specsPlain}
 
-============================================================
-WHAT HAPPENS NEXT
-============================================================
+WHAT HAPPENS NEXT:
   1. Scope Review    : A dedicated Solution Architect reviews your specifications within 24 hours.
   2. Discovery Call  : We align on technical architecture, sprint breakdown, and security requirements.
   3. Formal Proposal : You receive an architecture document, sprint plan, and transparent milestone quote.
@@ -492,7 +483,6 @@ WHAT HAPPENS NEXT
 Have existing architecture diagrams, wireframes, or RFP documents to share?
 Simply reply directly to this email and our technical team will review them ahead of our call.
 
-------------------------------------------------------------
 Strategic Consulting & Engineering Team
 AsthaSoft Technologies · Enterprise Solutions
 Email : sales@asthasoftindia.com
@@ -500,7 +490,6 @@ Web   : https://asthasoftindia.com
 
 © " . date('Y') . " AsthaSoft Technologies. All rights reserved.
 ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer
-============================================================
 ";
 
 $customerEmailHtml = "<!DOCTYPE html>
@@ -511,10 +500,8 @@ $customerEmailHtml = "<!DOCTYPE html>
   <title>Your Scoping Request Has Been Received - AsthaSoft</title>
 </head>
 <body style='margin: 0; padding: 24px 20px; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;'>
-  <div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827; white-space: pre-wrap; word-break: break-word;'>============================================================
-ASTHASOFT TECHNOLOGIES | SCOPING CONFIRMATION
+  <div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827; white-space: pre-wrap; word-break: break-word;'>ASTHASOFT TECHNOLOGIES | SCOPING CONFIRMATION
 Enterprise Software &amp; Cloud Engineering
-============================================================
 
 Ticket ID : #{$safeTicketId}
 Status    : Received · Solution Architect Assigned
@@ -526,10 +513,7 @@ Thank you for contacting AsthaSoft Technologies. We have received your project d
 RESPONSE COMMITMENT:
 A Senior Solution Architect is currently reviewing your project requirements and will connect with you within 24 hours with technical insights and recommended architecture.
 
-============================================================
 SERVICE SPECIFICATIONS &amp; ENGINEERING CAPABILITIES
-============================================================
-
 Service: {$safeServiceTitle}
 \"{$safeHeadline}\"
 
@@ -548,14 +532,10 @@ TECHNOLOGY &amp; TIMELINE:
 CONFIDENTIALITY &amp; NDA:
 {$ndaTextHtml}
 
-============================================================
 SUMMARY OF SUBMITTED SCOPE
-============================================================
 {$specsHtml}
 
-============================================================
-WHAT HAPPENS NEXT
-============================================================
+WHAT HAPPENS NEXT:
   1. Scope Review    : A dedicated Solution Architect reviews your specifications within 24 hours.
   2. Discovery Call  : We align on technical architecture, sprint breakdown, and security requirements.
   3. Formal Proposal : You receive an architecture document, sprint plan, and transparent milestone quote.
@@ -563,15 +543,13 @@ WHAT HAPPENS NEXT
 Have existing architecture diagrams, wireframes, or RFP documents to share?
 Simply reply directly to this email and our technical team will review them ahead of our call.
 
-------------------------------------------------------------
 Strategic Consulting &amp; Engineering Team
 AsthaSoft Technologies · Enterprise Solutions
 Email : <a href='mailto:sales@asthasoftindia.com' style='color: #2563eb; text-decoration: underline;'>sales@asthasoftindia.com</a>
 Web   : <a href='https://asthasoftindia.com' style='color: #2563eb; text-decoration: underline;'>https://asthasoftindia.com</a>
 
 © " . date('Y') . " AsthaSoft Technologies. All rights reserved.
-ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer
-============================================================</div>
+ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer</div>
 </body>
 </html>";
 

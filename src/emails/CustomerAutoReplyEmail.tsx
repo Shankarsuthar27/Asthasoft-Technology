@@ -59,10 +59,8 @@ export const CustomerAutoReplyEmail: React.FC<CustomerAutoReplyProps> = ({
           wordBreak: 'break-word',
         }}
       >
-{`============================================================
-ASTHASOFT TECHNOLOGIES | SCOPING CONFIRMATION
+{`ASTHASOFT TECHNOLOGIES | SCOPING CONFIRMATION
 Enterprise Software & Cloud Engineering
-============================================================
 
 Ticket ID : #${displayTicketId}
 Status    : Received · Solution Architect Assigned
@@ -74,10 +72,7 @@ Thank you for contacting AsthaSoft Technologies. We have received your project d
 RESPONSE COMMITMENT:
 A Senior Solution Architect is currently reviewing your project requirements and will connect with you within 24 hours with technical insights and recommended architecture.
 
-============================================================
 SERVICE SPECIFICATIONS & ENGINEERING CAPABILITIES
-============================================================
-
 Service: ${serviceInfo.title}
 "${serviceInfo.headline}"
 
@@ -102,9 +97,7 @@ ${
     All project specifications and ideas shared with AsthaSoft are treated with strict professional confidentiality under our standard bilateral policy.`
 }
 
-============================================================
 SUMMARY OF SUBMITTED SCOPE
-============================================================
   • Service Requested : ${serviceRequired}
   • Contact Number    : `}<a href={`tel:${safePhoneClean}`} style={{ color: '#2563eb', textDecoration: 'underline' }}>{contactNumber || 'Not provided'}</a>
 {budget ? `\n  • Estimated Budget  : ${budget}` : ''}
@@ -112,9 +105,7 @@ SUMMARY OF SUBMITTED SCOPE
 {preferredTime ? `\n  • Preferred Time    : ${preferredTime}` : ''}
 {`\n  • Project Brief     :\n    ${projectDescription || 'No description provided'}
 
-============================================================
-WHAT HAPPENS NEXT
-============================================================
+WHAT HAPPENS NEXT:
   1. Scope Review    : A dedicated Solution Architect reviews your specifications within 24 hours.
   2. Discovery Call  : We align on technical architecture, sprint breakdown, and security requirements.
   3. Formal Proposal : You receive an architecture document, sprint plan, and transparent milestone quote.
@@ -122,7 +113,6 @@ WHAT HAPPENS NEXT
 Have existing architecture diagrams, wireframes, or RFP documents to share?
 Simply reply directly to this email and our technical team will review them ahead of our call.
 
-------------------------------------------------------------
 Strategic Consulting & Engineering Team
 AsthaSoft Technologies · Enterprise Solutions
 Email : `}<a href="mailto:sales@asthasoftindia.com" style={{ color: '#2563eb', textDecoration: 'underline' }}>sales@asthasoftindia.com</a>
@@ -131,8 +121,7 @@ Web   : `}<a href="https://asthasoftindia.com" style={{ color: '#2563eb', textDe
 {`
 
 © ${new Date().getFullYear()} AsthaSoft Technologies. All rights reserved.
-ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer
-============================================================`}
+ISO-Aligned Architecture · Strict NDA Security · Guaranteed 100% IP Transfer`}
       </div>
     </div>
   );
